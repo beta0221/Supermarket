@@ -19,7 +19,44 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+
+
+
+//------註冊元件------
+
+Vue.component('Home',require('./components/Home.vue').default);
+
+
+
+
+
+
+
+
+
+
+
+
+//------註冊路徑------
+
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
+
+const Foo = { template: '<div>foo</div>' }
+const Bar = { template: '<div>bar</div>' }
+
+const routes = [
+    { path: '/admin/foo', component: Foo },
+    { path: '/admin/bar', component: Bar }
+]
+
+const router = new VueRouter({
+    routes,
+    mode:'history',
+})
+
+
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29,4 +66,5 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+    router,
 });
