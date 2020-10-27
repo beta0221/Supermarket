@@ -51,6 +51,9 @@ export default {
     },
     created(){
         this.reloadData();
+        EventBus.$on("reloadData",_ => {
+            this.reloadData();
+        });
     },
     methods:{
         setRows(value){

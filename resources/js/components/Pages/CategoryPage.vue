@@ -6,7 +6,12 @@
         :requestUrl="'/api/category'">
     </data-table>
     
-    <data-detail-modal></data-detail-modal>
+    <data-detail-modal
+        :requestUrl="'/api/category/'"
+        :slug="'slug'"
+        :columns="columns">
+    </data-detail-modal>
+
 </CCardBody>
   
 </template>
@@ -27,6 +32,10 @@ export default {
                 {key:'name',label:'分類'},
                 {key:'edit',label:'-'},
             ],
+            columns:[
+                {key:'slug',type:'text',label:'代號',readonly:true},
+                {key:'name',type:'text',label:'分類'},
+            ]
         }
     }
 }
