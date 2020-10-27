@@ -5,8 +5,21 @@
         :fields="fields"
         items-per-page-select
         :items-per-page="10"
-        v-on:pagination-change="setRows"
-        ></CDataTable>
+        v-on:pagination-change="setRows">
+        
+            <template #index={item,index}>
+                <td>{{index + 1}}</td>
+            </template>
+
+            <template #edit={item}>
+                <td>
+                    <CButton size="sm" color="info" class="ml-1" @click="showDetail(item)">
+                        詳細
+                    </CButton>
+                </td>
+            </template>
+        
+        </CDataTable>
 
         <CPagination
             :activePage.sync="pagination.page"
@@ -45,7 +58,6 @@ export default {
             this.reloadData();
         },
         reloadData(){
-            
             axios.get(this.requestUrl, {
                 params: this.pagination
             })
@@ -56,6 +68,9 @@ export default {
             .catch(error =>{
                 console.log(error);
             })
+        },
+        showDetail(item){
+            EventBus.$emit("showDetailModal",item);
         }
     }
 }

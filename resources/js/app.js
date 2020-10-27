@@ -7,6 +7,9 @@
 require('./bootstrap');
 window.Vue = require('vue');
 
+//全元件溝
+window.EventBus = new Vue();
+
 import CoreuiVue from '@coreui/vue';
 Vue.use(CoreuiVue);
 
