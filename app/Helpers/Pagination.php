@@ -22,10 +22,10 @@ class Pagination{
     public function __construct(Request $request)
     {
         if($request->has('page')){
-            $this->page = $request->page;
+            $this->page = (int)$request->page;
         }
         if($request->has('rows')){
-            $this->rows = $request->rows;
+            $this->rows = (int)$request->rows;
         }
         if($request->has('orderBy')){
             $this->orderBy = $request->orderBy;

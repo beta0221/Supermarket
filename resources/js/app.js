@@ -5,8 +5,10 @@
  */
 
 require('./bootstrap');
-
 window.Vue = require('vue');
+
+import CoreuiVue from '@coreui/vue';
+Vue.use(CoreuiVue);
 
 /**
  * The following block of code may be used to automatically register your
@@ -25,7 +27,7 @@ window.Vue = require('vue');
 //------註冊元件------
 
 Vue.component('Home',require('./components/Home.vue').default);
-
+Vue.component('SideBar',require('./components/SideBar').default)
 
 
 
@@ -44,10 +46,11 @@ Vue.use(VueRouter)
 
 const Foo = { template: '<div>foo</div>' }
 const Bar = { template: '<div>bar</div>' }
-
+import CategoryPage from './components/Pages/CategoryPage'
 const routes = [
     { path: '/admin/foo', component: Foo },
-    { path: '/admin/bar', component: Bar }
+    { path: '/admin/bar', component: Bar },
+    { path: '/admin/category',component: CategoryPage},
 ]
 
 const router = new VueRouter({
