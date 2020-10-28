@@ -1,19 +1,24 @@
 <template>
+    <div>
 
-<CCardBody>
-    <data-table 
-        :fields="fields"
-        :requestUrl="'/api/category'">
-    </data-table>
-    
-    <data-detail-modal
-        :requestUrl="'/api/category/'"
-        :slug="'slug'"
-        :columns="columns">
-    </data-detail-modal>
+        <NavBar :title="'產品類別管理'"/>
 
-</CCardBody>
-  
+        <CCardBody>
+            
+
+            <data-table 
+                :fields="fields"
+                :requestUrl="'/api/category'">
+            </data-table>
+            
+            <data-detail-modal
+                :requestUrl="'/api/category/'"
+                :slug="'slug'"
+                :columns="columns">
+            </data-detail-modal>
+
+        </CCardBody>
+    </div>
 </template>
 
 <script>

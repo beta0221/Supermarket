@@ -69,7 +69,7 @@ export default {
                 this.pagination = res.data.pagination;
             })
             .catch(error =>{
-                console.log(error);
+                errorHelper.handle(error);
             })
         },
         showDetail(item){

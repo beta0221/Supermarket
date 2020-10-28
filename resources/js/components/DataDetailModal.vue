@@ -51,7 +51,7 @@ export default {
                 this.detailData = res.data;
             })
             .catch(error => {
-                console.log(error);
+                errorHelper.handle(error);
             })
         },
         updateDetailData(){
@@ -60,14 +60,10 @@ export default {
             axios.post(this.requestUrl + this.dataSlug, postData)
             .then(res =>{
                 EventBus.$emit("reloadData");
-                EventBus.$emit('popMessage',{
-                    type:'success',
-                    header:'訊息',
-                    body:'更新成功',
-                })
+                messageHelper.success('更新成功');
             })
             .catch(error =>{
-                console.log(error);
+                errorHelper.handle(error);
             })
         }
     }

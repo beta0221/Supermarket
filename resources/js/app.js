@@ -7,8 +7,14 @@
 require('./bootstrap');
 window.Vue = require('vue');
 
-//全元件溝
+//全元件溝通
 window.EventBus = new Vue();
+//訊息顯示器
+import messageHelper from './helpers/messageHelper'
+window.messageHelper = new messageHelper();
+//錯誤處理器
+import errorHelper from './helpers/errorHelper'
+window.errorHelper = new errorHelper();
 
 import CoreuiVue from '@coreui/vue';
 Vue.use(CoreuiVue);
@@ -30,8 +36,8 @@ Vue.use(CoreuiVue);
 //------註冊元件------
 
 Vue.component('Home',require('./components/Home.vue').default);
-Vue.component('SideBar',require('./components/SideBar').default)
-
+Vue.component('SideBar',require('./components/SideBar').default);
+Vue.component('NavBar',require('./components/NavBar').default);
 
 
 
