@@ -51,9 +51,14 @@ export default {
     },
     created(){
         this.reloadData();
+    },
+    mounted(){
         EventBus.$on("reloadData",_ => {
             this.reloadData();
         });
+    },
+    destroyed(){
+        EventBus.$off("reloadData");
     },
     methods:{
         setRows(value){

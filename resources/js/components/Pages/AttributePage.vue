@@ -1,27 +1,30 @@
 <template>
     <div>
 
-        <NavBar :title="'產品類別管理'"/>
+        <NavBar :title="'標籤管理'"/>
 
         <CCardBody>
             
             <DataTable 
                 :fields="fields"
-                :requestUrl="'/api/category'">
+                :requestUrl="'/api/attribute'">
             </DataTable>
             
             <DataDetailModal
-                :requestUrl="'/api/category/'"
-                :slug="'slug'"
+                :requestUrl="'/api/attribute/'"
+                :slug="'id'"
                 :columns="columns">
             </DataDetailModal>
 
         </CCardBody>
+
+
     </div>
+  
 </template>
 
 <script>
-export default {
+export default {    
     components:{
         
     },
@@ -29,13 +32,13 @@ export default {
         return{
             fields:[
                 {key:'index',label:'#'},
-                {key:'slug',label:'代號'},
-                {key:'name',label:'分類'},
+                {key:'type',label:'類別'},
+                {key:'name',label:'標籤名稱'},
                 {key:'edit',label:'-'},
             ],
             columns:[
-                {key:'slug',type:'text',label:'代號',readonly:true},
-                {key:'name',type:'text',label:'分類'},
+                {key:'type',type:'text',label:'類別'},
+                {key:'name',type:'text',label:'標籤名稱'},
             ]
         }
     }

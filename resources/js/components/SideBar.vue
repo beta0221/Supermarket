@@ -11,8 +11,8 @@
                 <CSidebarNavItem :name="'hello'"></CSidebarNavItem>
             </CSidebarNavDropdown>
 
-            <CSidebarNavItem :name="'psycho'" ></CSidebarNavItem>
-            <CSidebarNavItem :name="'hello'" to="/admin/category"></CSidebarNavItem>
+            <CSidebarNavItem :name="'標籤管理'" to="/admin/attribute"></CSidebarNavItem>
+            <CSidebarNavItem :name="'產品類別管理'" to="/admin/category"></CSidebarNavItem>
 
             <CSidebarNavDropdown :name="'fuck'">
                 <CSidebarNavItem :name="'hello'"></CSidebarNavItem>

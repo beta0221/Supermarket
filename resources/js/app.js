@@ -38,7 +38,8 @@ Vue.use(CoreuiVue);
 Vue.component('Home',require('./components/Home.vue').default);
 Vue.component('SideBar',require('./components/SideBar').default);
 Vue.component('NavBar',require('./components/NavBar').default);
-
+Vue.component('DataTable',require('./components/DataTable').default);
+Vue.component('DataDetailModal',require('./components/DataDetailModal').default);
 
 
 
@@ -53,12 +54,10 @@ Vue.component('NavBar',require('./components/NavBar').default);
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
-const Foo = { template: '<div>foo</div>' }
-const Bar = { template: '<div>bar</div>' }
 import CategoryPage from './components/Pages/CategoryPage'
+import AttributePage from './components/Pages/AttributePage'
 const routes = [
-    { path: '/admin/foo', component: Foo },
-    { path: '/admin/bar', component: Bar },
+    { path: '/admin/attribute', component: AttributePage },
     { path: '/admin/category',component: CategoryPage},
 ]
 

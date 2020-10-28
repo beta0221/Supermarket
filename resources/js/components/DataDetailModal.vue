@@ -37,11 +37,17 @@ export default {
         }
     },
     created(){
+        
+    },
+    mounted(){
         EventBus.$on("showDetailModal", item => {
             let slug = item[this.slug];
             this.dataSlug = slug;
             this.getDetailData();
         });
+    },
+    destroyed(){
+        EventBus.$off("showDetailModal");
     },
     methods:{
         getDetailData(){

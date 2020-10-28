@@ -27,7 +27,7 @@ trait CrudTrait{
      * @return object 
      */
     private function getModelInstance($value){
-        $key = ($this->model::$key)?$this->model::$key:'id';
+        $key = (property_exists($this->model,'key'))?$this->model::$key:'id';
         $model = $this->model::where($key,$value)->firstOrFail();
         return $model;
     }

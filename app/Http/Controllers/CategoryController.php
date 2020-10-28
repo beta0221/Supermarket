@@ -16,11 +16,11 @@ class CategoryController extends Controller
 
         $this->model = Category::class;
         $this->storeRule = [
-            'name'=>['required','max:255'],
-            'slug'=>['required','unique:categories','max:255', new SlugRule],
+            'name'=>['required','max:255','string'],
+            'slug'=>['required','unique:categories','max:255','string', new SlugRule],
         ];
         $this->updateRule = [
-            'name'=>['required','max:255'],
+            'name'=>['required','max:255','string'],
         ];
         $this->updateColumns = ['name'];
 
