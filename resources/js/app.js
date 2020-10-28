@@ -40,6 +40,7 @@ Vue.component('SideBar',require('./components/SideBar').default);
 Vue.component('NavBar',require('./components/NavBar').default);
 Vue.component('DataTable',require('./components/DataTable').default);
 Vue.component('DataDetailModal',require('./components/DataDetailModal').default);
+Vue.component('CreateDetailModal',require('./components/CreateDetailModal').default);
 
 
 

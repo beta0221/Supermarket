@@ -4,17 +4,20 @@
         <NavBar :title="'產品類別管理'"/>
 
         <CCardBody>
+
+            <CreateDetailModal 
+                :requestUrl="'/api/category'"
+                :columns="columns"/>
             
             <DataTable 
                 :fields="fields"
-                :requestUrl="'/api/category'">
-            </DataTable>
+                :requestUrl="'/api/category'"/>
             
             <DataDetailModal
                 :requestUrl="'/api/category/'"
                 :slug="'slug'"
-                :columns="columns">
-            </DataDetailModal>
+                :columns="columns"/>
+            
 
         </CCardBody>
     </div>

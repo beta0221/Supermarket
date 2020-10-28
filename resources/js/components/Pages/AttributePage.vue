@@ -5,16 +5,19 @@
 
         <CCardBody>
             
+            <CreateDetailModal 
+                :requestUrl="'/api/attribute'"
+                :columns="columns"/>
+
             <DataTable 
                 :fields="fields"
-                :requestUrl="'/api/attribute'">
-            </DataTable>
+                :requestUrl="'/api/attribute'"/>
             
             <DataDetailModal
                 :requestUrl="'/api/attribute/'"
                 :slug="'id'"
-                :columns="columns">
-            </DataDetailModal>
+                :columns="columns"/>
+            
 
         </CCardBody>
 
