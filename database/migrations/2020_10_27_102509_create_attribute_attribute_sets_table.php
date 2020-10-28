@@ -17,7 +17,6 @@ class CreateAttributeAttributeSetsTable extends Migration
             $table->id();
             $table->integer('attribute_id');
             $table->integer('attribute_set_id');
-            $table->timestamps();
         });
     }
 

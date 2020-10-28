@@ -18,12 +18,12 @@ class CreateProductsTable extends Migration
             $table->integer('group_id')->nullable();
             $table->integer('attribute_set_id');
             $table->string('name');
-            $table->text('description')->nullable();
-            $table->integer('tax_id');
-            $table->decimal('price');
             $table->string('sku');
-            $table->integer('stock');
-            $table->tinyInteger('active');
+            $table->text('description')->nullable();
+            $table->integer('tax_id')->nullable();
+            $table->decimal('price');
+            $table->integer('stock')->default(0);
+            $table->tinyInteger('active')->default(1);
             $table->timestamps();
         });
     }

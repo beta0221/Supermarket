@@ -16,7 +16,6 @@ class CreateAttributeSetsTable extends Migration
         Schema::create('attribute_sets', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->timestamps();
         });
     }
 

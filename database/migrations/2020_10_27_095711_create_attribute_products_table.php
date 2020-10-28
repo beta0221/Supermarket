@@ -17,7 +17,6 @@ class CreateAttributeProductsTable extends Migration
             $table->id();
             $table->integer('product_id');
             $table->integer('attribute_id');
-            $table->timestamps();
         });
     }
 
