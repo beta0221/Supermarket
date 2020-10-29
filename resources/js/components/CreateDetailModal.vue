@@ -13,12 +13,11 @@
 
             <div v-for="column in columns" v-bind:key="column.key">
                 <CInput 
+                    v-if="(column.type == 'text')" 
                     :label="column.label" 
                     :placeholder="column.label"
                     v-model="detailData[column.key]"/>
             </div>
-            
-            
             
             <template slot="footer">
                 <CButton @click="show = false">取消</CButton>

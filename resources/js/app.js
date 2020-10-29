@@ -15,9 +15,12 @@ window.messageHelper = new messageHelper();
 //錯誤處理器
 import errorHelper from './helpers/errorHelper'
 window.errorHelper = new errorHelper();
-
+//後台介面套件
 import CoreuiVue from '@coreui/vue';
 Vue.use(CoreuiVue);
+//文字編輯器
+import CKEditor from '@ckeditor/ckeditor5-vue';
+Vue.use(CKEditor)
 
 /**
  * The following block of code may be used to automatically register your
@@ -42,6 +45,7 @@ Vue.component('DataTable',require('./components/DataTable').default);
 Vue.component('DataDetailModal',require('./components/DataDetailModal').default);
 Vue.component('CreateDetailModal',require('./components/CreateDetailModal').default);
 Vue.component('MultipleSelector',require('./components/MultipleSelector').default);
+Vue.component('TextEditor',require('./components/TextEditor').default);
 
 
 

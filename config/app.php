@@ -2,6 +2,9 @@
 
 return [
 
+
+
+    'file_driver' => env('FILE_DRIVER','local'),
     /*
     |--------------------------------------------------------------------------
     | Application Name
