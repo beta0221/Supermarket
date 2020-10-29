@@ -11,4 +11,12 @@ class Attribute extends Model
     ];
 
     public $timestamps = false;
+
+
+    public function attributeSets(){
+        return $this->belongsToMany('App\AttributeSet','attribute_attribute_sets','attribute_id','attribute_set_id');
+    }
+
+
+
 }

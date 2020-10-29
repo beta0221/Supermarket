@@ -39,6 +39,7 @@ export default {
             ],
             columns:[
                 {key:'name',type:'text',label:'群組名稱'},
+                {key:'_',type:'multiple_selector',label:'標籤',url:'/api/attributeSet',relation:'attributes',relationUrl:'/api/attribute/all',trackBy:'name'},
             ]
         }
     }

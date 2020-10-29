@@ -18,4 +18,24 @@ class AttributeSetController extends Controller
         $this->updateRule = $rule;
         $this->updateColumns = ['name'];
     }
+
+
+    /**取得所有 AttrubuteSet */
+    public function all(){
+        return response(AttributeSet::all());
+    }
+
+    /**取得關聯的 Attribute */
+    public function getAttributes($id){
+        $attributeSet = AttributeSet::find($id);
+        $attributes = $attributeSet->attributes()->get();
+        return response($attributes);
+    }
+
+    public function syncAttributes(Request $request,$id){
+        $attributeSet = AttributeSet::find($id);
+        $attributeSet->attributes()->sync($request->syncArray);
+        $attributes = $attributeSet->attributes()->get();
+        return response($attributes);
+    }
 }

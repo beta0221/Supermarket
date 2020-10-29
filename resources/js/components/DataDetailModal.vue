@@ -8,11 +8,21 @@
 
 
         <div v-for="column in columns" v-bind:key="column.key">
-            <CInput v-if="detailData[column.key]!='undefinded'" 
+            
+            <CInput v-if="(column.key in detailData)" 
                 :label="column.label" 
                 :placeholder="column.label"
                 :readonly="(column.readonly == true)?true:false"
                 v-model="detailData[column.key]"/>
+
+            <MultipleSelector 
+                v-if="column.type == 'multiple_selector'"
+                :label="column.label"
+                :url="column.url" 
+                :relation="column.relation"
+                :relationUrl="column.relationUrl"
+                :trackBy="column.trackBy"/>
+
         </div>
         
         

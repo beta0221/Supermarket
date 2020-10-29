@@ -42,6 +42,7 @@ export default {
             columns:[
                 {key:'type',type:'text',label:'類別'},
                 {key:'name',type:'text',label:'標籤名稱'},
+                {key:'_',type:'multiple_selector',label:'標籤群組',url:'/api/attribute',relation:'attributeSets',relationUrl:'/api/attributeSet/all',trackBy:'name'},
             ]
         }
     }
