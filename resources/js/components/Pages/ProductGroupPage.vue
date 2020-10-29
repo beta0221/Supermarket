@@ -1,30 +1,32 @@
 <template>
     <div>
 
-        <NavBar :title="'產品分類管理'"/>
+        <NavBar :title="'產品群組管理'"/>
 
         <CCardBody>
-
-            <CreateDetailModal 
-                :requestUrl="'/api/category'"
-                :columns="columns"/>
             
+            <CreateDetailModal 
+                :requestUrl="'/api/productGroup'"
+                :columns="columns"/>
+
             <DataTable 
                 :fields="fields"
-                :requestUrl="'/api/category'"/>
+                :requestUrl="'/api/productGroup'"/>
             
             <DataDetailModal
-                :requestUrl="'/api/category/'"
-                :slug="'slug'"
+                :requestUrl="'/api/productGroup/'"
+                :slug="'id'"
                 :columns="columns"/>
-            
 
         </CCardBody>
+
+
     </div>
+  
 </template>
 
 <script>
-export default {
+export default {    
     components:{
         
     },
@@ -32,13 +34,11 @@ export default {
         return{
             fields:[
                 {key:'index',label:'#'},
-                {key:'slug',label:'代號'},
-                {key:'name',label:'分類'},
+                {key:'name',label:'群組名稱'},
                 {key:'edit',label:'-'},
             ],
             columns:[
-                {key:'slug',type:'text',label:'代號',readonly:true},
-                {key:'name',type:'text',label:'分類'},
+                {key:'name',type:'text',label:'群組名稱'},
             ]
         }
     }

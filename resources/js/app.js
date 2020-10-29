@@ -57,9 +57,13 @@ Vue.use(VueRouter)
 
 import CategoryPage from './components/Pages/CategoryPage'
 import AttributePage from './components/Pages/AttributePage'
+import AttributeSetPage from './components/Pages/AttributeSetPage'
+import ProductGroupPage from './components/Pages/ProductGroupPage'
 const routes = [
-    { path: '/admin/attribute', component: AttributePage },
     { path: '/admin/category',component: CategoryPage},
+    { path: '/admin/attribute', component: AttributePage },
+    { path: '/admin/attributeSet',component: AttributeSetPage},
+    { path: '/admin/productGroup',component: ProductGroupPage},
 ]
 
 const router = new VueRouter({

@@ -21,3 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::apiResource('category','CategoryController');
 Route::apiResource('attribute','AttributeController');
+Route::apiResource('attributeSet','AttributeSetController');
+Route::apiResource('productGroup','ProductGroupController');

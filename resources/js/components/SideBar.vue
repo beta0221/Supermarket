@@ -7,12 +7,14 @@
         </CSidebarBrand>
         
         <CSidebarNav>
-            <CSidebarNavDropdown :name="'fuck'">
-                <CSidebarNavItem :name="'hello'"></CSidebarNavItem>
+            <CSidebarNavDropdown :name="'資料管理'">
+                <CSidebarNavItem :name="'標籤(Attribute)'" to="/admin/attribute"></CSidebarNavItem>
+                <CSidebarNavItem :name="'標籤群組(Attribute Set)'" to="/admin/attributeSet"></CSidebarNavItem>
+                <CSidebarNavItem :name="'產品分類(Category)'" to="/admin/category"></CSidebarNavItem>
+                <CSidebarNavItem :name="'產品群組(Product Group)'" to="/admin/productGroup"></CSidebarNavItem>
             </CSidebarNavDropdown>
 
-            <CSidebarNavItem :name="'標籤管理'" to="/admin/attribute"></CSidebarNavItem>
-            <CSidebarNavItem :name="'產品類別管理'" to="/admin/category"></CSidebarNavItem>
+                <CSidebarNavItem :name="'hello'"></CSidebarNavItem>
 
             <CSidebarNavDropdown :name="'fuck'">
                 <CSidebarNavItem :name="'hello'"></CSidebarNavItem>
