@@ -38,11 +38,7 @@ class ProductController extends Controller
         $this->updateColumns = ['group_id','attribute_set_id','name','description','price','stock','active'];
     }
     
-    public function test(){
-        $product = Product::find(1);
-        $group = $product->attributeSet->name;
-        return response($group);
-    }
+    
     
     
 }

@@ -32,8 +32,6 @@ Route::get('/attributeSet/{id}/products','AttributeSetController@getProducts');
 Route::get('/productGroup/{id}/products','ProductGroupController@getProducts');
 
 
-Route::get('/product/test','ProductController@test');
-
 Route::apiResource('category','CategoryController');
 Route::apiResource('attribute','AttributeController');
 Route::apiResource('attributeSet','AttributeSetController');
