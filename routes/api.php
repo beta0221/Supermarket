@@ -22,7 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/attribute/all','AttributeController@all');
 Route::get('/attributeSet/all','AttributeSetController@all');
 Route::get('/productGroup/all','ProductGroupController@all');
-
+Route::get('/activeStatus/all','EnumController@active_enum');
 
 Route::get('/attribute/{id}/attributeSets','AttributeController@getAttributeSets');
 Route::put('/attribute/{id}/attributeSets','AttributeController@syncAttributeSets');
@@ -30,18 +30,7 @@ Route::get('/attributeSet/{id}/attributes','AttributeSetController@getAttributes
 Route::put('/attributeSet/{id}/attributes','AttributeSetController@syncAttributes');
 Route::get('/attributeSet/{id}/products','AttributeSetController@getProducts');
 Route::get('/productGroup/{id}/products','ProductGroupController@getProducts');
-Route::get('/activeStatus/all',function(){
-    return response([
-        [
-            'id'=>1,
-            'name'=>'上架'
-        ],
-        [
-            'id'=>0,
-            'name'=>'下架'
-        ]
-    ]);
-});
+
 
 Route::apiResource('category','CategoryController');
 Route::apiResource('attribute','AttributeController');
