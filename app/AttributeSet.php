@@ -20,6 +20,10 @@ class AttributeSet extends Model
         return $this->belongsToMany('App\Attribute','attribute_attribute_sets','attribute_set_id','attribute_id');
     }
 
+    public function products(){
+        return $this->hasMany('App\Product','attribute_set_id');
+    }
+
 
 
 }

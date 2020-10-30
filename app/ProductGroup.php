@@ -11,4 +11,14 @@ class ProductGroup extends Model
     ];
 
     public $timestamps = false;
+
+
+
+
+
+    /**關聯 */
+    public function products(){
+        return $this->hasMany('App\Product','group_id');
+    }
+
 }

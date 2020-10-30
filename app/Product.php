@@ -18,4 +18,14 @@ class Product extends Model
     ];
 
     public static $key = 'sku';
+
+    /**關聯 ProductGroup */
+    public function group(){
+        return $this->belongsTo('App\ProductGroup');
+    }
+    /**關聯 AttributeSet */
+    public function attributeSet(){
+        return $this->belongsTo('App\AttributeSet');
+    }
+
 }

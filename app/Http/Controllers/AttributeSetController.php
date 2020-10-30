@@ -32,10 +32,18 @@ class AttributeSetController extends Controller
         return response($attributes);
     }
 
+    /**更新關聯的 Attribute */
     public function syncAttributes(Request $request,$id){
         $attributeSet = AttributeSet::find($id);
         $attributeSet->attributes()->sync($request->syncArray);
         $attributes = $attributeSet->attributes()->get();
         return response($attributes);
+    }
+
+    /**取得關聯的 Product */
+    public function getProducts($id){
+        $attributeSet = AttributeSet::find($id);
+        $products = $attributeSet->products()->get();
+        return response($products);
     }
 }

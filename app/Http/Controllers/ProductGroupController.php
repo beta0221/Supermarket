@@ -18,4 +18,17 @@ class ProductGroupController extends Controller
         $this->updateRule = $rule;
         $this->updateColumns = ['name'];
     }
+
+
+
+    /**取得全部 ProductGroup */
+    public function all(){
+        return response(ProductGroup::all());
+    }
+    /**取得關聯的 Product */
+    public function getProducts($id){
+        $productGroup = ProductGroup::find($id);
+        $products = $productGroup->products()->get();
+        return response($products);
+    }
 }

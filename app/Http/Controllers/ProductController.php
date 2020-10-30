@@ -4,82 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
+use App\Traits\CrudTrait;
+use App\Rules\SlugRule;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    use CrudTrait;
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function __construct(){
+        
+        
+        $this->model = Product::class;
+        $rule = [
+            'group_id'=>['required','integer'],
+            'attribute_set_id'=>['required','integer'],
+            'name'=>['required','max:255','string'],
+            'description'=>['required'],
+            'price'=>['required'],
+            'sku'=>['required','unique:products','max:255','string', new SlugRule],
+            'stock' => ['required','integer'],
+            'active' => ['required','integer'],
+        ];
+        $this->storeRule = $rule;
+        $this->updateRule = $rule;
+        $this->updateColumns = ['group_id','attribute_set_id','name','description','price','stock','active'];
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        //
+    
+    public function test(){
+        $product = Product::find(1);
+        $group = $product->attributeSet->name;
+        return response($group);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Product $product)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Product $product)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Product $product)
-    {
-        //
-    }
+    
+    
 }
