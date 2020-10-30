@@ -42,9 +42,7 @@ export default {
             this.options = options;
         },
         updateValue(value){
-            // console.log(value);
             this.$emit('updateDataColumn',{column:this.column,value:value});
-            // this.value = value;
         }
     }
 }

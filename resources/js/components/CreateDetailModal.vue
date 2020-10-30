@@ -31,7 +31,10 @@
                 <TextEditor
                     v-if="column.type == 'text_editor'"
                     :label="column.label"
-                    :uploadUrl="column.uploadUrl"/>
+                    :uploadUrl="column.uploadUrl"
+                    :text="null"
+                    :column="column.key"
+                    v-on:updateDataColumn="updateDataColumn"/>
 
             </div>
 
