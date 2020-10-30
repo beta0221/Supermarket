@@ -30,7 +30,18 @@ Route::get('/attributeSet/{id}/attributes','AttributeSetController@getAttributes
 Route::put('/attributeSet/{id}/attributes','AttributeSetController@syncAttributes');
 Route::get('/attributeSet/{id}/products','AttributeSetController@getProducts');
 Route::get('/productGroup/{id}/products','ProductGroupController@getProducts');
-
+Route::get('/activeStatus/all',function(){
+    return response([
+        [
+            'id'=>1,
+            'name'=>'上架'
+        ],
+        [
+            'id'=>0,
+            'name'=>'下架'
+        ]
+    ]);
+});
 
 Route::apiResource('category','CategoryController');
 Route::apiResource('attribute','AttributeController');

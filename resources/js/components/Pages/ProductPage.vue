@@ -41,6 +41,7 @@ export default {
                 {key:'name',type:'text',label:'商品名稱'},
                 {key:'group_id',type:'single_selector',label:'商品群組',relationUrl:'/api/productGroup/all',trackBy:'name'},
                 {key:'attribute_set_id',type:'single_selector',label:'標籤群組',relationUrl:'/api/attributeSet/all',trackBy:'name'},
+                {key:'active',type:'single_selector',label:'上下架',relationUrl:'/api/activeStatus/all',trackBy:'name'},
                 {key:'description',type:'text_editor',label:'說明',uploadUrl:'/'}
             ]
         }
