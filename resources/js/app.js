@@ -44,6 +44,7 @@ Vue.component('NavBar',require('./components/NavBar').default);
 Vue.component('DataTable',require('./components/DataTable').default);
 Vue.component('DataDetailModal',require('./components/DataDetailModal').default);
 Vue.component('CreateDetailModal',require('./components/CreateDetailModal').default);
+Vue.component('SingleSelector',require('./components/SingleSelector').default);
 Vue.component('MultipleSelector',require('./components/MultipleSelector').default);
 Vue.component('TextEditor',require('./components/TextEditor').default);
 
@@ -63,11 +64,13 @@ import CategoryPage from './components/Pages/CategoryPage'
 import AttributePage from './components/Pages/AttributePage'
 import AttributeSetPage from './components/Pages/AttributeSetPage'
 import ProductGroupPage from './components/Pages/ProductGroupPage'
+import ProductPage from './components/Pages/ProductPage'
 const routes = [
     { path: '/admin/category',component: CategoryPage},
     { path: '/admin/attribute', component: AttributePage },
     { path: '/admin/attributeSet',component: AttributeSetPage},
     { path: '/admin/productGroup',component: ProductGroupPage},
+    { path: '/admin/product',component: ProductPage},
 ]
 
 const router = new VueRouter({

@@ -12,6 +12,8 @@
                 <CSidebarNavItem :name="'標籤群組(Attribute Set)'" to="/admin/attributeSet"></CSidebarNavItem>
                 <CSidebarNavItem :name="'產品分類(Category)'" to="/admin/category"></CSidebarNavItem>
                 <CSidebarNavItem :name="'產品群組(Product Group)'" to="/admin/productGroup"></CSidebarNavItem>
+                <CSidebarNavItem :name="'產品(Product)'" to="/admin/product"></CSidebarNavItem>
+                
             </CSidebarNavDropdown>
 
                 <CSidebarNavItem :name="'hello'"></CSidebarNavItem>

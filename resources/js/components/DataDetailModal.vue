@@ -9,7 +9,7 @@
 
         <div v-for="column in columns" v-bind:key="column.key">
             
-            <CInput v-if="(column.key in detailData)" 
+            <CInput v-if="(column.type == 'text')" 
                 :label="column.label" 
                 :placeholder="column.label"
                 :readonly="(column.readonly == true)?true:false"
@@ -22,6 +22,20 @@
                 :relation="column.relation"
                 :relationUrl="column.relationUrl"
                 :trackBy="column.trackBy"/>
+
+            <SingleSelector
+                v-if="column.type == 'single_selector'"
+                :label="column.label"
+                :relationUrl="column.relationUrl"
+                :column="column.key"
+                :trackBy="column.trackBy"
+                v-on:updateDataColumn="updateDataColumn"
+                :value="detailData[column.key]"/>
+        
+            <TextEditor
+                v-if="column.type == 'text_editor'"
+                :label="column.label"
+                :uploadUrl="column.uploadUrl"/>
 
         </div>
         
@@ -81,6 +95,10 @@ export default {
             .catch(error =>{
                 errorHelper.handle(error);
             })
+        },
+        updateDataColumn(obj){
+            // this.detailData[obj.column] = obj.value;
+            this.$set(this.detailData,obj.column,obj.value);
         }
     }
 }

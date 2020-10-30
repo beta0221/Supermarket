@@ -17,7 +17,24 @@
                     :label="column.label" 
                     :placeholder="column.label"
                     v-model="detailData[column.key]"/>
+
+
+                <SingleSelector
+                    v-if="column.type == 'single_selector'"
+                    :label="column.label"
+                    :relationUrl="column.relationUrl"
+                    :column="column.key"
+                    :trackBy="column.trackBy"
+                    v-on:updateDataColumn="updateDataColumn"
+                    :value="null"/>
+
+                <TextEditor
+                    v-if="column.type == 'text_editor'"
+                    :label="column.label"
+                    :uploadUrl="column.uploadUrl"/>
+
             </div>
+
             
             <template slot="footer">
                 <CButton @click="show = false">取消</CButton>
@@ -64,6 +81,10 @@ export default {
             .catch(error =>{
                 errorHelper.handle(error);
             })
+        },
+        updateDataColumn(obj){
+            // this.detailData[obj.column] = obj.value;
+            this.$set(this.detailData,obj.column,obj.value);
         }
     }
 }

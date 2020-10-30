@@ -16,7 +16,7 @@ class ProductController extends Controller
         
         
         $this->model = Product::class;
-        $rule = [
+        $this->storeRule = [
             'group_id'=>['required','integer'],
             'attribute_set_id'=>['required','integer'],
             'name'=>['required','max:255','string'],
@@ -26,8 +26,15 @@ class ProductController extends Controller
             'stock' => ['required','integer'],
             'active' => ['required','integer'],
         ];
-        $this->storeRule = $rule;
-        $this->updateRule = $rule;
+        $this->updateRule = [
+            'group_id'=>['required','integer'],
+            'attribute_set_id'=>['required','integer'],
+            'name'=>['required','max:255','string'],
+            'description'=>['required'],
+            'price'=>['required'],
+            'stock' => ['required','integer'],
+            'active' => ['required','integer'],
+        ];
         $this->updateColumns = ['group_id','attribute_set_id','name','description','price','stock','active'];
     }
     
