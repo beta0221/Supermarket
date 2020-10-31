@@ -32,6 +32,12 @@ Route::get('/attributeSet/{id}/products','AttributeSetController@getProducts');
 Route::get('/productGroup/{id}/products','ProductGroupController@getProducts');
 
 
+Route::group(['prefix' => 'product'], function () {
+    Route::post('/{sku}/addImage','ProductController@addImage');
+    Route::delete('/{sku}/deleteImage','ProductController@deleteImage');
+});
+
+
 Route::apiResource('category','CategoryController');
 Route::apiResource('attribute','AttributeController');
 Route::apiResource('attributeSet','AttributeSetController');

@@ -27,5 +27,9 @@ class Product extends Model
     public function attributeSet(){
         return $this->belongsTo('App\AttributeSet');
     }
+    /**關聯 ProdcutImage */
+    public function images(){
+        return $this->hasMany('App\ProductImage');
+    }
 
 }

@@ -47,7 +47,7 @@ Vue.component('CreateDetailModal',require('./components/CreateDetailModal').defa
 Vue.component('SingleSelector',require('./components/SingleSelector').default);
 Vue.component('MultipleSelector',require('./components/MultipleSelector').default);
 Vue.component('TextEditor',require('./components/TextEditor').default);
-
+Vue.component('ImageInput',require('./components/ImageInput').default);
 
 
 

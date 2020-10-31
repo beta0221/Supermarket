@@ -38,7 +38,28 @@ class ProductController extends Controller
         $this->updateColumns = ['group_id','attribute_set_id','name','description','price','stock','active'];
     }
     
+
     
+    /**上傳圖片 */
+    public function addImage(Request $request,$sku){
+        
+        if (!$request->has('file')) { return response('Error',400); }
+        $product = Product::where('sku',$sku)->firstOrFail();
+
+
+        $product->images()->create(['name'=>'aaa.jpg']);
+
+        return 'hello';
+    }
     
-    
+    /**刪除圖片 */
+    public function deleteImage(Request $request,$sku){
+
+        if (!$request->has('file')) { return response('Error',400); }
+
+
+
+    }
+
+
 }

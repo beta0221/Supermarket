@@ -40,6 +40,11 @@
                 :column="column.key"
                 v-on:updateDataColumn="updateDataColumn"/>
 
+            <ImageInput 
+                v-if="column.type == 'image_input'"
+                :label="column.label"
+                :slug="slug"/>
+
         </div>
         
         
