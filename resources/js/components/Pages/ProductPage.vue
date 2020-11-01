@@ -39,6 +39,9 @@ export default {
             ],
             columns:[
                 {key:'name',type:'text',label:'商品名稱'},
+                {key:'sku',type:'text',label:'商品代號',readonly:true},
+                {key:'stock',type:'text',label:'庫存'},
+                {key:'price',type:'text',label:'價格'},
                 {key:'image',type:'image_input',label:'商品圖片',url:'/api/product/images'},
                 {key:'group_id',type:'single_selector',label:'商品群組',relationUrl:'/api/productGroup/all',trackBy:'name'},
                 {key:'attribute_set_id',type:'single_selector',label:'標籤群組',relationUrl:'/api/attributeSet/all',trackBy:'name'},
