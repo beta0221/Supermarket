@@ -41,6 +41,36 @@ class ProductController extends Controller
     }
     
 
+    /**取得關聯的 Attribute */
+    public function getAttributes($id){
+        $product = Product::find($id);
+        $attributes = $product->attributes()->get();
+        return response($attributes);
+    }
+
+    /**更新關聯的 Attribute */
+    public function syncAttributes(Request $request,$id){
+        $product = Product::find($id);
+        $product->attributes()->sync($request->syncArray);
+        $attributes = $product->attributes()->get();
+        return response($attributes);
+    }
+
+    /**取得關聯的 Categories */
+    public function getCategories($id){
+        $product = Product::find($id);
+        $categories = $product->categories()->get();
+        return response($categories);
+    }
+
+    /**更新關聯的 Categories */
+    public function syncCategories(Request $request,$id){
+        $product = Product::find($id);
+        $product->categories()->sync($request->syncArray);
+        $categories = $product->categories()->get();
+        return response($categories);
+    }
+
     /**取得商品圖片 */
     public function getImages($sku){
         $product = Product::where('sku',$sku)->firstOrFail();

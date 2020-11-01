@@ -43,6 +43,8 @@ export default {
                 {key:'group_id',type:'single_selector',label:'商品群組',relationUrl:'/api/productGroup/all',trackBy:'name'},
                 {key:'attribute_set_id',type:'single_selector',label:'標籤群組',relationUrl:'/api/attributeSet/all',trackBy:'name'},
                 {key:'active',type:'single_selector',label:'上下架',relationUrl:'/api/activeStatus/all',trackBy:'name'},
+                {key:'_',type:'multiple_selector',label:'標籤',url:'/api/product',relation:'attributes',relationUrl:'/api/attribute/all',trackBy:'name'},
+                {key:'_',type:'multiple_selector',label:'分類',url:'/api/product',relation:'categories',relationUrl:'/api/category/all',trackBy:'name'},
                 {key:'description',type:'text_editor',label:'說明',uploadUrl:'/'}
             ]
         }

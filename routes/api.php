@@ -18,22 +18,28 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+//get all
 Route::get('/attribute/all','AttributeController@all');
 Route::get('/attributeSet/all','AttributeSetController@all');
 Route::get('/productGroup/all','ProductGroupController@all');
+Route::get('/category/all','CategoryController@all');
 Route::get('/activeStatus/all','EnumController@active_enum');
-
+//多對多
 Route::get('/attribute/{id}/attributeSets','AttributeController@getAttributeSets');
 Route::put('/attribute/{id}/attributeSets','AttributeController@syncAttributeSets');
 Route::get('/attributeSet/{id}/attributes','AttributeSetController@getAttributes');
 Route::put('/attributeSet/{id}/attributes','AttributeSetController@syncAttributes');
+Route::get('/product/{id}/attributes','ProductController@getAttributes');
+Route::put('/product/{id}/attributes','ProductController@syncAttributes');
+Route::get('/product/{id}/categories','ProductController@getCategories');
+Route::put('/product/{id}/categories','ProductController@syncCategories');
+//一對多
 Route::get('/attributeSet/{id}/products','AttributeSetController@getProducts');
 Route::get('/productGroup/{id}/products','ProductGroupController@getProducts');
 
 
+
 Route::group(['prefix' => 'product'], function () {
-    
     Route::get('/images/{sku}','ProductController@getImages');
     Route::post('/{sku}/addImage','ProductController@addImage');
     Route::delete('/{sku}/deleteImage','ProductController@deleteImage');

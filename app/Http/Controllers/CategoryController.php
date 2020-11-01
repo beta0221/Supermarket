@@ -26,7 +26,10 @@ class CategoryController extends Controller
 
     }
 
-
+    /**取得所有 Category */
+    public function all(){
+        return response(Category::all());
+    }
 
 
 

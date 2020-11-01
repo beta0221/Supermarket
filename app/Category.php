@@ -21,7 +21,10 @@ class Category extends Model
     public $timestamps = false;
 
 
-    
+    /**關聯 Product */
+    public function products(){
+        return $this->belongsToMany('App\Product','category_products','category_id','product_id');
+    }
 
     
 
