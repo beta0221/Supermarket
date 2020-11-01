@@ -32,4 +32,17 @@ class Product extends Model
         return $this->hasMany('App\ProductImage');
     }
 
+    public function imagesUrl(){
+        $images = $this->images()->get();
+        $static_host = config('app.static_host') . '/';
+        $imagesUrl = [];
+        foreach ($images as $image) {
+            $imagesUrl[] = [
+                'id'=>$image->id,
+                'url'=>$static_host . $image->name,
+            ];
+        }
+        return $imagesUrl;
+    }
+
 }

@@ -5,6 +5,7 @@ return [
 
 
     'file_driver' => env('FILE_DRIVER','local'),
+    'static_host' => env('STATIC_HOST','http://localhost:8000/storage'),
     /*
     |--------------------------------------------------------------------------
     | Application Name

@@ -4,12 +4,12 @@
         <div>
             <div v-for="(image,index) in images" 
                 v-bind:Key="index" 
-                class="image-cell mr-2">
+                class="image-cell mr-2 mb-2">
                 
-                <button class="delete-button">X</button>
+                <button class="delete-button" @click="deleteImage(image.id)">X</button>
 
                 <div class="image-outter">
-                    <img :src="image">
+                    <img :src="image.url">
                 </div>                
 
             </div>
@@ -27,26 +27,33 @@
 <script>
 export default {
     props:[
-        'label','slug'
+        'label','slug','url'
     ],
     data(){
         return{
             id:null,
-            images:[
-                '/storage/test.jpg',
-                '/storage/trans.png',
-            ]
+            images:[],
         }
     },
     mounted(){
         EventBus.$on("showDetailModal", item => {
             this.id = item[this.slug];
+            this.getImages();
         });
     },
     destroyed(){
         EventBus.$off("showDetailModal");
     },
     methods:{
+        getImages(){
+            axios.get(`${this.url}/${this.id}`)
+            .then(res => {
+                this.images = res.data;
+            })
+            .catch(error =>{
+                errorHelper.handle(error);
+            })
+        },
         onChangeFileUpload(){
             let file = this.$refs.file.files[0];
             let formData = new FormData();
@@ -57,6 +64,21 @@ export default {
                 }
             })
             .then(res => {
+                messageHelper.success('上傳成功');
+                this.getImages();
+            })
+            .catch(error => {
+                errorHelper.handle(error);
+            })
+        },
+        deleteImage(id){
+            axios.post(`/api/product/${this.id}/deleteImage`,{
+                '_method':'DELETE',
+                'id':id,
+            })
+            .then(res => {
+                messageHelper.success('刪除成功');
+                this.getImages();
             })
             .catch(error => {
                 errorHelper.handle(error);

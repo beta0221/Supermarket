@@ -43,7 +43,8 @@
             <ImageInput 
                 v-if="column.type == 'image_input'"
                 :label="column.label"
-                :slug="slug"/>
+                :slug="slug"
+                :url="column.url"/>
 
         </div>
         
