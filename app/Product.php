@@ -45,6 +45,19 @@ class Product extends Model
         return $this->belongsToMany('App\Category','category_products','product_id','category_id');
     }
 
+    /**
+     * 取得第一個有效的特價 SpecificPrice 
+     * @return SpecificPrice
+     * */
+    public function getFirstSpecificPrice(){
+        $date = date('Y-m-d');
+        return $this->specificPrices()
+        ->whereDate('start_date', '<=',$date)
+        ->whereDate('expiration_date', '>',$date)
+        ->orderBy('id','desc')
+        ->first();
+    }
+
     public function imagesUrl(){
         $images = $this->images()->get();
         $static_host = config('app.static_host') . '/';

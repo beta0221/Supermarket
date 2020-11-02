@@ -8,6 +8,7 @@ use App\Traits\CrudTrait;
 use App\Rules\SlugRule;
 use App\Helpers\StorageHelper;
 use App\Helpers\StorageType;
+use App\Http\Resources\ProductResouce;
 use \Validator;
 
 class ProductController extends Controller
@@ -134,6 +135,21 @@ class ProductController extends Controller
         $specificPrice = $product->specificPrices()->create($request->all());
 
         return response($specificPrice);
+    }
+
+    public function viewProductDetail($sku){
+
+        $product = Product::where('sku',$sku)->firstOrFail();
+        $imageList= $product->imagesUrl();
+        $specificPrice = $product->getFirstSpecificPrice();
+
+        $product = new ProductResouce($product);
+        $product->setSpecificPrice($specificPrice);
+
+        return response([
+            'product' => $product,
+            'imageList' => $imageList,
+        ]);
     }
 
 
