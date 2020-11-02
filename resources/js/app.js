@@ -65,12 +65,14 @@ import AttributePage from './components/Pages/AttributePage'
 import AttributeSetPage from './components/Pages/AttributeSetPage'
 import ProductGroupPage from './components/Pages/ProductGroupPage'
 import ProductPage from './components/Pages/ProductPage'
+import SpecificPricePage from './components/Pages/SpecificPricePage'
 const routes = [
     { path: '/admin/category',component: CategoryPage},
     { path: '/admin/attribute', component: AttributePage },
     { path: '/admin/attributeSet',component: AttributeSetPage},
     { path: '/admin/productGroup',component: ProductGroupPage},
     { path: '/admin/product',component: ProductPage},
+    { path: '/admin/specificPrice',component: SpecificPricePage},
 ]
 
 const router = new VueRouter({

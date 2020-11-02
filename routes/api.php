@@ -43,6 +43,7 @@ Route::get('/category/{id}/products','CategoryController@getProducts');
 
 Route::group(['prefix' => 'product'], function () {
     Route::get('/images/{sku}','ProductController@getImages');
+    Route::get('/specificPrices/{sku}','ProductController@getSpecificPrices');
     Route::post('/{sku}/addImage','ProductController@addImage');
     Route::delete('/{sku}/deleteImage','ProductController@deleteImage');
 });

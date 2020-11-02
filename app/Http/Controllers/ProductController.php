@@ -112,5 +112,11 @@ class ProductController extends Controller
 
     }
 
+    public function getSpecificPrices($sku){
+        $product = Product::where('sku',$sku)->firstOrFail();
+        $specificPrices = $product->specificPrices()->get();
+        return response($specificPrices);
+    }
+
 
 }
