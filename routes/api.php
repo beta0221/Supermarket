@@ -43,13 +43,12 @@ Route::get('/productGroup/{id}/products','ProductGroupController@getProducts');
 
 
 Route::group(['prefix' => 'product'], function () {
+    Route::get('/detail/{sku}','ProductController@viewProductDetail');
     Route::get('/images/{sku}','ProductController@getImages');
     Route::get('/specificPrices/{sku}','ProductController@getSpecificPrices');
     Route::post('/{sku}/addImage','ProductController@addImage');
     Route::delete('/{sku}/deleteImage','ProductController@deleteImage');
     Route::post('/{sku}/addSpecificPrice','ProductController@addSpecificPrice');
-
-    Route::get('/detail/{sku}','ProductController@viewProductDetail');
 });
 
 Route::group(['prefix' => 'category'], function () {
