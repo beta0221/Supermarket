@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,7 @@ Route::put('/product/{id}/categories','ProductController@syncCategories');
 //一對多
 Route::get('/attributeSet/{id}/products','AttributeSetController@getProducts');
 Route::get('/productGroup/{id}/products','ProductGroupController@getProducts');
+Route::get('/category/{id}/products','CategoryController@getProducts');
 
 
 

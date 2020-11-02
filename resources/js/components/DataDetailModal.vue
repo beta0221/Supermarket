@@ -100,6 +100,7 @@ export default {
             .then(res =>{
                 EventBus.$emit("reloadData");
                 messageHelper.success('更新成功');
+               
             })
             .catch(error =>{
                 errorHelper.handle(error);

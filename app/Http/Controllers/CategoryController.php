@@ -30,6 +30,12 @@ class CategoryController extends Controller
     public function all(){
         return response(Category::all());
     }
+    /**取得關聯的 Products */
+    public function getProducts($id){
+        $category = Category::find($id);
+        $products = $category->products()->get();
+        return response($products);
+    }
 
 
 
