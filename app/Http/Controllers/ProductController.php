@@ -8,6 +8,7 @@ use App\Traits\CrudTrait;
 use App\Rules\SlugRule;
 use App\Helpers\StorageHelper;
 use App\Helpers\StorageType;
+use \Validator;
 
 class ProductController extends Controller
 {
@@ -112,10 +113,27 @@ class ProductController extends Controller
 
     }
 
+    /**取得所有特價 SpecificPrice */
     public function getSpecificPrices($sku){
         $product = Product::where('sku',$sku)->firstOrFail();
         $specificPrices = $product->specificPrices()->get();
         return response($specificPrices);
+    }
+    
+    /**新增特價 SpecificPrice */
+    public function addSpecificPrice(Request $request,$sku){
+        $validator = Validator::make($request->all(), [
+            'discount_type'=>'required|in:amount,dicimal',
+            'reduction'=>'required',
+            'start_date'=>'required',
+            'expiration_date'=>'required',
+        ]);
+        if ($validator->fails()) { return response($validator->messages(),400); }
+
+        $product = Product::where('sku',$sku)->firstOrFail();
+        $specificPrice = $product->specificPrices()->create($request->all());
+
+        return response($specificPrice);
     }
 
 

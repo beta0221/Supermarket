@@ -37,7 +37,7 @@ Route::put('/product/{id}/categories','ProductController@syncCategories');
 //一對多
 Route::get('/attributeSet/{id}/products','AttributeSetController@getProducts');
 Route::get('/productGroup/{id}/products','ProductGroupController@getProducts');
-Route::get('/category/{id}/products','CategoryController@getProducts');
+
 
 
 
@@ -46,7 +46,14 @@ Route::group(['prefix' => 'product'], function () {
     Route::get('/specificPrices/{sku}','ProductController@getSpecificPrices');
     Route::post('/{sku}/addImage','ProductController@addImage');
     Route::delete('/{sku}/deleteImage','ProductController@deleteImage');
+    Route::post('/{sku}/addSpecificPrice','ProductController@addSpecificPrice');
 });
+
+Route::group(['prefix' => 'category'], function () {
+    Route::get('/{slug}/products','CategoryController@viewProductList');
+});
+
+
 
 
 Route::apiResource('category','CategoryController');

@@ -6,14 +6,60 @@
         :show.sync="show"
         footer>
 
+        <CContainer>
 
-        
-        
+            <CRow class="mb-2">
+                <CCol lg="1">#</CCol>
+                <CCol lg="2">類別</CCol>
+                <CCol lg="2">折價</CCol>
+                <CCol lg="3">開始時間</CCol>
+                <CCol lg="3">結束時間</CCol>
+                <CCol lg="1">-</CCol>
+            </CRow>
+
+            <div v-for="(data,index)  in dataList" v-bind:key="data.id">
+                <CRow class="mb-2">
+                    <CCol lg="1">{{index + 1}}</CCol>
+                    <CCol lg="2">{{data.discount_type}}</CCol>
+                    <CCol lg="2">{{data.reduction}}</CCol>
+                    <CCol lg="3">{{data.start_date}}</CCol>
+                    <CCol lg="3">{{data.expiration_date}}</CCol>
+                    <CCol lg="1">
+                        <CButton size="sm" color="danger">刪除</CButton>
+                    </CCol>
+                </CRow>
+            </div>
+
+            <hr>
+            <CRow>
+                <CCol lg="1"></CCol>
+                <CCol lg="2">
+                    <select class="form-control" v-model="postData.discount_type">
+                        <option value="">類別</option>
+                        <option value="amount">定額</option>
+                        <option value="dicimal">折數</option>
+                    </select>
+                </CCol>
+                <CCol lg="2">
+                    <CInput :placeholder="'折價'" v-model="postData.reduction"/>
+                </CCol>
+                <CCol lg="3">
+                    <input type="date" class="form-control" v-model="postData.start_date">
+                </CCol>
+                <CCol lg="3">
+                    <input type="date" class="form-control" v-model="postData.expiration_date">
+                </CCol>
+                <CCol lg="1">
+                    <CButton size="sm" color="success" @click="submitPostData">新增</CButton>
+                </CCol>
+            </CRow>
+
+
+        </CContainer>
         
         
         <template slot="footer">
             <CButton @click="show = false">取消</CButton>
-            <CButton color="info" @click="updateDetailData">更新</CButton>
         </template>
         
         
@@ -28,7 +74,8 @@ export default {
             requestUrl:'/api/product/specificPrices/',
             dataSlug:null,
             show:false,
-            detailData:{},
+            dataList:[],
+            postData:{},
         }
     },
     created(){
@@ -38,38 +85,33 @@ export default {
         EventBus.$on("showDetailModal", item => {
             let slug = item['sku'];
             this.dataSlug = slug;
-            this.getDetailData();
+            this.getDataList();
         });
     },
     destroyed(){
         EventBus.$off("showDetailModal");
     },
     methods:{
-        getDetailData(){
+        getDataList(){
             axios.get(this.requestUrl + this.dataSlug)
             .then(res => {
                 this.show = true;
-                this.detailData = res.data;
+                this.dataList = res.data;
             })
             .catch(error => {
                 errorHelper.handle(error);
             })
         },
-        updateDetailData(){
-            let postData = this.detailData;
-            postData['_method'] = 'PUT';
-            axios.post(this.requestUrl + this.dataSlug, postData)
-            .then(res =>{
-                EventBus.$emit("reloadData");
-                messageHelper.success('更新成功');
+        submitPostData(){
+            axios.post(`/api/product/${this.dataSlug}/addSpecificPrice`,this.postData)
+            .then(res => {
+                messageHelper.success('新增成功');
+                this.postData = {};
+                this.getDataList();
             })
-            .catch(error =>{
+            .catch(err => {
                 errorHelper.handle(error);
             })
-        },
-        updateDataColumn(obj){
-            // this.detailData[obj.column] = obj.value;
-            this.$set(this.detailData,obj.column,obj.value);
         }
     }
 }
