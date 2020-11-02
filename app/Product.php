@@ -32,6 +32,10 @@ class Product extends Model
     public function images(){
         return $this->hasMany('App\ProductImage');
     }
+    /**關聯 SpecificPrice */
+    public function specificPrices(){
+        return $this->hasMany('App\SpecificPrice');
+    }
     /**關聯 Attribute */
     public function attributes(){
         return $this->belongsToMany('App\Attribute','attribute_products','product_id','attribute_id');
