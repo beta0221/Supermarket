@@ -30,10 +30,7 @@ export default {
     },
     watch:{
         selectedOptions(){
-            console.log(this.loading);
-            console.log('watch');
             if(this.loading){ return; }
-            console.log('do');
             this.syncSelectedOptions();
         }
     },

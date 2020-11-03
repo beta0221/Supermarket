@@ -53,6 +53,9 @@ Route::group(['prefix' => 'product'], function () {
 
 Route::group(['prefix' => 'category'], function () {
     Route::get('/{slug}/products','CategoryController@viewProductList');
+    Route::get('/{slug}/subCategory','CategoryController@getSubCategory');
+    Route::post('/{slug}/subCategory','CategoryController@addSubCategory');
+    Route::delete('/removeFromParentCategory/{slug}','CategoryController@removeFromParentCategory');
 });
 
 

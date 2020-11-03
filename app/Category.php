@@ -13,7 +13,7 @@ class Category extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'slug'
+        'parent_id','name', 'slug'
     ];
 
     public static $key = 'slug';

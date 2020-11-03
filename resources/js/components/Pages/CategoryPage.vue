@@ -13,7 +13,7 @@
                 :fields="fields"
                 :requestUrl="'/api/category'"/>
             
-            <DataDetailModal
+            <CategoryDataDetailModal
                 :requestUrl="'/api/category/'"
                 :slug="'slug'"
                 :columns="columns"/>
@@ -24,9 +24,10 @@
 </template>
 
 <script>
+import CategoryDataDetailModal from '../Category/_DataDetailModal'
 export default {
     components:{
-        
+        CategoryDataDetailModal
     },
     data(){
         return{
