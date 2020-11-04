@@ -18,7 +18,10 @@
                 
             </CSidebarNavDropdown>
 
-                <CSidebarNavItem :name="'hello'"></CSidebarNavItem>
+            <CSidebarNavDropdown :name="'前台管理'">
+                <CSidebarNavItem name="列表管理"></CSidebarNavItem>
+            </CSidebarNavDropdown>
+                
 
             <CSidebarNavDropdown :name="'會員管理'">
                 <CSidebarNavItem :name="'會員管理'"></CSidebarNavItem>
