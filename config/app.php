@@ -179,6 +179,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+
+        //第三方函式庫
+        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class
+
+
     ],
 
     /*
@@ -230,6 +235,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        //第三方函式庫
+        'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
 
     ],
 
