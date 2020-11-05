@@ -52,6 +52,7 @@ class CategoryController extends Controller
     /**新增Category parent_id */
     public function addSubCategory(Request $request,$slug){
         $category = Category::where('slug',$slug)->firstOrFail();
+        if(!is_null($category->parent_id)){ return response('此類別為子類別，不可再指派子類別。',500);}
         Category::where('id',$request->id)->update(['parent_id'=>$category->id]);
         return response('success');
     }
@@ -65,6 +66,12 @@ class CategoryController extends Controller
     /**取得所有 Category */
     public function all(){
         return response(Category::all());
+    }
+    //**取得所有父層級 也沒有子層級的 Category */
+    public function allParents(){
+        $parentIdArray = Category::whereNotNull('parent_id')->groupBy('parent_id')->pluck('parent_id');
+        $allParents = Category::whereNull('parent_id')->whereNotIn('id',$parentIdArray)->get();
+        return response($allParents);
     }
     /**產品列表 view */
     public function viewProductList($slug){

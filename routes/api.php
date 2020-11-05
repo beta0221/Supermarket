@@ -24,6 +24,7 @@ Route::get('/attribute/all','AttributeController@all');
 Route::get('/attributeSet/all','AttributeSetController@all');
 Route::get('/productGroup/all','ProductGroupController@all');
 Route::get('/category/all','CategoryController@all');
+Route::get('/category/allParents','CategoryController@allParents');
 Route::get('/activeStatus/all','EnumController@active_enum');
 //多對多
 Route::get('/attribute/{id}/attributeSets','AttributeController@getAttributeSets');

@@ -67,7 +67,7 @@ export default {
         }
     },
     created(){
-        this.getAllCategory();
+        
     },
     watch:{
         show(value){
@@ -81,15 +81,19 @@ export default {
             let slug = item[this.slug];
             this.dataSlug = slug;
             this.getDetailData();
-            this.getSubCategory();
+            this.initial();
         });
     },
     destroyed(){
         EventBus.$off("showDetailModal");
     },
     methods:{
-        async getDetailData(){
-            await axios.get(this.requestUrl + this.dataSlug)
+        async initial(){
+            await this.getParentCategory();
+            this.getSubCategory();
+        },
+        getDetailData(){
+            axios.get(this.requestUrl + this.dataSlug)
             .then(res => {
                 this.show = true;
                 this.detailData = res.data;
@@ -98,8 +102,8 @@ export default {
                 errorHelper.handle(error);
             })
         },
-        getAllCategory(){
-            axios.get('/api/category/all')
+        async getParentCategory(){
+            await axios.get('/api/category/allParents')
             .then(res => {
                 this.categoryList = res.data;
             })
@@ -137,7 +141,7 @@ export default {
                 '_method':'DELETE'
             })
             .then(res => {
-                this.getSubCategory();
+                this.initial();
             })
             .catch(error => {
                 errorHelper.handle(error);
