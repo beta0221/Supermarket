@@ -42,8 +42,8 @@
                     <li><a href="./blog-details.html">Blog Details</a></li>
                 </ul>
             </li>
-            <li><a href="./blog.html">Blog</a></li>
-            <li><a href="./contact.html">Contact</a></li>
+            <li><a href="./blog.html">訂購相關</a></li>
+            <li><a href="./contact.html">連絡我們</a></li>
         </ul>
     </nav>
     <div id="mobile-menu-wrap"></div>

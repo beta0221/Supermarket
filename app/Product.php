@@ -19,6 +19,7 @@ class Product extends Model
     ];
 
     public static $key = 'sku';
+    public $firstImageUrl;
 
     /**關聯 ProductGroup */
     public function group(){
@@ -56,6 +57,19 @@ class Product extends Model
         ->whereDate('expiration_date', '>',$date)
         ->orderBy('id','desc')
         ->first();
+    }
+
+    public function setFirstImageUrl(){
+        $static_host = config('app.static_host') . '/';
+
+        if(!$image = $this->images()->first()){
+            $this->firstImageUrl = $static_host . 'default_product_image.png';    
+            return;
+        }
+
+        $imageUrl =  $static_host . $image->name;    
+        $this->firstImageUrl = $imageUrl;
+        
     }
 
     public function imagesUrl(){
