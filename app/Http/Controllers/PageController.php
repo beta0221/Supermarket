@@ -16,34 +16,40 @@ class PageController extends Controller
         return view('pages.index');
     }
 
-<<<<<<< HEAD
+
     
     /**購物頁面 */
-    public function shop($slug = null){
-        $categories = Category::getNestedCategoryList();
-        $products = Product::all();
-=======
-    /**購物頁面 */
-    public function shop(){
-        $categories = Category::all(); 
-        $products = Product::all()->where('active',1)->orderBy('id','desc')->get();
-        $query = DB::table('products')
-        ->select('*');
-        $total = $query->count();
+    public function shop(Request $request,$slug = null){
         
->>>>>>> 選擇上架產品
+        $products = new Product();
+        if($slug){
+            $category = Category::where('slug',$slug)->firstOrFail();
+            $products = $category->products();
+        }
+        
+
+        if(!$request->has('rows')){$request->merge(['rows'=>9]);}
+        $p = new Pagination($request);
+
+        $total = $products->where('active',1)->count();
+        $p->cacuTotalPage($total);
+
+
+        $products = $products->where('active',1)
+            ->skip($p->skip)
+            ->take($p->rows)
+            ->orderBy($p->orderBy,$p->order)
+            ->get();
+        
+
         foreach ($products as $product) {
             $product->setFirstImageUrl();
         }
 
         return view('pages.shop',[
-            'categories'=>$categories,
+            'categories'=>Category::getNestedCategoryList(),
             'products'=>$products,
-<<<<<<< HEAD
-=======
-            'total'=>$total,
-            // 'productImageDict'=>$productImageDict,
->>>>>>> 選擇上架產品
+            'pagination'=>$p,
         ]);
     }
 }

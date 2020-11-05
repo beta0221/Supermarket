@@ -230,7 +230,7 @@
                         </div>
                         <div class="col-lg-4 col-md-4">
                             <div class="filter__found">
-                            <h6><span>{{$total}}</span> Products found</h6>
+                            <h6><span>{{$pagination->total}}</span> Products found</h6>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-3">
@@ -261,10 +261,15 @@
                     @endforeach
                 </div>
                 <div class="product__pagination">
-                    <a href="#">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#"><i class="fa fa-long-arrow-right"></i></a>
+                    @for ($page = 1; $page <= $pagination->totalPage; $page++)
+                    
+                    <a href="{{Request::url()}}?page={{$page}}"
+                        class="{{($pagination->page == $page)?'active':''}}">
+                        {{$page}}</a>  
+                    @endfor
+                    @if ($pagination->hasNextPage)
+                    <a href="{{Request::url()}}?page={{$pagination->page +1}}"><i class="fa fa-long-arrow-right"></i></a>   
+                    @endif
                 </div>
             </div>
         </div>
