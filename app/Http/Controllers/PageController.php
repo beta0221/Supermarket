@@ -14,23 +14,18 @@ class PageController extends Controller
         return view('pages.index');
     }
 
-    /**購物頁面 */
-    public function shop(){
-        $categories = Category::all();
     
+    /**購物頁面 */
+    public function shop($slug = null){
+        $categories = Category::getNestedCategoryList();
         $products = Product::all();
-
-        
         foreach ($products as $product) {
             $product->setFirstImageUrl();
-            //$productImageDict[$product->id] = $product->firstImageUrl();
         }
-        
 
         return view('pages.shop',[
             'categories'=>$categories,
             'products'=>$products,
-            // 'productImageDict'=>$productImageDict,
         ]);
     }
 }
