@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use App\Product;
 use App\Helpers\Pagination;
+use App\Http\Resources\ProductCollection;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 class PageController extends Controller
@@ -33,21 +34,18 @@ class PageController extends Controller
         $total = $products->where('active',1)->count();
         $p->cacuTotalPage($total);
 
-
         $products = $products->where('active',1)
             ->skip($p->skip)
             ->take($p->rows)
             ->orderBy($p->orderBy,$p->order)
             ->get();
+
+
+        $productCollection = new ProductCollection($products);
         
-
-        foreach ($products as $product) {
-            $product->setFirstImageUrl();
-        }
-
         return view('pages.shop',[
             'categories'=>Category::getNestedCategoryList(),
-            'products'=>$products,
+            'products'=>$productCollection->withFirstImage()->toArray(),
             'pagination'=>$p,
         ]);
     }

@@ -19,7 +19,7 @@ class Product extends Model implements Buyable {
     ];
 
     public static $key = 'sku';
-    public $firstImageUrl;
+    
 
     /**關聯 ProductGroup */
     public function group(){
@@ -60,17 +60,14 @@ class Product extends Model implements Buyable {
         ->orderBy('id','desc')
         ->first();
     }
-
-    public function setFirstImageUrl(){
-        $this->firstImageUrl = $this->getFirstImageUrl();
+    public function getDefaultImageUrl(){
+        return config('app.static_host') . '/default_product_image.png';
     }
     public function getFirstImageUrl(){
-        $static_host = config('app.static_host') . '/';
         if(!$image = $this->images()->first()){
-            return $static_host . 'default_product_image.png';
+            return $this->getDefaultImageUrl();
         }
-        $imageUrl =  $static_host . $image->name;    
-        return $imageUrl;
+        return config('app.static_host') . '/' . $image->name;    
     }
 
     public function imagesUrl(){

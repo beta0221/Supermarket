@@ -197,7 +197,7 @@
                             @foreach ($products as $product)
                             <div class="col-lg-4">
                                 <div class="product__discount__item">
-                                    <div class="product__discount__item__pic set-bg" data-setbg="{{$product->firstImageUrl}}">
+                                    <div class="product__discount__item__pic set-bg" data-setbg="{{$product->imageUrl}}">
                                         <div class="product__discount__percent">-20%</div>
                                         <ul class="product__item__pic__hover">
                                             <li><a href="#"><i class="fa fa-heart"></i></a></li>
@@ -245,7 +245,7 @@
                     @foreach ($products as $product)
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="{{$product->firstImageUrl}}">
+                            <div class="product__item__pic set-bg" data-setbg="{{$product->imageUrl}}">
                                 <ul class="product__item__pic__hover">
                                     <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                     <li><a href="#"><i class="fa fa-retweet"></i></a></li>

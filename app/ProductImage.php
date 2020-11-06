@@ -11,4 +11,10 @@ class ProductImage extends Model
     ];
 
     public $timestamps = false;
+
+
+
+    public function getStaticUrl(){
+        return config('app.static_host') . '/' . $this->name;
+    }
 }
