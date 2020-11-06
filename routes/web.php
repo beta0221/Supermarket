@@ -16,10 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'PageController@index');
 Route::get('/shop', 'PageController@shop');
 Route::get('/shop/{slug}', 'PageController@shop');
-Route::get('/cart','PageController@cart');
+Route::get('/cart','PageController@cart')->name('cart');
 
 Route::group(['prefix' => 'cart'], function () {
     Route::post('/add/{sku}','CartController@add');
+    Route::put('/update','CartController@update');
+    Route::delete('/delete/{rowId}','CartController@delete');
 });
 
 Auth::routes();

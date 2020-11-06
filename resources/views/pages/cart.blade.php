@@ -29,8 +29,11 @@
                             </tr>
                         </thead>
                         <tbody>
-
+                            <form id="cart-content-form" action="/cart/update" method="POST">
+                            <input name="_method" type="hidden" value="PUT">
+                            @csrf
                             @foreach (Cart::content() as $row)
+                            <input name="rowIdArray[]" type="hidden" value="{{$row->rowId}}">
                                 <tr>
                                     <td class="shoping__cart__item">
                                         <img style="width:100px;height:100" src="{{$row->model->getFirstImageUrl()}}">
@@ -42,7 +45,7 @@
                                     <td class="shoping__cart__quantity">
                                         <div class="quantity">
                                             <div class="pro-qty">
-                                                <input type="text" value="{{$row->qty}}">
+                                                <input name="qty_{{$row->rowId}}" type="text" value="{{$row->qty}}">
                                             </div>
                                         </div>
                                     </td>
@@ -50,11 +53,11 @@
                                         ${{$row->subtotal}}
                                     </td>
                                     <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
+                                        <span onclick="deleteFromCart('{{$row->rowId}}')" class="icon_close"></span>
                                     </td>
                                 </tr>
                             @endforeach
-                            
+                            </form>
                         </tbody>
                     </table>
                 </div>
@@ -64,7 +67,7 @@
             <div class="col-lg-12">
                 <div class="shoping__cart__btns">
                     <a href="#" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
-                    <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
+                    <a href="javascript:;" onclick="updateCartQty()" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
                         Upadate Cart</a>
                 </div>
             </div>
@@ -83,8 +86,9 @@
                 <div class="shoping__checkout">
                     <h5>Cart Total</h5>
                     <ul>
-                        <li>Subtotal <span>$454.98</span></li>
-                        <li>Total <span>$454.98</span></li>
+                        <li>Subtotal <span>${{Cart::subtotal()}}</span></li>
+                        <li>Tax <span>${{Cart::tax()}}</span></li>
+                        <li>Total <span>${{Cart::total()}}</span></li>
                     </ul>
                     <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
                 </div>
@@ -97,5 +101,9 @@
 @endsection
 
 @section('js')
-
+<script>
+    function updateCartQty(){
+        $('#cart-content-form').submit();
+    }
+</script>
 @endsection

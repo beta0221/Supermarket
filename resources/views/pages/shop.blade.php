@@ -281,24 +281,6 @@
 @section('js')
 <script>
 
-function addToCart(sku){
-    let csrf_token = document.head.querySelector('meta[name="csrf-token"]').content;
-    $.ajaxSetup({
-        headers: { "X-CSRF-TOKEN": csrf_token }
-    });
 
-    $.ajax({
-        type: "POST",
-        url: "/cart/add/" + sku,
-        data: null,
-        dataType: "json",
-        success: function (response) {
-            console.log(response);
-        },
-        error: function(error){
-            console.log(error);
-        }
-    });
-}
 </script>
 @endsection
