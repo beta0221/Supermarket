@@ -2,10 +2,10 @@
 
 namespace App;
 
+use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
-{
+class Product extends Model implements Buyable {    
     protected $fillable = [
         'group_id',
         'attribute_set_id',
@@ -23,6 +23,8 @@ class Product extends Model
 
     /**關聯 ProductGroup */
     public function group(){
+
+        
         return $this->belongsTo('App\ProductGroup');
     }
     /**關聯 AttributeSet */
@@ -60,16 +62,15 @@ class Product extends Model
     }
 
     public function setFirstImageUrl(){
+        $this->firstImageUrl = $this->getFirstImageUrl();
+    }
+    public function getFirstImageUrl(){
         $static_host = config('app.static_host') . '/';
-
         if(!$image = $this->images()->first()){
-            $this->firstImageUrl = $static_host . 'default_product_image.png';    
-            return;
+            return $static_host . 'default_product_image.png';
         }
-
         $imageUrl =  $static_host . $image->name;    
-        $this->firstImageUrl = $imageUrl;
-        
+        return $imageUrl;
     }
 
     public function imagesUrl(){
@@ -84,5 +85,19 @@ class Product extends Model
         }
         return $imagesUrl;
     }
+
+    public function getBuyableIdentifier($options = null){
+        return $this->id;
+    }
+    public function getBuyableDescription($options = null){
+        return '哈哈哈';
+    }
+    public function getBuyablePrice($options = null){
+        return $this->price;
+    }
+    public function getBuyableWeight($options = null){
+        return 0;
+    }
+
 
 }

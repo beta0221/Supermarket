@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
 use App\Product;
-use App\ProductImage;
 use App\Helpers\Pagination;
-use Illuminate\Support\Facades\DB;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class PageController extends Controller
 {
@@ -52,4 +51,10 @@ class PageController extends Controller
             'pagination'=>$p,
         ]);
     }
+
+    /**購物車頁面 */
+    public function cart(){
+        return view('pages.cart');
+    }
+
 }

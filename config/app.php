@@ -181,7 +181,6 @@ return [
 
 
         //第三方函式庫
-        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class
 
 
     ],
@@ -237,7 +236,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         //第三方函式庫
-        'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
 
     ],
 

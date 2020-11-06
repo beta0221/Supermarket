@@ -202,7 +202,7 @@
                                         <ul class="product__item__pic__hover">
                                             <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                             <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                            <li><a href="javascript:;" onclick="addToCart('{{$product->sku}}')"><i class="fa fa-shopping-cart"></i></a></li>
                                         </ul>
                                     </div>
                                     <div class="product__discount__item__text">
@@ -249,7 +249,7 @@
                                 <ul class="product__item__pic__hover">
                                     <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                     <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                    <li><a href="javascript:;" onclick="addToCart('{{$product->sku}}')"><i class="fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
                             <div class="product__item__text">
@@ -279,5 +279,26 @@
 @endsection
 
 @section('js')
+<script>
 
+function addToCart(sku){
+    let csrf_token = document.head.querySelector('meta[name="csrf-token"]').content;
+    $.ajaxSetup({
+        headers: { "X-CSRF-TOKEN": csrf_token }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "/cart/add/" + sku,
+        data: null,
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+        },
+        error: function(error){
+            console.log(error);
+        }
+    });
+}
+</script>
 @endsection

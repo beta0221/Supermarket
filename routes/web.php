@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'PageController@index');
 Route::get('/shop', 'PageController@shop');
 Route::get('/shop/{slug}', 'PageController@shop');
+Route::get('/cart','PageController@cart');
+
+Route::group(['prefix' => 'cart'], function () {
+    Route::post('/add/{sku}','CartController@add');
+});
 
 Auth::routes();
 
