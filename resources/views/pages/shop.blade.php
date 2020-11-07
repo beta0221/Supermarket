@@ -194,11 +194,11 @@
                     </div>
                     <div class="row">
                         <div class="product__discount__slider owl-carousel">
-                            @foreach ($products as $product)
+                            @foreach ($onSaleProducts as $product)
                             <div class="col-lg-4">
                                 <div class="product__discount__item">
                                     <div class="product__discount__item__pic set-bg" data-setbg="{{$product->imageUrl}}">
-                                        <div class="product__discount__percent">-20%</div>
+                                        <div class="product__discount__percent">{{$product->discount}}</div>
                                         <ul class="product__item__pic__hover">
                                             <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                             <li><a href="#"><i class="fa fa-retweet"></i></a></li>
@@ -208,7 +208,7 @@
                                     <div class="product__discount__item__text">
                                         <span>Dried Fruit</span>
                                     <h5><a href="#">{{$product->name}}</a></h5>
-                                        <div class="product__item__price">${{$product->price}}<span>$36.00</span></div>
+                                        <div class="product__item__price">${{$product->price}}<span>${{$product->priceOnSale}}</span></div>
                                     </div>
                                 </div>
                             </div>

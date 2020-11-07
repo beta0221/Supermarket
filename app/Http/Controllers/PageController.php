@@ -6,6 +6,7 @@ use App\Category;
 use App\Product;
 use App\Helpers\Pagination;
 use App\Http\Resources\ProductCollection;
+use App\SpecificPrice;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 class PageController extends Controller
@@ -40,12 +41,15 @@ class PageController extends Controller
             ->orderBy($p->orderBy,$p->order)
             ->get();
 
-
         $productCollection = new ProductCollection($products);
         
+        $onSaleProducts = Product::getOnSaleProducts();
+        $onSaleProductCollection = new ProductCollection($onSaleProducts);
+
         return view('pages.shop',[
             'categories'=>Category::getNestedCategoryList(),
             'products'=>$productCollection->withFirstImage()->toArray(),
+            'onSaleProducts'=>$onSaleProductCollection->withFirstImage()->withFirstSpecificPrice()->toArray(),
             'pagination'=>$p,
         ]);
     }

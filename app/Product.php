@@ -55,10 +55,10 @@ class Product extends Model implements Buyable {
     public function getFirstSpecificPrice(){
         $date = date('Y-m-d');
         return $this->specificPrices()
-        ->whereDate('start_date', '<=',$date)
-        ->whereDate('expiration_date', '>',$date)
-        ->orderBy('id','desc')
-        ->first();
+            ->whereDate('start_date', '<=',$date)
+            ->whereDate('expiration_date', '>',$date)
+            ->orderBy('id','desc')
+            ->first();
     }
     public function getDefaultImageUrl(){
         return config('app.static_host') . '/default_product_image.png';
@@ -69,7 +69,6 @@ class Product extends Model implements Buyable {
         }
         return config('app.static_host') . '/' . $image->name;    
     }
-
     public function imagesUrl(){
         $images = $this->images()->get();
         $static_host = config('app.static_host') . '/';
@@ -82,7 +81,12 @@ class Product extends Model implements Buyable {
         }
         return $imagesUrl;
     }
+    public static function getOnSaleProducts(){
+        $productIdArray = SpecificPrice::pluck('product_id');
+        return Product::whereIn('id',$productIdArray)->get();
+    }
 
+    //Buyable Interface
     public function getBuyableIdentifier($options = null){
         return $this->id;
     }
