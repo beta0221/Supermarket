@@ -38,6 +38,7 @@
     <script src="/js/owl.carousel.min.js"></script>
     <script src="/js/main.js"></script>
     <script src="/js/common.js"></script>
+    <script src="/js/littleCart.js"></script>
     @yield('js')
 </body>
 </html>
