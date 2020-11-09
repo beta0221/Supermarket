@@ -56,7 +56,7 @@ class ProductCollection extends ResourceCollection
                 $resource->{$column} = $model->{$column};
             }
 
-            if($this->firstImageDict){
+            if(!is_null($this->firstImageDict)){
                 $imageUrl = $model->getDefaultImageUrl();
                 if(isset($this->firstImageDict[$model->id])){
                     $imageUrl = $this->firstImageDict[$model->id];
@@ -64,7 +64,7 @@ class ProductCollection extends ResourceCollection
                 $resource->imageUrl = $imageUrl;
             }
 
-            if($this->firstSpecificPriceDict){
+            if(!is_null($this->firstSpecificPriceDict)){
                 $priceOnSale = null;
                 $discount = null;
                 if(isset($this->firstSpecificPriceDict[$model->id])){

@@ -46,6 +46,7 @@ class PageController extends Controller
         $onSaleProducts = Product::getOnSaleProducts();
         $onSaleProductCollection = new ProductCollection($onSaleProducts);
 
+        // return response($productCollection->withFirstImage());
         return view('pages.shop',[
             'categories'=>Category::getNestedCategoryList(),
             'products'=>$productCollection->withFirstImage()->toArray(),
