@@ -127,33 +127,13 @@
                 <div class="header__cart">
                     <ul>
                         <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>                      
-                    <li><a href="#" id="cart"><i class="fa fa-shopping-cart"></i><span>{{Cart::content()->count()}}</span></a></li>
-                <div class="cart-container">
-                    <div class="shopping-cart">
-                        <div class="shopping-cart-header">
-                          <i class="fa fa-shopping-cart cart-icon"></i>
-                          <div class="shopping-cart-total">
-                            <span class="lighter-text">Total:</span>
-                            <span class="main-color-text">{{Cart::total()}}</span>
-                          </div>
-                        </div> <!--end shopping-cart-header -->
-                        
-                            <ul class="shopping-cart-items">
-                                @foreach (Cart::content() as $row)
-                                <ul class="shopping-cart-items">
-                                   <li class="clearfix">
-                                     <img src="{{$row->model->getFirstImageUrl()}}" alt="item1" />
-                                     <span class="item-name">{{$row->name}}</span>
-                                     <span class="item-price">${{$row->price}}</span>
-                                     <span class="item-quantity">Quantity: {{$row->qty}}</span>
-                                   </li>
-                                 </ul>
-                               @endforeach
-                            </ul>
-                        
-                            <a href="#" class="btn btn-primary">Checkout</a>
-                          </div>
-                </div>
+                        <li>
+                            <a class="little-cart-btn" href="javascript:;">
+                                <i class="fa fa-shopping-cart little-cart-btn"></i>
+                                <span class="little-cart-btn">{{Cart::content()->count()}}</span>
+                            </a>
+                        </li>
+                        @include('components.littleCart')
                     
                     </ul>
                 </div>

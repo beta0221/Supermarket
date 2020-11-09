@@ -9,6 +9,10 @@ use App\Product;
 
 class CartController extends Controller
 {
+    /**取得購物車內容 */
+    public function api_getCartItems(){
+        
+    }
     /**加入購物車 */
     public function add($sku){
         $product = Product::where('sku',$sku)->firstOrFail();

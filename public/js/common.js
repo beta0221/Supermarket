@@ -5,6 +5,16 @@ jQuery(function(){
             "X-CSRF-TOKEN": csrf_token,
         }
     });
+    
+    /** 小購物車顯示 */
+    $('body').on('click',function(event){
+        if($(event.target).hasClass('little-cart-btn')){
+            $(".shopping-cart").toggle();
+            return;
+        }
+        $(".shopping-cart").hide();
+    });
+
 });
 
 function addToCart(sku){

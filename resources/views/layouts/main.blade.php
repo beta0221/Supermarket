@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/css/style.css" type="text/css">
-
+    <link rel="stylesheet" href="/css/common.css" type="text/css">
         
     @yield('css')
 </head>
@@ -38,7 +38,6 @@
     <script src="/js/owl.carousel.min.js"></script>
     <script src="/js/main.js"></script>
     <script src="/js/common.js"></script>
-    <script src="/js/littleCart.js"></script>
     @yield('js')
 </body>
 </html>
