@@ -19,8 +19,9 @@
     <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/css/style.css" type="text/css">
-    <link rel="stylesheet" href="/css/common.css" type="text/css">
-        
+    
+    {{-- 自己的css --}}
+    <link rel="stylesheet" href="/css/common.css" type="text/css">    
     @yield('css')
 </head>
 <body>
@@ -37,6 +38,9 @@
     <script src="/js/mixitup.min.js"></script>
     <script src="/js/owl.carousel.min.js"></script>
     <script src="/js/main.js"></script>
+    
+    {{-- 自己的js --}}
+    <script src="/js/components.js"></script>
     <script src="/js/common.js"></script>
     @yield('js')
 </body>

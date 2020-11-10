@@ -58,16 +58,19 @@
     height: 100px;
     margin-right: 12px;
 }
+.shopping-cart .item-info{
+    padding-left: 100px;
+}
+.shopping-cart .item-info span{
+    display: block;
+}
 
 .shopping-cart .shopping-cart-items .item-name {
-    margin-top: 1.3rem;
     font-size: 1rem;
-    position: relative;
 }
 
 .shopping-cart .shopping-cart-items .item-price {
     color: #6394F8;
-    margin-left: 0.5rem;
 }
 
 .shopping-cart .shopping-cart-items .item-quantity {

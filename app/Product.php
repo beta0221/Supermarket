@@ -60,6 +60,21 @@ class Product extends Model implements Buyable {
             ->orderBy('id','desc')
             ->first();
     }
+    public function getPriceOnSale(){
+        if(!$specificPrice = $this->getFirstSpecificPrice()){ return null; }
+        $priceOnSale = null;
+        switch ($specificPrice->discount_type) {
+            case SpecificPrice::TYPE_AMOUNT:
+                    $priceOnSale = $this->price - $specificPrice->reduction;
+                break;
+            case SpecificPrice::TYPE_DICIMAL:
+                    $priceOnSale = $this->price * $specificPrice->reduction;
+                break;
+            default:
+                break;
+        }
+        return $priceOnSale;
+    }
     public function getDefaultImageUrl(){
         return config('app.static_host') . '/default_product_image.png';
     }

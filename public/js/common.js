@@ -15,7 +15,28 @@ jQuery(function(){
         $(".shopping-cart").hide();
     });
 
+    /**載入購物車 */
+    getCartItems();
 });
+
+function getCartItems(){
+    $('.shopping-cart-items').empty();
+    $.ajax({
+        type: "GET",
+        url: "/cart/getItems",
+        dataType: "json",
+        success: function (res) {
+            $('#shopping-cart-total').html('$' + res.total);
+            Object.keys(res.items).forEach(key => {
+                let item = res.items[key];
+                $('.shopping-cart-items').append(cartItem(item));
+            });
+        },
+        error:function(error){
+            console.log(error);
+        }
+    });
+}
 
 function addToCart(sku){
     $.ajax({
@@ -23,7 +44,7 @@ function addToCart(sku){
         url: "/cart/add/" + sku,
         data: null,
         success: function (response) {
-            console.log(response);
+            getCartItems();
         },
         error: function(error){
             console.log(error);

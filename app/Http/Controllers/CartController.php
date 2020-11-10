@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
-use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Product;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Http\Resources\CartCollection;
 
 class CartController extends Controller
 {
     /**取得購物車內容 */
-    public function api_getCartItems(){
-        
+    public function getItems(){
+        $carts = Cart::content();
+        $cartItems = new CartCollection($carts);
+        return response([
+            'items'=>$cartItems,
+            'total'=>Cart::total(),
+        ]);
     }
     /**加入購物車 */
     public function add($sku){

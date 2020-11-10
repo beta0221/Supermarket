@@ -19,6 +19,7 @@ Route::get('/shop/{slug}', 'PageController@shop');
 Route::get('/cart','PageController@cart')->name('cart');
 
 Route::group(['prefix' => 'cart'], function () {
+    Route::get('/getItems','CartController@getItems');
     Route::post('/add/{sku}','CartController@add');
     Route::put('/update','CartController@update');
     Route::delete('/delete/{rowId}','CartController@delete');
