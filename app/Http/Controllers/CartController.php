@@ -16,7 +16,8 @@ class CartController extends Controller
         return response([
             'items'=>$cartItems,
             'count'=>$carts->count(),
-            'total'=>Cart::total(),
+            'total'=>Cart::subtotal(),
+
         ]);
     }
     /**加入購物車 */

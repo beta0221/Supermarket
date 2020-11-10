@@ -24,7 +24,7 @@
     margin-right: 12rem;
     float: left;
     background: white;
-    width: 320px;
+    width: 20rem;
     position: absolute;
     z-index: 99;
     border-radius: 3px;
@@ -43,6 +43,7 @@
 
 .shopping-cart .shopping-cart-items {
     float: left;
+    width: 100%;
     padding-top: 1rem;
 }
 
@@ -60,6 +61,7 @@
 }
 .shopping-cart .item-info{
     padding-left: 100px;
+    margin-top: 1rem;
 }
 .shopping-cart .item-info span{
     display: block;
