@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->integer('user_id');
             $table->integer('status_id')->default(1);
             $table->integer('carrier_id');
+            $table->integer('pay_id');
             $table->integer('shipping_address_id');
             $table->integer('billing_address_id');
             $table->integer('billing_company_id');

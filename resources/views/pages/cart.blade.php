@@ -7,8 +7,6 @@
 @endsection
 
 @section('content')
-{{-- <?php //var_dump(Cart::content())?> --}}
-{{-- {{json_encode(Cart::content())}} --}}
 
 @include('components.breadcrumb')
 

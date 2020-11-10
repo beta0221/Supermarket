@@ -7,19 +7,62 @@
 @endsection
 
 @section('content')
+
+@include('components.breadcrumb')
+
 <!-- Checkout Section Begin -->
 <section class="checkout spad">
     <div class="container">
+
         <div class="row">
             <div class="col-lg-12">
-                <h6><span class="icon_tag_alt"></span> Have a coupon? <a href="#">Click here</a> to enter your code
-                </h6>
+                
+                <div class="shoping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="shoping__product">Products</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            @foreach (Cart::content() as $row)
+                            <tr>
+                                <td class="shoping__cart__item">
+                                    <img style="width:100px;height:100" src="{{$row->model->getFirstImageUrl()}}">
+                                    <h5>{{$row->name}}</h5>
+                                </td>
+                                <td class="shoping__cart__price">
+                                    ${{$row->price}}
+                                </td>
+                                <td class="shoping__cart__quantity">
+                                    {{$row->qty}}
+                                </td>
+                                <td class="shoping__cart__total">
+                                    ${{$row->subtotal}}
+                                </td>
+                            </tr>
+                            @endforeach
+                            
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </div>
+
+
         <div class="checkout__form">
             <h4>Billing Details</h4>
+
+
             <form action="#">
                 <div class="row">
+
+                    
                     <div class="col-lg-8 col-md-6">
                         <div class="row">
                             <div class="col-lg-6">
@@ -96,17 +139,18 @@
                                 placeholder="Notes about your order, e.g. special notes for delivery.">
                         </div>
                     </div>
+
+
                     <div class="col-lg-4 col-md-6">
                         <div class="checkout__order">
                             <h4>Your Order</h4>
-                            <div class="checkout__order__products">Products <span>Total</span></div>
-                            <ul>
-                                <li>Vegetable’s Package <span>$75.99</span></li>
-                                <li>Fresh Vegetable <span>$151.99</span></li>
-                                <li>Organic Bananas <span>$53.99</span></li>
-                            </ul>
-                            <div class="checkout__order__subtotal">Subtotal <span>$750.99</span></div>
-                            <div class="checkout__order__total">Total <span>$750.99</span></div>
+                            <div class="checkout__order__products">Subtotal <span>${{Cart::subtotal()}}</span></div>
+                            <div class="checkout__order__products">運費 <span>${{Cart::tax()}}</span></div>
+                            
+                            <div class="checkout__order__subtotal">Total <span>${{Cart::total()}}</span></div>
+
+
+
                             <div class="checkout__input__checkbox">
                                 <label for="acc-or">
                                     Create an account?
@@ -133,8 +177,12 @@
                             <button type="submit" class="site-btn">PLACE ORDER</button>
                         </div>
                     </div>
+
+
                 </div>
             </form>
+
+
         </div>
     </div>
 </section>
