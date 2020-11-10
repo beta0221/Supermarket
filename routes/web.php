@@ -14,9 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'PageController@index');
-Route::get('/shop', 'PageController@shop');
+Route::get('/shop', 'PageController@shop')->name('shop');
 Route::get('/shop/{slug}', 'PageController@shop');
 Route::get('/cart','PageController@cart')->name('cart');
+Route::get('/checkout','PageController@checkout')->name('checkout');
 
 Route::group(['prefix' => 'cart'], function () {
     Route::get('/getItems','CartController@getItems');

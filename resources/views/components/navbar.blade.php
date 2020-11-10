@@ -127,12 +127,7 @@
                 <div class="header__cart">
                     <ul>
                         <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>                      
-                        <li>
-                            <a class="little-cart-btn" href="javascript:;">
-                                <i class="fa fa-shopping-cart little-cart-btn"></i>
-                                <span class="little-cart-btn">{{Cart::content()->count()}}</span>
-                            </a>
-                        </li>
+                        
                         @include('components.littleCart')
                     
                     </ul>

@@ -15,6 +15,7 @@ class CartController extends Controller
         $cartItems = new CartCollection($carts);
         return response([
             'items'=>$cartItems,
+            'count'=>$carts->count(),
             'total'=>Cart::total(),
         ]);
     }

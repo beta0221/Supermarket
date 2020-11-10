@@ -60,4 +60,9 @@ class PageController extends Controller
         return view('pages.cart');
     }
 
+    /**結帳頁面 */
+    public function checkout(){
+        return view('pages.checkout');
+    }
+
 }

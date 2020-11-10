@@ -1,3 +1,10 @@
+<li>
+    <a class="little-cart-btn" href="javascript:;">
+        <i class="fa fa-shopping-cart little-cart-btn"></i>
+        <span id="little-cart-count" class="little-cart-btn">0</span>
+    </a>
+</li>
+
 <div class="cart-container">
 
     <div class="shopping-cart" style="display: none;">

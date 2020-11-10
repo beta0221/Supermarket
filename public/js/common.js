@@ -27,6 +27,7 @@ function getCartItems(){
         dataType: "json",
         success: function (res) {
             $('#shopping-cart-total').html('$' + res.total);
+            $('#little-cart-count').html(res.count);
             Object.keys(res.items).forEach(key => {
                 let item = res.items[key];
                 $('.shopping-cart-items').append(cartItem(item));
