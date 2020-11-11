@@ -207,8 +207,8 @@
                                     </div>
                                     <div class="product__discount__item__text">
                                         <span>Dried Fruit</span>
-                                    <h5><a href="#">{{$product->name}}</a></h5>
-                                        <div class="product__item__price">${{$product->price}}<span>${{$product->priceOnSale}}</span></div>
+                                    <h5><a href="/product/{{$product->sku}}">{{$product->name}}</a></h5>
+                                        <div class="product__item__price">${{$product->priceOnSale}}<span>${{$product->price}}</span></div>
                                     </div>
                                 </div>
                             </div>

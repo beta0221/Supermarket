@@ -8,6 +8,7 @@ use App\Traits\CrudTrait;
 use App\Rules\SlugRule;
 use App\Helpers\StorageHelper;
 use App\Helpers\StorageType;
+use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResouce;
 use \Validator;
 
@@ -141,14 +142,20 @@ class ProductController extends Controller
 
         $product = Product::where('sku',$sku)->firstOrFail();
         $imageList= $product->imagesUrl();
-        
-
         $product = new ProductResouce($product);
+
+
+        $relateToProducts = $product->categories()
+            ->firstOrFail()
+            ->products()
+            ->get();
+        $productCollection = new ProductCollection($relateToProducts);
         
 
         return view('pages.product',[
             'product' => $product->toArray(),
             'imageList' => $imageList,
+            'relateToProducts' => $productCollection->withFirstImage()->toArray(),
         ]);
     }
 
