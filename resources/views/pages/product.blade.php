@@ -165,6 +165,9 @@
             </div>
             <div class="row">
                 @foreach ($relateToProducts as $item)
+                    @if ($item->sku==$sku)
+                    @continue
+                    @endif
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="product__item">
                             <div class="product__item__pic set-bg" data-setbg="{{$item->imageUrl}}">
@@ -175,7 +178,7 @@
                                 </ul>
                             </div>
                             <div class="product__item__text">
-                                <h6><a href="#">{{$item->name}}</a></h6>
+                                <h6><a href="/product/{{$item->sku}}">{{$item->name}}</a></h6>
                                  <h5>{{$item->price}}</h5>
                             </div>
                         </div>

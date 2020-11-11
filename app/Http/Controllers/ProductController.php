@@ -143,7 +143,7 @@ class ProductController extends Controller
         $product = Product::where('sku',$sku)->firstOrFail();
         $imageList= $product->imagesUrl();
         $product = new ProductResouce($product);
-
+        
 
         $relateToProducts = $product->categories()
             ->firstOrFail()
@@ -156,6 +156,7 @@ class ProductController extends Controller
             'product' => $product->toArray(),
             'imageList' => $imageList,
             'relateToProducts' => $productCollection->withFirstImage()->toArray(),
+            'sku'=>$sku
         ]);
     }
 
