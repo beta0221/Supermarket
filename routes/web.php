@@ -26,6 +26,11 @@ Route::group(['prefix' => 'cart'], function () {
     Route::delete('/delete/{rowId}','CartController@delete');
 });
 
+Route::group(['prefix' => 'product'], function () {
+    Route::get('/{sku}','ProductController@viewProductDetail');
+});
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

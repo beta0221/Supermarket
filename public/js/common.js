@@ -39,11 +39,13 @@ function getCartItems(){
     });
 }
 
-function addToCart(sku){
+function addToCart(sku,qty = 1){
     $.ajax({
         type: "POST",
         url: "/cart/add/" + sku,
-        data: null,
+        data: {
+            qty:qty,
+        },
         success: function (response) {
             getCartItems();
         },

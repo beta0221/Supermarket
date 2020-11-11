@@ -4,47 +4,30 @@ namespace App\Http\Resources;
 
 use App\SpecificPrice;
 use Illuminate\Http\Resources\Json\JsonResource;
+use stdClass;
 
 class ProductResouce extends JsonResource
 {
-    private $specficPrice;
 
-    /**
-     * @param SpecificPrie $specficPrice
-     * @return Void
-     */
-    public function setSpecificPrice(SpecificPrice $specficPrice){
-        $this->specficPrice = $specficPrice;
-    }
+    private $initColumn = ['name','sku','description','price','stock'];
+
     /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function toArray($request)
+    public function toArray($request = null)
     {
-        $priceOnSale = null;
-        if($this->specficPrice){
-            switch ($this->specficPrice->discount_type) {
-                case SpecificPrice::TYPE_AMOUNT:
-                        $priceOnSale = $this->price - $this->specficPrice->reduction;
-                    break;
-                case SpecificPrice::TYPE_DICIMAL:
-                        $priceOnSale = $this->price * $this->specficPrice->reduction;
-                    break;
-                default:
-                    break;
-            }
+        $productDetail = new stdClass();
+        
+        foreach ($this->initColumn as $column) {
+            $productDetail->{$column} = $this->{$column};
         }
 
 
-        return [
-            'name'=>$this->name,
-            'description'=>$this->description,
-            'stock'=>$this->stock,
-            'price'=>(int)$this->price,
-            'priceOnSale'=>$priceOnSale,
-        ];
+        $productDetail->priceOnsale =$this->getPriceOnSale();
+        
+        return $productDetail;
     }
 }

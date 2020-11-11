@@ -141,13 +141,13 @@ class ProductController extends Controller
 
         $product = Product::where('sku',$sku)->firstOrFail();
         $imageList= $product->imagesUrl();
-        $specificPrice = $product->getFirstSpecificPrice();
+        
 
         $product = new ProductResouce($product);
-        $product->setSpecificPrice($specificPrice);
+        
 
-        return response([
-            'product' => $product,
+        return view('pages.product',[
+            'product' => $product->toArray(),
             'imageList' => $imageList,
         ]);
     }
