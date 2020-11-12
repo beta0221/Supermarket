@@ -66,3 +66,4 @@ Route::apiResource('attribute','AttributeController');
 Route::apiResource('attributeSet','AttributeSetController');
 Route::apiResource('productGroup','ProductGroupController');
 Route::apiResource('product','ProductController');
+Route::apiResource('order','OrderController');

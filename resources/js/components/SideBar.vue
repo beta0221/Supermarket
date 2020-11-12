@@ -28,6 +28,10 @@
                 <CSidebarNavItem :name="'hello'"></CSidebarNavItem>
                 <CSidebarNavItem :name="'hello'"></CSidebarNavItem>
             </CSidebarNavDropdown>
+
+            <CSidebarNavDropdown :name="'訂單管理'">
+                <CSidebarNavItem :name="'訂單管理'" to="/admin/order"></CSidebarNavItem>
+            </CSidebarNavDropdown>
             
         </CSidebarNav>
     </CSidebar>

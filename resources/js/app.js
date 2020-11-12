@@ -66,6 +66,7 @@ import AttributeSetPage from './components/Pages/AttributeSetPage'
 import ProductGroupPage from './components/Pages/ProductGroupPage'
 import ProductPage from './components/Pages/ProductPage'
 import SpecificPricePage from './components/Pages/SpecificPricePage'
+import OrderPage from './components/Pages/OrderPage'
 const routes = [
     { path: '/admin/category',component: CategoryPage},
     { path: '/admin/attribute', component: AttributePage },
@@ -73,6 +74,7 @@ const routes = [
     { path: '/admin/productGroup',component: ProductGroupPage},
     { path: '/admin/product',component: ProductPage},
     { path: '/admin/specificPrice',component: SpecificPricePage},
+    { path: '/admin/order',component: OrderPage},
 ]
 
 const router = new VueRouter({
