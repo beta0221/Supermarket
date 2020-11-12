@@ -164,10 +164,9 @@
                 </div>
             </div>
             <div class="row">
+                
                 @foreach ($relateToProducts as $item)
-                    @if ($item->sku==$sku)
-                    @continue
-                    @endif
+                    @if ($item->sku != $sku)
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="product__item">
                             <div class="product__item__pic set-bg" data-setbg="{{$item->imageUrl}}">
@@ -183,7 +182,9 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 @endforeach
+
             </div>
         </div>
     </section>
