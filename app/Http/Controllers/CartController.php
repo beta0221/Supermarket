@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Http\Resources\CartCollection;
+use \Validator;
 
 class CartController extends Controller
 {
@@ -17,7 +18,6 @@ class CartController extends Controller
             'items'=>$cartItems,
             'count'=>$carts->count(),
             'total'=>Cart::subtotal(),
-
         ]);
     }
     /**加入購物車 */
@@ -40,4 +40,20 @@ class CartController extends Controller
         Cart::remove($rowId);
         return response('success');
     }
+
+    private function validateRequest(Request $request){
+        $validator = Validator::make($request->all(),[
+
+        ]);
+        return $validator;
+    }
+
+    public function validateCheckout(Request $request){
+
+    }
+
+    public function checkout(Request $request){
+        
+    }
+    
 }
