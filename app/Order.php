@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     protected $fillable = [
+        'order_numero',
         'user_id',
         'status_id',
         'carrier_id',
@@ -25,4 +26,6 @@ class Order extends Model
         'total',
         'total_tax',
     ];
+
+    public static $key = 'order_numero';
 }
