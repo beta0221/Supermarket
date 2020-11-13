@@ -3,7 +3,15 @@
 @section('title','結帳')
 
 @section('css')
-
+<style>
+    .nice-select{
+        width:100%;
+        padding: 0 12px;
+    }
+    .nice-select ul{
+        width:100%;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -78,16 +86,33 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="checkout__input">
+                            <p>Phone<span>*</span></p>
+                            <input type="text">
+                        </div>
+
                         <div class="checkout__input">
                             <p>Country<span>*</span></p>
-                            <input type="text">
+                            <select class="form-control" name="country" id="country">
+                                @foreach ($countries as $country)
+                                <option value="{{$country->code}}">{{$country->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="checkout__input">
                             <p>Address<span>*</span></p>
                             <input type="text" placeholder="Street Address" class="checkout__input__add">
                             <input type="text" placeholder="Apartment, suite, unite ect (optinal)">
                         </div>
+
                         <div class="checkout__input">
+                            <p>Order notes<span>*</span></p>
+                            <input type="text"
+                                placeholder="Notes about your order, e.g. special notes for delivery.">
+                        </div>
+
+                        {{-- <div class="checkout__input">
                             <p>Town/City<span>*</span></p>
                             <input type="text">
                         </div>
@@ -98,8 +123,8 @@
                         <div class="checkout__input">
                             <p>Postcode / ZIP<span>*</span></p>
                             <input type="text">
-                        </div>
-                        <div class="row">
+                        </div> --}}
+                        {{-- <div class="row">
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Phone<span>*</span></p>
@@ -112,8 +137,10 @@
                                     <input type="text">
                                 </div>
                             </div>
-                        </div>
-                        <div class="checkout__input__checkbox">
+                        </div> --}}
+
+
+                        {{-- <div class="checkout__input__checkbox">
                             <label for="acc">
                                 Create an account?
                                 <input type="checkbox" id="acc">
@@ -126,18 +153,19 @@
                             <p>Account Password<span>*</span></p>
                             <input type="text">
                         </div>
-                        <div class="checkout__input__checkbox">
+                        <div class="checkout__input">
+                            <p>Confirm Password<span>*</span></p>
+                            <input type="text">
+                        </div> --}}
+
+                        {{-- <div class="checkout__input__checkbox">
                             <label for="diff-acc">
                                 Ship to a different address?
                                 <input type="checkbox" id="diff-acc">
                                 <span class="checkmark"></span>
                             </label>
-                        </div>
-                        <div class="checkout__input">
-                            <p>Order notes<span>*</span></p>
-                            <input type="text"
-                                placeholder="Notes about your order, e.g. special notes for delivery.">
-                        </div>
+                        </div> --}}
+                        
                     </div>
 
 

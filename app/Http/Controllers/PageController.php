@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
+use App\Country;
 use App\Product;
 use App\Helpers\Pagination;
 use App\Http\Resources\ProductCollection;
-use App\SpecificPrice;
-use Gloudemans\Shoppingcart\Facades\Cart;
 
 class PageController extends Controller
 {
@@ -27,7 +26,6 @@ class PageController extends Controller
             $category = Category::where('slug',$slug)->firstOrFail();
             $products = $category->products();
         }
-        
 
         if(!$request->has('rows')){$request->merge(['rows'=>9]);}
         $p = new Pagination($request);
@@ -46,7 +44,6 @@ class PageController extends Controller
         $onSaleProducts = Product::getOnSaleProducts();
         $onSaleProductCollection = new ProductCollection($onSaleProducts);
 
-        // return response($productCollection->withFirstImage());
         return view('pages.shop',[
             'categories'=>Category::getNestedCategoryList(),
             'products'=>$productCollection->withFirstImage()->toArray(),
@@ -62,7 +59,10 @@ class PageController extends Controller
 
     /**結帳頁面 */
     public function checkout(){
-        return view('pages.checkout');
+        
+        return view('pages.checkout',[
+            'countries'=>Country::all(),
+        ]);
     }
 
 }
