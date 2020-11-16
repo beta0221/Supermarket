@@ -24,7 +24,7 @@ Route::group(['prefix' => 'cart'], function () {
     Route::post('/add/{sku}','CartController@add');
     Route::put('/update','CartController@update');
     Route::delete('/delete/{rowId}','CartController@delete');
-    Route::post('/checkout','CartController@checkout');
+    Route::post('/checkout','CartController@checkout')->name('submitCheckout');
     Route::post('/validateCheckout','CartController@validateCheckout');
     
 });

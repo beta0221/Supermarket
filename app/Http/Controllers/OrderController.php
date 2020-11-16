@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\OrderProduct;
+use App\Product;
 use Illuminate\Http\Request;
 use App\Traits\CrudTrait;
 
@@ -58,6 +60,13 @@ class OrderController extends Controller
             'total_shipping_tax','total','total_tax'];
 
     }
-
     
+    /**取得 Products */
+    public function getOrderProducts(Request $request,$id){
+        $order = Order::find($id);
+        $products = $order->orderProducts()->get();
+        return response($products);
+    }
+
+        
 }

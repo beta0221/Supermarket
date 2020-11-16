@@ -67,7 +67,8 @@
             <h4>Billing Details</h4>
 
 
-            <form action="#">
+            <form action="{{route('submitCheckout')}}" method="POST">
+                @csrf
                 <div class="row">
 
                     

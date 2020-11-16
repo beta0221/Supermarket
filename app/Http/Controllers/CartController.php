@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\Order;
+use App\OrderProduct;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Http\Resources\CartCollection;
 use \Validator;
@@ -53,7 +55,56 @@ class CartController extends Controller
     }
 
     public function checkout(Request $request){
+
+        // return response(strtotime('Y-m-d'));
+        $order = new Order();
+        $order->order_numero = uniqid();
+        $order->user_id = 1;
+        // $order->status_id = '';
+        $order->carrier_id = 1;
+        $order->shipping_address_id = 1;
+        $order->billing_address_id = 1;
+        $order->billing_company_id = 1;
+        $order->currency_id = 1;
+        $order->comment = '';
+        $order->shipping_no = '';
+        $order->invoice_no = '';
+        $order->invoice_date = date('Y-m-d H:i:s');
+        $order->delivery_date = date('Y-m-d H:i:s');
+
         
+        $order->total_discount = 0;
+        $order->total_discount_tax = 0;
+        $order->total_shipping = 0;
+        $order->total_shipping_tax = 0;
+        $order->total = 100;
+        $order->total_tax = 0;
+        $order->save();
+
+        
+
+        $carts = Cart::content();
+        foreach ($carts as $cart){
+
+            $orderProduct =  new OrderProduct();      
+            $orderProduct->name = $cart->name;
+            $orderProduct->price = $cart->price;            
+            $orderProduct->quantity = $cart->qty;
+            $orderProduct->price_with_tax = 0;
+            $orderProduct->sku = $cart->model->sku;
+            $orderProduct->product_id = $cart->model->id;
+            $orderProduct->order_id = $order->id;
+
+            $orderProduct->save();
+        };
+
+
+        return response($order->id);
+
+        return 'done';
+            
+        
+
     }
     
 }

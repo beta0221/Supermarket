@@ -13,6 +13,7 @@ class Order extends Model
         'carrier_id',
         'shipping_address_id',
         'billing_address_id',
+        'billing_company_id',
         'currency_id',
         'comment',
         'shipping_no',
@@ -28,4 +29,11 @@ class Order extends Model
     ];
 
     public static $key = 'order_numero';
+
+
+    public function orderProducts(){
+        return $this->hasMany('App\OrderProduct','order_products','order_id','product_id');
+    }
+    
+
 }
