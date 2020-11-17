@@ -68,5 +68,20 @@ class OrderController extends Controller
         return response($products);
     }
 
+    public function view_thankyou($order_numero){
+        
+        $order_numero = $order_numero;
+
+
+        return view('pages.thankyou',[
+            'order_numero'=>$order_numero,
+        ]);
+    }
+
+    public function view_orderDetail(){
+
+
+        return view('pages.orderDetail');
+    }
         
 }

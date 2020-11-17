@@ -97,14 +97,10 @@ class CartController extends Controller
 
             $orderProduct->save();
         };
-
-
-        return response($order->id);
-
-        return 'done';
-            
+        Cart::destroy();
+        $order_numero = $order->order_numero;
         
-
+        return redirect('/order/thankyou/'.$order_numero);    
     }
     
 }
