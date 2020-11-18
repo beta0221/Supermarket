@@ -9,6 +9,7 @@ use App\Carrier;
 use App\Helpers\Pagination;
 use App\Helpers\TaiwanDistrict;
 use App\Http\Resources\ProductCollection;
+use App\Payment;
 
 class PageController extends Controller
 {
@@ -64,6 +65,7 @@ class PageController extends Controller
             'counties'=>TaiwanDistrict::COUNTY,
             'cities'=>TaiwanDistrict::CITY,
             'carriers'=>Carrier::all(),
+            'payments'=>Payment::all(),
         ]);
     }
 

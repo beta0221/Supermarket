@@ -11,6 +11,7 @@ class Order extends Model
         'user_id',
         'status_id',
         'carrier_id',
+        'payment_id',
         'shipping_address_id',
         'billing_address_id',
         'billing_company_id',

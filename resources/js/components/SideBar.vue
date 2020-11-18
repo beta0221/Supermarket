@@ -16,6 +16,7 @@
                 <CSidebarNavItem :name="'產品特價(SpecificPrice))'" to="/admin/specificPrice"></CSidebarNavItem>
                 <CSidebarNavItem :name="'國家(Country))'" to="/admin/country"></CSidebarNavItem>
                 <CSidebarNavItem :name="'物流(Carrier))'" to="/admin/carrier"></CSidebarNavItem>
+                <CSidebarNavItem :name="'金流(Payment))'" to="/admin/payment"></CSidebarNavItem>
                 
             </CSidebarNavDropdown>
 

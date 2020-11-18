@@ -84,6 +84,15 @@
                             </select>
                         </div>
 
+                        <div class="checkout__input">
+                            <p>付款方式<span>*</span></p>
+                            <select class="form-control" name="payment_id" id="payment_id">
+                                @foreach ($payments as $payment)
+                                <option value="{{$payment->id}}">{{$payment->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
 
                         <div class="checkout__input">
                             <p>訂購人姓名<span>*</span></p>

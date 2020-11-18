@@ -69,6 +69,7 @@ import SpecificPricePage from './components/Pages/SpecificPricePage'
 import OrderPage from './components/Pages/OrderPage'
 import CountryPage from './components/Pages/CountryPage'
 import CarrierPage from './components/Pages/CarrierPage'
+import PaymentPage from './components/Pages/PaymentPage'
 const routes = [
     { path: '/admin/category',component: CategoryPage},
     { path: '/admin/attribute', component: AttributePage },
@@ -79,6 +80,7 @@ const routes = [
     { path: '/admin/order',component: OrderPage},
     { path: '/admin/country',component: CountryPage},
     { path: '/admin/carrier',component: CarrierPage},
+    { path: '/admin/payment',component: PaymentPage},
 ]
 
 const router = new VueRouter({
