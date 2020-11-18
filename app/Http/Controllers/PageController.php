@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use App\Country;
 use App\Product;
+use App\Carrier;
 use App\Helpers\Pagination;
 use App\Helpers\TaiwanDistrict;
 use App\Http\Resources\ProductCollection;
@@ -62,6 +63,7 @@ class PageController extends Controller
             'countries'=>Country::all(),
             'counties'=>TaiwanDistrict::COUNTY,
             'cities'=>TaiwanDistrict::CITY,
+            'carriers'=>Carrier::all(),
         ]);
     }
 

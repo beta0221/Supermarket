@@ -47,6 +47,12 @@ class CartController extends Controller
         $validator = Validator::make($request->all(),[
             'carrier_id'=>'',
             'pay_id'=>'',
+            'name'=>'',
+            'phone'=>'',
+            'country_id'=>'',
+            'county'=>'',
+            'city'=>'',
+            'address1'=>''
         ]);
         return $validator;
     }
@@ -81,8 +87,6 @@ class CartController extends Controller
         $order->total = 100;
         $order->total_tax = 0;
         $order->save();
-
-        
 
         $carts = Cart::content();
         foreach ($carts as $cart){

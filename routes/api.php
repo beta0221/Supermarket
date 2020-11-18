@@ -24,6 +24,7 @@ Route::get('/attribute/all','AttributeController@all');
 Route::get('/attributeSet/all','AttributeSetController@all');
 Route::get('/productGroup/all','ProductGroupController@all');
 Route::get('/category/all','CategoryController@all');
+Route::get('/carrier/all','CarrierController@all');
 Route::get('/category/allParents','CategoryController@allParents');
 Route::get('/activeStatus/all','EnumController@active_enum');
 //多對多
@@ -69,3 +70,4 @@ Route::apiResource('productGroup','ProductGroupController');
 Route::apiResource('product','ProductController');
 Route::apiResource('order','OrderController');
 Route::apiResource('country','CountryController');
+Route::apiResource('carrier','CarrierController');

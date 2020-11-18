@@ -74,6 +74,17 @@
                     
                     <div class="col-lg-8 col-md-6">
                         
+                        
+                        <div class="checkout__input">
+                            <p>運送方式<span>*</span></p>
+                            <select class="form-control" name="carrier_id" id="carrier_id">
+                                @foreach ($carriers as $carrier)
+                                <option value="{{$carrier->id}}">{{$carrier->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+
                         <div class="checkout__input">
                             <p>訂購人姓名<span>*</span></p>
                             <input type="text" name="name">

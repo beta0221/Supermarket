@@ -17,8 +17,8 @@ class CreateCarriersTable extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('price');
-            $table->string('delivery_text');
-            $table->string('logo');
+            $table->string('delivery_text')->nullable();
+            $table->string('logo')->nullable();
         });
     }
 

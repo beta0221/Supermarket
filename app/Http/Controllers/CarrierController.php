@@ -4,82 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Carrier;
 use Illuminate\Http\Request;
+use App\Traits\CrudTrait;
 
 class CarrierController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    use CrudTrait;
+    public function __construct(){
+        $this->model = Carrier::class;
+        $this->storeRule = [
+            'name'=>['required'],
+            'price'=>['required'],
+        ];
+        $this->updateRule = [
+            'name'=>['required'],
+            'price'=>['required'],
+        ];
+        $this->updateColumns = ['name','price','delivery_text'];
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+
+    /**取得所有 Carrier */
+    public function all(){
+        return response(Carrier::all());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Carrier  $carrier
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Carrier $carrier)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Carrier  $carrier
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Carrier $carrier)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Carrier  $carrier
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Carrier $carrier)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Carrier  $carrier
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Carrier $carrier)
-    {
-        //
-    }
 }
