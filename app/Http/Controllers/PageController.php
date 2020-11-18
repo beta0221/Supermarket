@@ -6,17 +6,15 @@ use App\Category;
 use App\Country;
 use App\Product;
 use App\Helpers\Pagination;
+use App\Helpers\TaiwanDistrict;
 use App\Http\Resources\ProductCollection;
 
 class PageController extends Controller
 {
     /**首頁 */
     public function index(){
-
         return view('pages.index');
     }
-
-
     
     /**購物頁面 */
     public function shop(Request $request,$slug = null){
@@ -59,9 +57,11 @@ class PageController extends Controller
 
     /**結帳頁面 */
     public function checkout(){
-        
+
         return view('pages.checkout',[
             'countries'=>Country::all(),
+            'counties'=>TaiwanDistrict::COUNTY,
+            'cities'=>TaiwanDistrict::CITY,
         ]);
     }
 

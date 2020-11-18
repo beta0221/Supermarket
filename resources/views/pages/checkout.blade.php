@@ -73,43 +73,49 @@
 
                     
                     <div class="col-lg-8 col-md-6">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="checkout__input">
-                                    <p>Fist Name<span>*</span></p>
-                                    <input type="text">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="checkout__input">
-                                    <p>Last Name<span>*</span></p>
-                                    <input type="text">
-                                </div>
-                            </div>
+                        
+                        <div class="checkout__input">
+                            <p>訂購人姓名<span>*</span></p>
+                            <input type="text" name="name">
                         </div>
 
                         <div class="checkout__input">
-                            <p>Phone<span>*</span></p>
-                            <input type="text">
+                            <p>聯絡電話<span>*</span></p>
+                            <input type="text" name="phone">
                         </div>
 
+                        
                         <div class="checkout__input">
-                            <p>Country<span>*</span></p>
-                            <select class="form-control" name="country" id="country">
+                            <p>國家<span>*</span></p>
+                            <select class="form-control mb-2" name="country_id" id="country_id">
                                 @foreach ($countries as $country)
                                 <option value="{{$country->code}}">{{$country->name}}</option>
                                 @endforeach
                             </select>
+
+                            <p>地址<span>*</span></p>
+                            <select class="form-control mb-2" name="county" id="county">
+                                <option value="">縣市</option>
+                                @foreach ($counties as $county)
+                                <option value="{{$county}}">{{$county}}</option>    
+                                @endforeach
+                            </select>
+
+                            <select class="form-control mb-2" name="city" id="city">
+                                <option value="">地區</option>
+                            </select>
+
+                            <input type="text" placeholder="地址" class="checkout__input__add" name="address1">
+
                         </div>
-                        <div class="checkout__input">
-                            <p>Address<span>*</span></p>
-                            <input type="text" placeholder="Street Address" class="checkout__input__add">
-                            <input type="text" placeholder="Apartment, suite, unite ect (optinal)">
-                        </div>
+
+                        
+                        
 
                         <div class="checkout__input">
                             <p>Order notes<span>*</span></p>
                             <input type="text"
+                                name="comment"
                                 placeholder="Notes about your order, e.g. special notes for delivery.">
                         </div>
 
@@ -219,5 +225,8 @@
 @endsection
 
 @section('js')
-
+<script>
+    const cities = {!!json_encode($cities)!!};
+</script>
+<script src="/js/checkout.js"></script>
 @endsection

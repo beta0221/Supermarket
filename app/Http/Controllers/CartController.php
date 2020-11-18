@@ -45,7 +45,8 @@ class CartController extends Controller
 
     private function validateRequest(Request $request){
         $validator = Validator::make($request->all(),[
-
+            'carrier_id'=>'',
+            'pay_id'=>'',
         ]);
         return $validator;
     }
