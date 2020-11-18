@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OrderProductCollection;
 use App\Order;
 use App\OrderProduct;
 use App\Product;
@@ -78,10 +79,15 @@ class OrderController extends Controller
         ]);
     }
 
-    public function view_orderDetail(){
+    public function view_orderDetail($order_numero){
+        
+        $order = Order::where('order_numero',$order_numero)->firstOrFail();     
+        $orderProduct = $order->orderProducts()->get();
+        $orderProductCollection = new OrderProductCollection($orderProduct);
 
-
-        return view('pages.orderDetail');
+        return view('pages.orderDetail',[
+            'orderProduct' => $orderProductCollection->withFirstImage()->toArray(),
+        ]);
     }
         
 }

@@ -20,4 +20,7 @@ class OrderProduct extends Model
     public function order(){
         return $this->belongsTo('App\Order','order_id');
     }
+    public function getDefaultImageUrl(){
+        return config('app.static_host') . '/default_product_image.png';
+    }
 }

@@ -9,6 +9,7 @@
             <div class="row">
                 <div class="col-md-12 mt-3" style="text-align: center">
                     <h3>訂單細節</h3>
+                    {{$orderProduct}}
                 </div>
             </div>
         </div>
