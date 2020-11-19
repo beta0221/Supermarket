@@ -84,9 +84,11 @@ class OrderController extends Controller
         $order = Order::where('order_numero',$order_numero)->firstOrFail();     
         $orderProduct = $order->orderProducts()->get();
         $orderProductCollection = new OrderProductCollection($orderProduct);
-
+        $total = $order->total;
         return view('pages.orderDetail',[
             'orderProduct' => $orderProductCollection->withFirstImage()->toArray(),
+            'order_numero' => $order_numero,
+            'total' => $total,
         ]);
     }
         
