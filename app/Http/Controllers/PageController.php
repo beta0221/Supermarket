@@ -65,7 +65,7 @@ class PageController extends Controller
             'counties'=>TaiwanDistrict::COUNTY,
             'cities'=>TaiwanDistrict::CITY,
             'carriers'=>Carrier::all(),
-            'payments'=>Payment::all(),
+            'payments'=>Payment::all_sortByCarrier(),
         ]);
     }
 

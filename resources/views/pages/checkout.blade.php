@@ -78,6 +78,7 @@
                         <div class="checkout__input">
                             <p>運送方式<span>*</span></p>
                             <select class="form-control" name="carrier_id" id="carrier_id">
+                                <option value="">運送方式</option>
                                 @foreach ($carriers as $carrier)
                                 <option value="{{$carrier->id}}">{{$carrier->name}}</option>
                                 @endforeach
@@ -87,9 +88,7 @@
                         <div class="checkout__input">
                             <p>付款方式<span>*</span></p>
                             <select class="form-control" name="payment_id" id="payment_id">
-                                @foreach ($payments as $payment)
-                                <option value="{{$payment->id}}">{{$payment->name}}</option>
-                                @endforeach
+                                <option value="">付款方式</option>
                             </select>
                         </div>
 
@@ -247,6 +246,7 @@
 @section('js')
 <script>
     const cities = {!!json_encode($cities)!!};
+    const payments = {!!json_encode($payments)!!};
 </script>
 <script src="/js/checkout.js"></script>
 @endsection

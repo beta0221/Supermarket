@@ -40,6 +40,7 @@ export default {
                 {key:'name',type:'text',label:'名稱'},
                 {key:'price',type:'text',label:'運費'},
                 {key:'delivery_text',type:'text',label:'說明'},
+                {key:'_',type:'multiple_selector',label:'可用付款方式',url:'/api/carrier',relation:'payments',relationUrl:'/api/payment/all',trackBy:'name'},
             ]
         }
     }

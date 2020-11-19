@@ -28,5 +28,19 @@ class CarrierController extends Controller
         return response(Carrier::all());
     }
 
+    /** 取得關聯的 Payment */
+    public function getPayments($id){
+        $carrier = Carrier::find($id);
+        $payments = $carrier->payments()->get();
+        return response($payments);
+    }
+
+    /**更新關聯 */
+    public function syncPayments(Request $request,$id){
+        $carrier = Carrier::find($id);
+        $carrier->payments()->sync($request->syncArray);
+        $payments = $carrier->payments()->get();
+        return response($payments);
+    }
 
 }

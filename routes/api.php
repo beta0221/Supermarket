@@ -37,6 +37,8 @@ Route::get('/product/{id}/attributes','ProductController@getAttributes');
 Route::put('/product/{id}/attributes','ProductController@syncAttributes');
 Route::get('/product/{id}/categories','ProductController@getCategories');
 Route::put('/product/{id}/categories','ProductController@syncCategories');
+Route::get('/carrier/{id}/payments','CarrierController@getPayments');
+Route::put('/carrier/{id}/payments','CarrierController@syncPayments');
 //一對多
 Route::get('/attributeSet/{id}/products','AttributeSetController@getProducts');
 Route::get('/productGroup/{id}/products','ProductGroupController@getProducts');

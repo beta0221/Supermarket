@@ -17,5 +17,9 @@ class Carrier extends Model
 
     public $timestamps = false;
 
+    /**關聯 Payment */
+    public function payments(){
+        return $this->belongsToMany('App\Payment','carrier_payment','carrier_id','payment_id');
+    }
     
 }
