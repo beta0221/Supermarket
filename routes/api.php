@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,7 @@ Route::get('/carrier/all','CarrierController@all');
 Route::get('/payment/all','PaymentController@all');
 Route::get('/category/allParents','CategoryController@allParents');
 Route::get('/activeStatus/all','EnumController@active_enum');
+Route::get('order/all','OrderController@index');
 //多對多
 Route::get('/attribute/{id}/attributeSets','AttributeController@getAttributeSets');
 Route::put('/attribute/{id}/attributeSets','AttributeController@syncAttributeSets');

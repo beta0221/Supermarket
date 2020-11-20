@@ -90,7 +90,7 @@ export default {
             this.reloadData();
         },
         reloadData(){
-            axios.get('/api/order', {
+            axios.get('/api/order/all', {
                 params: this.pagination
             })
             .then(res => {
