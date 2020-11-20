@@ -42,7 +42,7 @@ Route::put('/carrier/{id}/payments','CarrierController@syncPayments');
 //一對多
 Route::get('/attributeSet/{id}/products','AttributeSetController@getProducts');
 Route::get('/productGroup/{id}/products','ProductGroupController@getProducts');
-Route::get('order/{id}/orderProducts','OrderController@getOrderProducts');
+Route::get('/order/{id}/orderProducts','OrderController@getOrderProducts');
 
 
 
