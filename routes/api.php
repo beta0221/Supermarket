@@ -29,7 +29,7 @@ Route::get('/carrier/all','CarrierController@all');
 Route::get('/payment/all','PaymentController@all');
 Route::get('/category/allParents','CategoryController@allParents');
 Route::get('/activeStatus/all','EnumController@active_enum');
-Route::get('order/all','OrderController@index');
+// Route::get('order/all','OrderController@index');
 //多對多
 Route::get('/attribute/{id}/attributeSets','AttributeController@getAttributeSets');
 Route::put('/attribute/{id}/attributeSets','AttributeController@syncAttributeSets');
@@ -65,6 +65,13 @@ Route::group(['prefix' => 'category'], function () {
     Route::delete('/removeFromParentCategory/{slug}','CategoryController@removeFromParentCategory');
 });
 
+//後台
+Route::group(['prefix'=>'order'],function(){
+    Route::get('/all','OrderController@index');
+    // Route::get('getOrderDetail/{order_numero}','OrderController@getOrderDetail');
+    Route::post('nextStatus','OrderController@nextStatus');
+    Route::post('groupNextStatus','OrderController@groupNextStatus');
+});
 
 
 

@@ -1,116 +1,161 @@
 <template>
-    <div>
-
-        <NavBar :title="'商品管理'"/>
-        <CCardBody>
-            <CDataTable
-            :items="items"
-            :fields="fields"
-            items-per-page-select
-            :items-per-page="10"
-            v-on:pagination-change="setRows"
+  <div>
+    <NavBar :title="'商品管理'" />
+    <CCardBody>
+      <CButton size="sm" color="info" class="ml-1" @click="selectAll"
+        >全選</CButton
+      >
+      <CButton
+        size="sm"
+        color="info"
+        class="ml-1"
+        @click="getCheckedOrderNumero"
+        >show</CButton
+      >
+      <CDataTable
+        :items="items"
+        :fields="fields"
+        items-per-page-select
+        :items-per-page="10"
+        v-on:pagination-change="setRows"
+      >
+        <template #checkbox="{ item }">
+          <td>
+            <CInputCheckbox
+              :checked="item.isCheck"
+              @change="changeChecked(item)"
             >
-            <template #checkbox={item}>
-                <td>
-                    <CInputCheckbox
-                    :checked=false
-                    @click="checkedOrNot(item)">
+            </CInputCheckbox>
+          </td>
+        </template>
 
-                    </CInputCheckbox>
-                </td>
-            </template>
-            </CDataTable>
+        <template #status="{ item }">
+          <td>
+            <CButton :color="colorDict[item.shipping_address_id]">
+              {{ statusDict[item.shipping_address_id] }}
+            </CButton>
+          </td>
+        </template>
 
-            <CPagination
-            :activePage.sync="pagination.page"
-            :pages.sync="pagination.totalPage"
-            align="start"
-            v-on:update:activePage="reloadData"/>
+        <template #detail="{ item }">
+          <td>
+            <CButton
+              size="sm"
+              color="info"
+              class="ml-1"
+              @click="orderDetail(item)"
+              >詳細</CButton
+            >
+          </td>
+        </template>
+      </CDataTable>
 
-        </CCardBody>
-
-
-    </div>
-  
+      <CPagination
+        :activePage.sync="pagination.page"
+        :pages.sync="pagination.totalPage"
+        align="start"
+        v-on:update:activePage="reloadData"
+      />
+    </CCardBody>
+  </div>
 </template>
 
 <script>
-export default {    
-    components:{
-        
-    },
-    data(){
-        return{
-            checked:false,
-            items:[],
-            pagination:{
-                page:1,
-                rows:10,
-                totalPage:10,
-                //orderBy:'id',
-                //order:'desc',
-            },
+export default {
+  components: {},
+  data() {
+    return {
+      checked: false,
+      isSelectAll: false,
+      items: [],
+      pagination: {
+        page: 1,
+        rows: 10,
+        totalPage: 10,
+        //orderBy:'id',
+        //order:'desc',
+      },
 
-            fields:[
-                {key:'checkbox',label:'#'},
-                {key:'order_numero',label:'訂單編號'},
-                {key:'status',label:'狀態'},
-                {key:'buyer',label:'訂購人'},
-                {key:'date',label:'日期'},
-            ],
-            columns:[
-                // {key:'name',type:'text',label:'商品名稱'},
-                // {key:'sku',type:'text',label:'商品代號',readonly:true},
-                // {key:'stock',type:'text',label:'庫存'},
-                // {key:'price',type:'text',label:'價格'},
-                // {key:'image',type:'image_input',label:'商品圖片',url:'/api/product/images'},
-                // {key:'group_id',type:'single_selector',label:'商品群組',relationUrl:'/api/productGroup/all',trackBy:'name'},
-                // {key:'attribute_set_id',type:'single_selector',label:'標籤群組',relationUrl:'/api/attributeSet/all',trackBy:'name'},
-                // {key:'active',type:'single_selector',label:'上下架',relationUrl:'/api/activeStatus/all',trackBy:'name'},
-                // {key:'_',type:'multiple_selector',label:'標籤',url:'/api/product',relation:'attributes',relationUrl:'/api/attribute/all',trackBy:'name'},
-                // {key:'__',type:'multiple_selector',label:'分類',url:'/api/product',relation:'categories',relationUrl:'/api/category/all',trackBy:'name'},
-                // {key:'description',type:'text_editor',label:'說明',uploadUrl:'/'}
-            ]
-        }
+      fields: [
+        { key: "checkbox", label: "#" },
+        { key: "order_numero", label: "訂單編號" },
+        { key: "status", label: "狀態" },
+        { key: "buyer", label: "訂購人" },
+        { key: "date", label: "日期" },
+        { key: "detail", label: "詳細資訊" },
+      ],
+      colorDict: {
+        0: "error",
+        1: "warning",
+        2: "info",
+        3: "primary",
+        4: "success",
+      },
+      statusDict: {
+        0: "待出貨",
+        1: "準備中",
+        2: "已出貨",
+        3: "已到貨",
+        4: "結案",
+      },
+    };
+  },
+  created() {
+    this.reloadData();
+  },
+  mounted() {
+    EventBus.$on("reloadData", (_) => {
+      this.reloadData();
+    });
+  },
+  destroyed() {
+    EventBus.$off("reloadData");
+  },
+  methods: {
+    setRows(value) {
+      this.pagination.rows = value;
+      this.reloadData();
     },
-    created(){
-        this.reloadData();
-    },
-    mounted(){
-        EventBus.$on("reloadData",_ => {
-            this.reloadData();
+    reloadData() {
+      axios
+        .get("/api/order/all", {
+          params: this.pagination,
+        })
+        .then((res) => {
+          this.items = res.data.data;
+          this.pagination = res.data.pagination;
+        })
+        .catch((error) => {
+          errorHelper.handle(error);
         });
     },
-    destroyed(){
-        EventBus.$off("reloadData");
+    showDetail(item) {
+      EventBus.$emit("showDetailModal", item);
     },
-    methods:{
-        setRows(value){
-            this.pagination.rows = value;
-            this.reloadData();
-        },
-        reloadData(){
-            axios.get('/api/order/all', {
-                params: this.pagination
-            })
-            .then(res => {
-                this.items = res.data.data;
-                this.pagination = res.data.pagination;
-            })
-            .catch(error =>{
-                errorHelper.handle(error);
-            })
-        },
-        showDetail(item){
-            EventBus.$emit("showDetailModal",item);
-        },
-        checkedOrNot(item){
-             this.$set(item, 'checked', !item.checked)
+    getCheckedOrderNumero() {
+      let numeroArray = [];
+      this.items.forEach((order) => {
+        if (order.isCheck) {
+          numeroArray.push(order.order_numero);
         }
-    }
-}
+      });
+      console.log(numeroArray);
+    },
+    orderDetail(item) {
+      console.log(item.order_numero);
+    },
+    changeChecked(item) {
+      item.isCheck = !item.isCheck;
+    },
+    selectAll() {
+      this.isSelectAll = !this.isSelectAll;
+      this.items.forEach((order, index) => {
+        this.$set(order, "isCheck", this.isSelectAll);
+      });
+    },
+  },
+};
 </script>
 
 <style>
-
 </style>
