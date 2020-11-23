@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Address;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Order;
@@ -12,6 +13,15 @@ use \Validator;
 
 class CartController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware("auth",['only'=>'checkout']);
+    }
+
+
+
     /**取得購物車內容 */
     public function getItems(){
         $carts = Cart::content();
@@ -51,7 +61,7 @@ class CartController extends Controller
             'phone'=>'',
             'country_id'=>'',
             'county'=>'',
-            'city'=>'',
+            'postal_code'=>'',
             'address1'=>''
         ]);
         return $validator;
@@ -63,30 +73,8 @@ class CartController extends Controller
 
     public function checkout(Request $request){
 
-        // return response(strtotime('Y-m-d'));
-        $order = new Order();
-        $order->order_numero = uniqid();
-        $order->user_id = 1;
-        // $order->status_id = '';
-        $order->carrier_id = 1;
-        $order->shipping_address_id = 1;
-        $order->billing_address_id = 1;
-        $order->billing_company_id = 1;
-        $order->currency_id = 1;
-        $order->comment = '';
-        $order->shipping_no = '';
-        $order->invoice_no = '';
-        $order->invoice_date = date('Y-m-d H:i:s');
-        $order->delivery_date = date('Y-m-d H:i:s');
-
-        
-        $order->total_discount = 0;
-        $order->total_discount_tax = 0;
-        $order->total_shipping = 0;
-        $order->total_shipping_tax = 0;
-        $order->total = 100;
-        $order->total_tax = 0;
-        $order->save();
+        $address = Address::insert_row($request);
+        $order = Order::insert_row($request,$address->id);
 
         $carts = Cart::content();
         foreach ($carts as $cart){
@@ -105,7 +93,8 @@ class CartController extends Controller
         Cart::destroy();
         $order_numero = $order->order_numero;
         
-        return redirect('/order/thankyou/'.$order_numero);    
+        return redirect()->route('thankyou',['order_numero'=>$order_numero]);
+        
     }
     
 }

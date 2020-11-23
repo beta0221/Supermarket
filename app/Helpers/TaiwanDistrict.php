@@ -2,6 +2,25 @@
 namespace App\Helpers;
 class TaiwanDistrict{
 
+    /**
+     * 查詢地區名稱
+     * @param string $county
+     * @param mixed $zip
+     * @return string
+     */
+    public static function getCityName($county,$zip){
+        if(!isset(TaiwanDistrict::CITY[$county])){
+            return null;
+        }
+        $cities = TaiwanDistrict::CITY[$county];
+        foreach ($cities as $city) {
+            if($city['zip'] == (string)$zip){
+                return $city['name'];
+            }
+        }
+        return null;
+    }
+
     const COUNTY = [
         "台北市",
 		"基隆市",

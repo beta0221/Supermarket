@@ -99,7 +99,13 @@
 @endsection
 
 @section('js')
+<script src="/js/jquery.nice-select.min.js"></script>
 <script>
+    jQuery(function(){
+        $("select").niceSelect();
+    });
+    
+
     function updateCartQty(){
         $('#cart-content-form').submit();
     }

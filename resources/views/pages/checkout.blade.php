@@ -120,7 +120,7 @@
                                 @endforeach
                             </select>
 
-                            <select class="form-control mb-2" name="city" id="city">
+                            <select class="form-control mb-2" name="postal_code" id="postal_code">
                                 <option value="">地區</option>
                             </select>
 

@@ -3,11 +3,11 @@ jQuery(function(){
     
     $('#county').on('change',function(){
         let county = $(this).val();
-        $('#city').val('');
-        $('#city').empty();
-        $('#city').append(`<option value="">地區</option>`);
+        $('#postal_code').val('');
+        $('#postal_code').empty();
+        $('#postal_code').append(`<option value="">地區</option>`);
         cities[county].forEach(city => {
-            $('#city').append(`<option value="${city.name}">${city.name}</option>`);
+            $('#postal_code').append(`<option value="${city.zip}">${city.name}</option>`);
         });
     });
 
