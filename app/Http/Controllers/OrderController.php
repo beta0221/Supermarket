@@ -58,5 +58,17 @@ class OrderController extends Controller
             'total' => $total,
         ]);
     }
+
+    public function getOrderDetail($order_numero){
+        $order = Order::where('order_numero',$order_numero)->firstOrFail();     
+        $orderProduct = $order->orderProducts()->get();
+        $orderProductCollection = new OrderProductCollection($orderProduct);
+        $total = $order->total;
+        $orderProduct = $orderProductCollection->withFirstImage()->toArray();
+        return response([
+            'orderProduct' => $orderProduct,
+            'total' => $total,
+        ]);
+    }
         
 }

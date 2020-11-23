@@ -68,7 +68,7 @@ Route::group(['prefix' => 'category'], function () {
 //後台
 Route::group(['prefix'=>'order'],function(){
     Route::get('/all','OrderController@index');
-    // Route::get('getOrderDetail/{order_numero}','OrderController@getOrderDetail');
+    Route::get('getOrderDetail/{order_numero}','OrderController@getOrderDetail');
     Route::post('nextStatus','OrderController@nextStatus');
     Route::post('groupNextStatus','OrderController@groupNextStatus');
 });

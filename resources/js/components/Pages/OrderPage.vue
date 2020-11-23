@@ -31,8 +31,8 @@
 
         <template #status="{ item }">
           <td>
-            <CButton :color="colorDict[item.shipping_address_id]">
-              {{ statusDict[item.shipping_address_id] }}
+            <CButton :color="colorDict[item.status_id]">
+              {{ statusDict[item.status_id] }}
             </CButton>
           </td>
         </template>
@@ -43,7 +43,7 @@
               size="sm"
               color="info"
               class="ml-1"
-              @click="orderDetail(item)"
+              @click="orderDetail(item.order_numero)"
               >詳細</CButton
             >
           </td>
@@ -56,6 +56,32 @@
         align="start"
         v-on:update:activePage="reloadData"
       />
+
+      <CModal
+      title="訂單內容"
+      color="info"
+      :show.sync="show"
+      size="lg"
+      >
+          <CDataTable
+          :items="orderProduct"
+          :fields="orderProductFields"
+          >
+          <template #imageUrl="{item}">
+            <td>
+              <img
+                :src="item.imageUrl"
+                width="90px"
+                height="90px"
+                class="mt-1"
+                style="align-middle"
+              />
+            </td>
+              
+            </template>
+          </CDataTable>
+      </CModal>
+
     </CCardBody>
   </div>
 </template>
@@ -65,9 +91,11 @@ export default {
   components: {},
   data() {
     return {
+      show:false,
       checked: false,
       isSelectAll: false,
       items: [],
+      orderProduct:[],
       pagination: {
         page: 1,
         rows: 10,
@@ -90,14 +118,24 @@ export default {
         2: "info",
         3: "primary",
         4: "success",
+        5: "secondary",
+        6: "danger",
       },
       statusDict: {
-        0: "待出貨",
-        1: "準備中",
-        2: "已出貨",
-        3: "已到貨",
-        4: "結案",
+        0: "代付款",
+        1: "待出貨",
+        2: "準備中",
+        3: "已出貨",
+        4: "已到貨",
+        5: "結案",
+        6: "作廢",
       },
+      orderProductFields : [
+        { key: "name", label: "商品" },
+        { key: "imageUrl", label: "圖片" },
+        { key: "price", label: "價錢" },
+        { key: "quantity", label: "數量" },
+      ]
     };
   },
   created() {
@@ -141,8 +179,17 @@ export default {
       });
       console.log(numeroArray);
     },
-    orderDetail(item) {
-      console.log(item.order_numero);
+    orderDetail($order_numero) {
+      axios
+        .get("/api/order/getOrderDetail/"+$order_numero )
+        .then((res) => {
+          this.show = true;
+          this.orderProduct = res.data.orderProduct;
+          console.log(this.orderProduct);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
     changeChecked(item) {
       item.isCheck = !item.isCheck;
