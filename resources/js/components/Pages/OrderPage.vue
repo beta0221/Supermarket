@@ -9,8 +9,8 @@
         size="sm"
         color="info"
         class="ml-1"
-        @click="getCheckedOrderNumero"
-        >show</CButton
+        @click="groupNextStatus"
+        >下階段</CButton
       >
       <CDataTable
         :items="items"
@@ -31,7 +31,8 @@
 
         <template #status="{ item }">
           <td>
-            <CButton :color="colorDict[item.status_id]">
+            <CButton :color="colorDict[item.status_id]"
+            @click="nextStatus(item.order_numero)">
               {{ statusDict[item.status_id] }}
             </CButton>
           </td>
@@ -109,7 +110,7 @@ export default {
         { key: "order_numero", label: "訂單編號" },
         { key: "status", label: "狀態" },
         { key: "buyer", label: "訂購人" },
-        { key: "date", label: "日期" },
+        { key: "created_at", label: "日期" },
         { key: "detail", label: "詳細資訊" },
       ],
       colorDict: {
@@ -170,15 +171,6 @@ export default {
     showDetail(item) {
       EventBus.$emit("showDetailModal", item);
     },
-    getCheckedOrderNumero() {
-      let numeroArray = [];
-      this.items.forEach((order) => {
-        if (order.isCheck) {
-          numeroArray.push(order.order_numero);
-        }
-      });
-      console.log(numeroArray);
-    },
     orderDetail($order_numero) {
       axios
         .get("/api/order/getOrderDetail/"+$order_numero )
@@ -200,6 +192,43 @@ export default {
         this.$set(order, "isCheck", this.isSelectAll);
       });
     },
+    getCheckedOrderNumero() {
+      let numeroArray = [];
+      this.items.forEach((order) => {
+        if (order.isCheck) {
+          numeroArray.push(order.order_numero);
+        }
+      });
+      return numeroArray;
+    },
+    groupNextStatus(){
+            let order_numero_array = this.getCheckedOrderNumero();
+            if(order_numero_array.length == 0){
+                alert('請勾選');
+                return;
+            }
+            axios.post('/api/order/groupNextStatus',{
+                'order_numero_array':JSON.stringify(order_numero_array)
+            })
+            .then(res => {
+                this.$router.go('/admin/order');
+            })
+            .catch(err => {
+                console.error(err); 
+            })
+        },
+    nextStatus($order_numero){
+      axios.post('/api/order/nextStatus/',{
+                'order_numero':$order_numero
+            })
+      .then(res => {
+        console.log(res);
+        this.reloadData();
+      })
+      .catch(err => {
+        console.error(err); 
+      })
+    }
   },
 };
 </script>

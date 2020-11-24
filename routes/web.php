@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +36,7 @@ Route::group(['prefix' => 'product'], function () {
 Route::group(['prefix' => 'order'], function () {
     Route::get('/thankyou/{order_numero}','OrderController@view_thankyou')->name('thankyou');
     Route::get('/detail/{order_numero}','OrderController@view_orderDetail');
+    Route::get('/myOrder','OrderController@view_myOrder');
 });
 
 Auth::routes();

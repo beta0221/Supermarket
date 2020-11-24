@@ -32,6 +32,14 @@ class Order extends Model
 
     public static $key = 'order_numero';
 
+    const STATUS_PENDING_PAYMENT = 0;
+    const STATUS_READY = 1;
+    const STATUS_PREPARE = 2;
+    const STATUS_SHIPPING = 3;
+    const STATUS_ARRIVE = 4;
+    const STATUS_CLOSE = 5;
+    const STATUS_INVALID = 6;
+
 
     public function orderProducts(){
         return $this->hasMany('App\OrderProduct');
@@ -65,6 +73,21 @@ class Order extends Model
         $order->save();
 
         return $order;
+    }
+
+    public static function updateToNextStatus($order_numero){
+        $first = Order::where('order_numero',$order_numero)->first();
+        if(!$first){
+            return 0;
+        }
+        if($first->status_id == Order::STATUS_INVALID){
+            return -1;
+        }
+        $nextStatus = $first->status_id + 1;
+        Order::where('order_numero',$order_numero)->update([
+            'status_id'=>$nextStatus
+        ]);
+        return 1;
     }
     
 
