@@ -157,7 +157,7 @@ export default {
     },
     reloadData() {
       axios
-        .get("/api/order/all", {
+        .get("/api/order/getOrderList", {
           params: this.pagination,
         })
         .then((res) => {

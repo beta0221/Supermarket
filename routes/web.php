@@ -37,6 +37,7 @@ Route::group(['prefix' => 'order'], function () {
     Route::get('/thankyou/{order_numero}','OrderController@view_thankyou')->name('thankyou');
     Route::get('/detail/{order_numero}','OrderController@view_orderDetail');
     Route::get('/myOrder','OrderController@view_myOrder');
+    Route::get('/myOrderDetail/{id}','OrderController@view_myOrderDetail');
 });
 
 Auth::routes();

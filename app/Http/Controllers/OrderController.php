@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\OrderProductCollection;
 use App\Order;
 use App\Helpers\Pagination;
+use App\Http\Resources\MyOrderListCollection;
 use App\OrderProduct;
 use App\Product;
 use App\User;
@@ -14,7 +15,7 @@ use Illuminate\Http\Request;
 class OrderController extends Controller
 {
     
-    public function index(Request $request)
+    public function getOrderList(Request $request)
     {  
         $p = new Pagination($request);
         $p->cacuTotalPage(Order::count());
@@ -87,11 +88,21 @@ class OrderController extends Controller
             ->take($p->rows)
             ->orderBy($p->orderBy,$p->order)
             ->get();
+        $myOrderList = new MyOrderListCollection($myOrderList);
 
         return view('pages.myOrder',[
             'user'=>$user,
-            'myOrderList'=>$myOrderList,
+            'myOrderList'=>$myOrderList->getStatusWord(),
             'pagination'=>$p
+        ]);
+    }
+
+    public function view_myOrderDetail($order_id){
+        $myOrderProduct = OrderProduct::where('order_id',$order_id)->get();
+        $orderProductCollection = new OrderProductCollection($myOrderProduct);
+        $myOrderProductList = $orderProductCollection->withFirstImage()->toArray();
+        return view('pages.myOrderDetail',[
+            'myOrderProductList' => $myOrderProductList,
         ]);
     }
 
