@@ -73,20 +73,25 @@ class OrderController extends Controller
     }
 
     public function view_myOrder(Request $request){
+        
         $user = auth()->user(); //沒登入會出錯 
+        $p = new Pagination($request);
+
+        $query = Order::where('user_id',$user->id);
+
+        $count = $query->count();
+        $p->cacuTotalPage($count);
         
-        $myOrderList = Order::where('user_id',$user->id)->get();
-        // $p = new Pagination($request);
-        // $p->cacuTotalPage($order->count());
-        
-        // $orderList = $order->skip($p->skip)
-        //     ->take($p->rows)
-        //     ->orderBy($p->orderBy,$p->order)
-        //     ->get();
+        $myOrderList = $query
+            ->skip($p->skip)
+            ->take($p->rows)
+            ->orderBy($p->orderBy,$p->order)
+            ->get();
 
         return view('pages.myOrder',[
             'user'=>$user,
             'myOrderList'=>$myOrderList,
+            'pagination'=>$p
         ]);
     }
 
