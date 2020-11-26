@@ -2,6 +2,7 @@
 
 namespace App;
 
+use DateTime;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -97,7 +98,8 @@ class Product extends Model implements Buyable {
         return $imagesUrl;
     }
     public static function getOnSaleProducts(){
-        $productIdArray = SpecificPrice::pluck('product_id');
+        $today = new DateTime();
+        $productIdArray = SpecificPrice::whereDate('expiration_date', '>', $today->format('Y-m-d'))->pluck('product_id');
         return Product::whereIn('id',$productIdArray)->get();
     }
 

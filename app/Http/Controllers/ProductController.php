@@ -121,7 +121,13 @@ class ProductController extends Controller
         $specificPrices = $product->specificPrices()->get();
         return response($specificPrices);
     }
-    
+    /**取得特價中 SpecificPrice */
+    public function getSpecificPricesING($sku){
+        $product = Product::where('sku',$sku)->firstOrFail();
+        $specificPrices = $product->specificPrices();
+        
+        return response($specificPrices);
+    }
     /**新增特價 SpecificPrice */
     public function addSpecificPrice(Request $request,$sku){
         $validator = Validator::make($request->all(), [
