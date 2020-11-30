@@ -252,10 +252,19 @@
                                     <li><a href="javascript:;" onclick="addToCart('{{$product->sku}}')"><i class="fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
+                            @if (!$product->priceOnSale)
                             <div class="product__item__text">
-                            <h6><a href="/product/{{$product->sku}}">{{$product->name}}</a></h6>
-                                <h5>${{$product->price}}</h5>
+                                <h6><a href="/product/{{$product->sku}}">{{$product->name}}</a></h6>
+                                    <h5>${{$product->price}}</h5>
+                                </div>
+                            @else
+                            <div class="product__discount__item__text">
+                                {{-- <span>Dried Fruit</span> --}}
+                            <h5><a href="/product/{{$product->sku}}">{{$product->name}}</a></h5>
+                                <div class="product__item__price">${{$product->priceOnSale}}<span>${{$product->price}}</span></div>
                             </div>
+                            @endif
+                            
                         </div>
                     </div>
                     @endforeach

@@ -46,7 +46,7 @@ class PageController extends Controller
 
         return view('pages.shop',[
             'categories'=>Category::getNestedCategoryList(),
-            'products'=>$productCollection->withFirstImage()->toArray(),
+            'products'=>$productCollection->withFirstImage()->withFirstSpecificPrice()->toArray(),
             'onSaleProducts'=>$onSaleProductCollection->withFirstImage()->withFirstSpecificPrice()->toArray(),
             'pagination'=>$p,
         ]);
