@@ -10,13 +10,17 @@ use App\OrderProduct;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Http\Resources\CartCollection;
 use \Validator;
+use TsaiYiHua\ECPay\Checkout;
 
 class CartController extends Controller
 {
 
 
-    public function __construct()
+    private $checkout;
+
+    public function __construct(Checkout $checkout)
     {
+        $this->checkout = $checkout;
         $this->middleware("auth",['only'=>'checkout']);
     }
 
@@ -88,11 +92,33 @@ class CartController extends Controller
             $orderProduct->product_id = $cart->model->id;
             $orderProduct->order_id = $order->id;
 
+            // $items = [
+            //     'name' => $cart->name,
+            //     'qty' => $cart->qty,
+            //     'unit' => '個',
+            //     'price' => $cart->price,
+            // ];
+
             $orderProduct->save();
         };
         Cart::destroy();
         $order_numero = $order->order_numero;
+
         
+
+        $formData = [
+            'OrderId'=>$order_numero,
+            'UserId' => 1, // 用戶ID , Optional
+            'ItemDescription' => '產品簡介',
+            'ItemName' => 'Product Name',
+            // 'items' => $items,
+            'TotalAmount' => $order->total,
+            'PaymentMethod' => 'Credit', // ALL, Credit, ATM, WebATM
+        ];
+
+        
+        return $this->checkout->setPostData($formData)->send();
+
         return redirect()->route('thankyou',['order_numero'=>$order_numero]);
         
     }
