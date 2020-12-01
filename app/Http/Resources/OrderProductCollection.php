@@ -13,7 +13,7 @@ class OrderProductCollection extends ResourceCollection
 
     public function __construct($resource){
         parent::__construct($resource);
-        foreach($this as $model){ $this->idArray[] = $model->id; }
+        foreach($this as $model){ $this->idArray[] = $model->product_id; }
     }
 
     public function withFirstImage(){
@@ -48,8 +48,8 @@ class OrderProductCollection extends ResourceCollection
 
             if(!is_null($this->firstImageDict)){
                 $imageUrl = $model->getDefaultImageUrl();
-                if(isset($this->firstImageDict[$model->id])){
-                    $imageUrl = $this->firstImageDict[$model->id];
+                if(isset($this->firstImageDict[$model->product_id])){
+                    $imageUrl = $this->firstImageDict[$model->product_id];
                 }
                 $resource->imageUrl = $imageUrl;
             }
