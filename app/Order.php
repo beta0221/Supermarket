@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use Cart;
 
 class Order extends Model
 {
@@ -52,6 +53,7 @@ class Order extends Model
      * @return Order
      */
     public static function insert_row(Request $request,int $address_id){
+        $carts_total = Cart::subtotal();
         $order = new Order();
         $order->order_numero = uniqid();
         $order->user_id = $request->user()->id;
@@ -68,7 +70,7 @@ class Order extends Model
         $order->total_discount_tax = 0;
         $order->total_shipping = 0;
         $order->total_shipping_tax = 0;
-        $order->total = 100;
+        $order->total = $carts_total;
         $order->total_tax = 0;
         $order->save();
 

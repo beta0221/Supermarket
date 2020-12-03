@@ -79,8 +79,9 @@ class CartController extends Controller
 
         $address = Address::insert_row($request);
         $order = Order::insert_row($request,$address->id);
-
         $carts = Cart::content();
+        
+        $items=[];
         foreach ($carts as $cart){
 
             $orderProduct =  new OrderProduct();      
@@ -92,26 +93,24 @@ class CartController extends Controller
             $orderProduct->product_id = $cart->model->id;
             $orderProduct->order_id = $order->id;
 
-            // $items = [
-            //     'name' => $cart->name,
-            //     'qty' => $cart->qty,
-            //     'unit' => '個',
-            //     'price' => $cart->price,
-            // ];
+            $items[] = [
+                'name' => $cart->name,
+                'qty' => $cart->qty,
+                'unit' => '個',
+                'price' => $cart->price,
+            ];
 
             $orderProduct->save();
         };
         Cart::destroy();
         $order_numero = $order->order_numero;
 
-        
-
         $formData = [
             'OrderId'=>$order_numero,
             'UserId' => 1, // 用戶ID , Optional
             'ItemDescription' => '產品簡介',
-            'ItemName' => 'Product Name',
-            // 'items' => $items,
+            // 'ItemName' => 'Product Name',
+            'Items' => $items,
             'TotalAmount' => $order->total,
             'PaymentMethod' => 'Credit', // ALL, Credit, ATM, WebATM
         ];
