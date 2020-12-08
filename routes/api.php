@@ -29,7 +29,11 @@ Route::get('/carrier/all','CarrierController@all');
 Route::get('/payment/all','PaymentController@all');
 Route::get('/category/allParents','CategoryController@allParents');
 Route::get('/activeStatus/all','EnumController@active_enum');
-// Route::get('order/all','OrderController@index');
+Route::get('/cartRuleStatus/all','EnumController@cartRule_status_enum');
+Route::get('/cartRuleHeightlight/all','EnumController@cartRule_heightlight_enum');
+Route::get('/cartRuleFreeDelivery/all','EnumController@cartRule_freeDelivery_enum');
+Route::get('/discountType/all','EnumController@discountType_enum');
+
 //多對多
 Route::get('/attribute/{id}/attributeSets','AttributeController@getAttributeSets');
 Route::put('/attribute/{id}/attributeSets','AttributeController@syncAttributeSets');
@@ -84,3 +88,4 @@ Route::apiResource('order','OrderController');
 Route::apiResource('country','CountryController');
 Route::apiResource('carrier','CarrierController');
 Route::apiResource('payment','PaymentController');
+Route::apiResource('cartRule','CartRuleController');

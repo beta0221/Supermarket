@@ -109,7 +109,6 @@ class CartController extends Controller
             'OrderId'=>$order_numero,
             'UserId' => 1, // 用戶ID , Optional
             'ItemDescription' => '產品簡介',
-            // 'ItemName' => 'Product Name',
             'Items' => $items,
             'TotalAmount' => $order->total,
             'PaymentMethod' => 'Credit', // ALL, Credit, ATM, WebATM

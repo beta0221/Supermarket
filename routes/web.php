@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +18,7 @@ Route::get('/shop', 'PageController@shop')->name('shop');
 Route::get('/shop/{slug}', 'PageController@shop');
 Route::get('/cart','PageController@cart')->name('cart');
 Route::get('/checkout','PageController@checkout')->name('checkout');
+Route::get('/home', 'OrderController@view_myOrder')->name('home');
 
 Route::group(['prefix' => 'cart'], function () {
     Route::get('/getItems','CartController@getItems');
@@ -42,7 +42,6 @@ Route::group(['prefix' => 'order'], function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::view('/admin','admin.home');

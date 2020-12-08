@@ -17,7 +17,10 @@
                 <CSidebarNavItem :name="'國家(Country))'" to="/admin/country"></CSidebarNavItem>
                 <CSidebarNavItem :name="'物流(Carrier))'" to="/admin/carrier"></CSidebarNavItem>
                 <CSidebarNavItem :name="'金流(Payment))'" to="/admin/payment"></CSidebarNavItem>
-                
+            </CSidebarNavDropdown>
+
+            <CSidebarNavDropdown name="行銷管理">
+                <CSidebarNavItem name="購物車規則" to="/admin/cartRule"></CSidebarNavItem>
             </CSidebarNavDropdown>
 
             <CSidebarNavDropdown :name="'前台管理'">
