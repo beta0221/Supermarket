@@ -70,7 +70,7 @@ class Order extends Model
         $order->total_discount_tax = 0;
         $order->total_shipping = 0;
         $order->total_shipping_tax = 0;
-        $order->total = $carts_total;
+        $order->total = floatval($carts_total);
         $order->total_tax = 0;
         $order->save();
 

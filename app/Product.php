@@ -62,7 +62,7 @@ class Product extends Model implements Buyable {
             ->first();
     }
     public function getPriceOnSale(){
-        if(!$specificPrice = $this->getFirstSpecificPrice()){ return null; }
+        if(!$specificPrice = $this->getFirstSpecificPrice()){ return $this->price; }
         $priceOnSale = null;
         switch ($specificPrice->discount_type) {
             case SpecificPrice::TYPE_AMOUNT:
@@ -111,7 +111,7 @@ class Product extends Model implements Buyable {
         return '哈哈哈';
     }
     public function getBuyablePrice($options = null){
-        return $this->price;
+        return $this->getPriceOnSale();
     }
     public function getBuyableWeight($options = null){
         return 0;

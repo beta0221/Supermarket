@@ -15,6 +15,8 @@ class CartCollection extends ResourceCollection
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
+
+
     public function toArray($request = null)
     {
         return $this->collection->map(function($item) use($request){

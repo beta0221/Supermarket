@@ -39,7 +39,8 @@ class CartController extends Controller
     /**加入購物車 */
     public function add(Request $request, $sku){
         $product = Product::where('sku',$sku)->firstOrFail();
-        Cart::add($product->id, $product->name, $request->qty, $product->price)->associate('App\Product');
+        // Cart::add($product->id, $product->name, $request->qty, $product->getPriceOnSale())->associate('App\Product');
+        Cart::add($product,1);
         return response('success');
     }
     /**更新購物車商品數量 */

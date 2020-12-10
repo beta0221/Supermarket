@@ -38,7 +38,7 @@
                                         <h5>{{$row->name}}</h5>
                                     </td>
                                     <td class="shoping__cart__price">
-                                        ${{$row->price}}
+                                        ${{$row->model->getPriceOnSale()}}
                                     </td>
                                     <td class="shoping__cart__quantity">
                                         <div class="quantity">
