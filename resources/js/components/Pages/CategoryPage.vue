@@ -40,6 +40,7 @@ export default {
             columns:[
                 {key:'slug',type:'text',label:'代號',readonly:true},
                 {key:'name',type:'text',label:'分類'},
+                {key:'_',type:'multiple_selector',label:'配合活動',url:'/api/category',relation:'cartRules',relationUrl:'/api/cartRule/all',trackBy:'name'},
             ]
         }
     }

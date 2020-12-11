@@ -80,6 +80,19 @@ class CategoryController extends Controller
         return response($products);
     }
 
+    /**取得關聯得 CartRule */
+    public function getCartRules($slug){
+        $category = Category::find($slug);
+        $cartRules = $category->cartRules()->get();
+        return response($cartRules);
+    }
+    /**更新關聯的 CartRule */
+    public function syncCartRules(Request $request,$slug){
+        $category = Category::find($slug);
+        $category->cartRules()->sync($request->syncArray);
+        $cartRules = $category->cartRules()->get();
+        return response($cartRules);
+    }
 
 
 

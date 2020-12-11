@@ -36,4 +36,8 @@ class CartRule extends Model
         $cartRule = new CartRule();
         return $cartRule->fillable;
     }
+
+    public function categories(){
+        return $this->belongsToMany('App\Category','cart_rule_categories','cart_rule_id','category_id');
+    }
 }

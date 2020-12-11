@@ -17,6 +17,9 @@ class CartRuleController extends Controller
         $this->updateRule = $rule;
         $this->updateColumns = CartRule::get_fillable();
     }
-
+    /**取得所有 CartRule */
+    public function all(){
+        return response(CartRule::all());
+    }
     
 }

@@ -14,6 +14,15 @@
                 :placeholder="column.label"
                 :readonly="(column.readonly == true)?true:false"
                 v-model="detailData[column.key]"/>
+            
+            <MultipleSelector
+            v-if="column.type == 'multiple_selector'"
+            :label="column.label"
+            :url="column.url"
+            :relation="column.relation"
+            :relationUrl="column.relationUrl"
+            :trackBy="column.trackBy"
+            />
 
         </div>
 
@@ -54,7 +63,9 @@
 </template>
 
 <script>
+import MultipleSelector from '../MultipleSelector.vue';
 export default {
+  components: { MultipleSelector },
     props:['requestUrl','slug','columns'],
     data(){
         return{

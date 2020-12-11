@@ -29,6 +29,7 @@ Route::get('/carrier/all','CarrierController@all');
 Route::get('/payment/all','PaymentController@all');
 Route::get('/category/allParents','CategoryController@allParents');
 Route::get('/activeStatus/all','EnumController@active_enum');
+Route::get('/cartRule/all','CartRuleController@all');
 Route::get('/cartRuleStatus/all','EnumController@cartRule_status_enum');
 Route::get('/cartRuleHeightlight/all','EnumController@cartRule_heightlight_enum');
 Route::get('/cartRuleFreeDelivery/all','EnumController@cartRule_freeDelivery_enum');
@@ -45,6 +46,8 @@ Route::get('/product/{id}/categories','ProductController@getCategories');
 Route::put('/product/{id}/categories','ProductController@syncCategories');
 Route::get('/carrier/{id}/payments','CarrierController@getPayments');
 Route::put('/carrier/{id}/payments','CarrierController@syncPayments');
+Route::get('/category/{slug}/cartRules','CategoryController@getCartRules');
+Route::put('/category/{slug}/cartRules','CategoryController@syncCartRules');
 //一對多
 Route::get('/attributeSet/{id}/products','AttributeSetController@getProducts');
 Route::get('/productGroup/{id}/products','ProductGroupController@getProducts');

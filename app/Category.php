@@ -27,6 +27,10 @@ class Category extends Model
     public function products(){
         return $this->belongsToMany('App\Product','category_products','category_id','product_id');
     }
+    /**關聯 cart_rules */
+    public function cartRules(){
+        return $this->belongsToMany('App\CartRule','cart_rule_categories','category_id','cart_rule_id');
+    }
 
     /**取得巢狀階層的 Category List */
     public static function getNestedCategoryList(){
