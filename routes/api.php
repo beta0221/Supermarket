@@ -79,6 +79,7 @@ Route::group(['prefix'=>'order'],function(){
     Route::post('nextStatus','OrderController@nextStatus');
     Route::post('groupNextStatus','OrderController@groupNextStatus');
 });
+Route::get('member','MemberController@getMembers');
 
 
 

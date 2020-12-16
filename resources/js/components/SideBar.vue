@@ -29,8 +29,7 @@
                 
 
             <CSidebarNavDropdown :name="'會員管理'">
-                <CSidebarNavItem :name="'會員管理'"></CSidebarNavItem>
-                <CSidebarNavItem :name="'hello'"></CSidebarNavItem>
+                <CSidebarNavItem :name="'會員管理'" to="/admin/member"></CSidebarNavItem>
                 <CSidebarNavItem :name="'hello'"></CSidebarNavItem>
             </CSidebarNavDropdown>
 
