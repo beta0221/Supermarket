@@ -49,4 +49,14 @@ class User extends Authenticatable
     public function permissions(){
         return $this->belongsToMany('App\Permission','permission_users','user_id','permission_id');
     }
+    public function isAdmin()
+    {
+        $roles = $this->roles()->get();
+        foreach ($roles as $role) {   
+            if ($role->name=='Admin' or 'Employee') {
+                return true;
+            }    
+        }
+        return false;
+    }
 }

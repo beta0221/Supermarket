@@ -95,6 +95,10 @@
                         <div class="header__top__right__auth">
                             @auth
                             <a href="/home"><i class="fa fa-user"></i>{{auth()->user()->name}}</a>
+                            <form action="{{route('logout')}}" method="post">
+                                @csrf
+                                <button type="submit">logout</button>
+                            </form>
                             @endauth
                             @guest
                             <a href="/login"><i class="fa fa-user"></i> Login</a>    

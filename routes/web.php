@@ -43,7 +43,6 @@ Route::group(['prefix' => 'order'], function () {
 Auth::routes();
 
 Route::get('/admin','AuthController@admin_login');
-Route::get('/logout','AuthController@logout');
 
 
 Route::group(['middleware'=>'AdminGroup'],function(){
