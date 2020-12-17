@@ -25,7 +25,7 @@ class AdminGroup
         $from = $request->path();
         $result = false;
         foreach ($roles as $role){
-            if(in_array($role,$this->group)){
+            if(in_array($role->name,$this->group)){
                 $result = true;
             }
         }

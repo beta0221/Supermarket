@@ -37,6 +37,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    Public function setPasswordAttribute($password) 
+    { 
+        return $this->attributes['password'] = bcrypt($password); 
+    }
     /**關聯 Role */
     public function roles(){
         return $this->belongsToMany('App\Role','role_users','user_id','role_id');
