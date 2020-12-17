@@ -23,17 +23,17 @@
         </div>
         <div class="header__top__right__auth">
             @auth
-            <a href="/home"><i class="fa fa-user"></i>{{auth()->user()->name}}</a>
+                <a href="/home"><i class="fa fa-user"></i>{{ auth()->user()->name }}</a>
             @endauth
             @guest
-            <a href="/login"><i class="fa fa-user"></i> Login</a>    
+                <a href="/login"><i class="fa fa-user"></i> Login</a>
             @endguest
         </div>
     </div>
     <nav class="humberger__menu__nav mobile-menu">
         <ul>
-            <li class="{{(Request::is('/'))?'active':''}}"><a href="/">Home</a></li>
-            <li class="{{(Request::is('shop'))?'active':''}}"><a href="/shop">Shop</a></li>
+            <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="/">Home</a></li>
+            <li class="{{ Request::is('shop') ? 'active' : '' }}"><a href="/shop">Shop</a></li>
             <li><a href="#">Pages</a>
                 <ul class="header__menu__dropdown">
                     <li><a href="./shop-details.html">Shop Details</a></li>
@@ -92,16 +92,22 @@
                                 <li><a href="#">English</a></li>
                             </ul>
                         </div>
-                        <div class="header__top__right__auth">
+                        <div class="header__top__right__language">
                             @auth
-                            <a href="/home"><i class="fa fa-user"></i>{{auth()->user()->name}}</a>
-                            <form action="{{route('logout')}}" method="post">
-                                @csrf
-                                <button type="submit">logout</button>
-                            </form>
+                                <div> <a href="/home"><i class="fa fa-user"></i>{{ auth()->user()->name }}</a></div>
+                                <span class="arrow_carrot-down"></span>
+                                <ul>
+                                    <li><a href="/order/myOrder" style="color:black">My Order</a></li>
+                                    <li>
+                                        <form action="{{ route('logout') }}" method="post">
+                                            @csrf
+                                            <button type="submit" class="btn btn-light">logout</button>
+                                        </form>
+                                    </li>
+                                </ul>
                             @endauth
                             @guest
-                            <a href="/login"><i class="fa fa-user"></i> Login</a>    
+                                <a href="/login"><i class="fa fa-user"></i> Login</a>
                             @endguest
                         </div>
                     </div>
@@ -119,8 +125,8 @@
             <div class="col-lg-6">
                 <nav class="header__menu">
                     <ul>
-                        <li class="{{(Request::is('/'))?'active':''}}"><a href="/">Home</a></li>
-                        <li class="{{(Request::is('shop'))?'active':''}}"><a href="/shop">Shop</a></li>
+                        <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="/">Home</a></li>
+                        <li class="{{ Request::is('shop') ? 'active' : '' }}"><a href="/shop">Shop</a></li>
                         <li><a href="#">Pages</a></li>
                         <li><a href="./blog.html">Blog</a></li>
                         <li><a href="./contact.html">Contact</a></li>
@@ -130,10 +136,10 @@
             <div class="col-lg-3">
                 <div class="header__cart">
                     <ul>
-                        <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>                      
-                        
+                        <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
+
                         @include('components.littleCart')
-                    
+
                     </ul>
                 </div>
             </div>
@@ -144,4 +150,3 @@
     </div>
 </header>
 <!-- Header Section End -->
-

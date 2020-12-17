@@ -45,7 +45,7 @@ Auth::routes();
 Route::get('/admin','AuthController@admin_login');
 
 
-Route::group(['middleware'=>'AdminGroup'],function(){
+Route::group(['middleware'=>['auth','AdminGroup']],function(){
     Route::view('/admin','admin.home');
     Route::view('/admin/{any}','admin.home');
     Route::view('/admin/{any1}/{any2}','admin.home');

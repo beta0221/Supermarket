@@ -30,10 +30,15 @@
                                 <td class="align-middle">{{$op->price * $op->quantity}}</td>
                             </tr>            
                     @endforeach       
-                        
+                        <tfoot>
+                            <tr>
+                                <td>
+                                    <a href="{{ url()->previous() }}">回上一頁</a>
+                                </td>
+                            </tr>
+                        </tfoot>
                 </table>
             </div>
         </div>
-
 
     @endsection
