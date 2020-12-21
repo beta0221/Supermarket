@@ -27,6 +27,7 @@ Route::group(['prefix' => 'cart'], function () {
     Route::delete('/delete/{rowId}','CartController@delete');
     Route::post('/checkout','CartController@checkout')->name('submitCheckout');
     Route::post('/validateCheckout','CartController@validateCheckout')->name('validateCheckout');
+    Route::get('/test','CartController@test');
 });
 
 Route::group(['prefix' => 'product'], function () {

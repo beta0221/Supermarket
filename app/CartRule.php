@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class CartRule extends Model
 {
@@ -40,4 +41,11 @@ class CartRule extends Model
     public function categories(){
         return $this->belongsToMany('App\Category','cart_rule_categories','cart_rule_id','category_id');
     }
+
+    public static function getCartRulesByCategoryIdArray($categoryIdArray){
+        $cartRuleIdArray = DB::table('cart_rule_categories')->whereIn('category_id',$categoryIdArray)->pluck('cart_rule_id');
+        $cartRuleList = CartRule::whereIn('id',$cartRuleIdArray)->get();
+        return $cartRuleList;
+    }
+
 }
