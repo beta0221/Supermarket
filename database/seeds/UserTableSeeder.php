@@ -20,6 +20,8 @@ class UserTableSeeder extends Seeder
         $employee->name = 'employee';
         $employee->email = 'employee@employee';
         $employee->password = 'employee';
+        $employee->birthday = '1995-03-13';
+        $employee->gender = 1;
         $employee->save();
         $employee->roles()->attach($role_employee);
 
@@ -27,6 +29,8 @@ class UserTableSeeder extends Seeder
         $admin->name = 'admin';
         $admin->email = 'admin@admin';
         $admin->password = 'admin';
+        $admin->birthday = '1995-02-21';
+        $admin->gender = 1;
         $admin->save();
         $admin->roles()->attach($role_admin);
     }

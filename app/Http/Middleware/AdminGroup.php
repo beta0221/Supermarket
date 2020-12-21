@@ -34,7 +34,7 @@ class AdminGroup
             if($driver == 'api'){
                 return response('權限不足',400);
             }else{
-                return redirect()->route('home');
+                return redirect()->route('shop');
             }
             
         }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Cookie;
 
 class LoginController extends Controller
 {
@@ -19,21 +20,19 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
     use AuthenticatesUsers;
     public function showLoginForm()
     {
-        session(['link' => url()->previous()]);
+        Cookie::queue('from',url()->previous(), 5); //save 前一頁在cookie
         return view('auth.login');
-        parent::showLoginForm();
     }
     protected function authenticated(Request $request, $user)
     {
+        $preUrl = Cookie::get('from');  //取的前一頁
         if($user->isAdmin()){
             return redirect()->intended('admin'); //redirect to admin panel
         }
-        return redirect(session('link'));
-        parent::authenticated();
+        return redirect($preUrl);
     }
 
     /**
@@ -53,18 +52,3 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 }
-// class authenticateUsers extends AuthenticatesUsers
-// {
-//     public function showLoginForm()
-//     {
-//         session(['link' => url()->previous()]);
-//          return view('auth.login');
-//     }
-//     protected function authenticated(Request $request, $user)
-//     {
-//         if($user->isAdmin()){
-//             return redirect()->intended('admin'); //redirect to admin panel
-//         }
-//         return redirect(session('link'));
-//     }
-// }

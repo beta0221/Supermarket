@@ -18,7 +18,7 @@ Route::get('/shop', 'PageController@shop')->name('shop');
 Route::get('/shop/{slug}', 'PageController@shop');
 Route::get('/cart','PageController@cart')->name('cart');
 Route::get('/checkout','PageController@checkout')->name('checkout');
-Route::get('/myOrder', 'OrderController@view_myOrder')->name('myOrder');
+// Route::get('/myOrder', 'OrderController@view_myOrder')->name('myOrder')->middleware('auth');
 
 Route::group(['prefix' => 'cart'], function () {
     Route::get('/getItems','CartController@getItems');
@@ -33,10 +33,10 @@ Route::group(['prefix' => 'product'], function () {
     Route::get('/{sku}','ProductController@viewProductDetail');
 });
 
-Route::group(['prefix' => 'order'], function () {
+Route::group(['prefix' => 'order','middleware'=>['auth']], function () {
     Route::get('/thankyou/{order_numero}','OrderController@view_thankyou')->name('thankyou');
     Route::get('/detail/{order_numero}','OrderController@view_orderDetail');
-    Route::get('/myOrder','OrderController@view_myOrder');
+    Route::get('/myOrder','OrderController@view_myOrder')->middleware('auth');
     Route::get('/myOrderDetail/{id}','OrderController@view_myOrderDetail');
 });
 
