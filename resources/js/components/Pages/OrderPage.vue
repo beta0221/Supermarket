@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar :title="'商品管理'" />
+    <NavBar :title="'訂單管理'" />
     <CCardBody>
       <CButton size="sm" color="info" class="ml-1" @click="selectAll"
         >全選</CButton
@@ -11,6 +11,13 @@
         class="ml-1"
         @click="groupNextStatus"
         >下階段</CButton
+      >
+      <CButton
+        size="sm"
+        color="info"
+        class="ml-1"
+        @click="groupExportExcel"
+        >匯出</CButton
       >
       <CDataTable
         :items="items"
@@ -201,6 +208,14 @@ export default {
       });
       return numeroArray;
     },
+    groupExportExcel(){
+            let order_numero_array = this.getCheckedOrderNumero();
+            if(order_numero_array.length == 0){
+                alert('請勾選');
+                return;
+            }
+            window.open('/order/downloadOrderExcel?token='+localStorage.getItem('token') + '&order_numero_array='+order_numero_array.join(','))
+        },
     groupNextStatus(){
             let order_numero_array = this.getCheckedOrderNumero();
             if(order_numero_array.length == 0){

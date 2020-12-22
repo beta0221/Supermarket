@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Address;
 use App\Http\Resources\OrderProductCollection;
 use App\Order;
 use App\Helpers\Pagination;
@@ -10,7 +11,8 @@ use App\OrderProduct;
 use App\Product;
 use App\User;
 use Illuminate\Http\Request;
-
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\OrderExport;
 
 class OrderController extends Controller
 {
@@ -141,6 +143,53 @@ class OrderController extends Controller
             Order::updateToNextStatus($order_numero);
         }
         return response('success');
+    }
+
+    public function excel_downloadOrderExcel(Request $request){
+        $this->validate($request,[
+            'order_numero_array'=>'required',
+        ]);
+        
+        $order_numero_array = explode(',',$request->order_numero_array);
+        
+        
+        $orders = Order::whereIn('order_numero',$order_numero_array)->get();
+        $cellData = [];
+        $cellDict = [
+            // 's232323'=>[
+            //     'from'=>2,
+            //     'to'=>5,
+            // ],
+        ];
+        foreach ($orders as $index => $order) {
+            $delivery = null;
+            if(!isset($cellDict[$order->order_numero])){
+                $cellDict[$order->order_numero] = ['from'=>$index+2];
+                $delivery = Address::find($order->shipping_address_id);
+            }else{
+                $cellDict[$order->order_numero]['to'] = $index+2;
+            }
+            $data = [
+                $order->created_at,
+                $order->order_numero,
+                $order->name,
+                $order->delivery_date,
+                $order->total,
+            ];
+            if($delivery){
+                $data[] = $delivery->name;
+                $data[] = $delivery->phone;
+                $data[] = $delivery->postal_code;
+                $data[] = $delivery->county . $delivery->postal_code . $delivery->address1;
+            }
+            $cellData[] = $data;
+        }
+
+        date_default_timezone_set('Asia/Taipei');
+        $now = date("Y-m-d");
+
+        return Excel::download(new OrderExport($cellData,$cellDict),'訂單資料-'.$now.'.xlsx');
+        
     }
         
 }

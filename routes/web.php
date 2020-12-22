@@ -38,6 +38,7 @@ Route::group(['prefix' => 'order','middleware'=>['auth']], function () {
     Route::get('/detail/{order_numero}','OrderController@view_orderDetail');
     Route::get('/myOrder','OrderController@view_myOrder')->middleware('auth');
     Route::get('/myOrderDetail/{id}','OrderController@view_myOrderDetail');
+    Route::get('downloadOrderExcel','OrderController@excel_downloadOrderExcel');
 });
 
 Auth::routes();
