@@ -125,8 +125,7 @@ class CartController extends Controller
 
     public function test(){
         $cartHandler = new CartHandler();
-        // return $cartHandler->getCategoryIdArray();
-        return 'hello';
+        return response()->json($cartHandler);
     }
     
 }

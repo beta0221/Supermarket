@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\DB;
 
 class CartRule extends Model
 {
+    const TYPE_AMOUNT = 'amount';
+    const TYPE_DICIMAL = 'dicimal';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -42,10 +45,10 @@ class CartRule extends Model
         return $this->belongsToMany('App\Category','cart_rule_categories','cart_rule_id','category_id');
     }
 
-    public static function getCartRulesByCategoryIdArray($categoryIdArray){
+    public static function getCartRuleByCategoryIdArray($categoryIdArray){
         $cartRuleIdArray = DB::table('cart_rule_categories')->whereIn('category_id',$categoryIdArray)->pluck('cart_rule_id');
-        $cartRuleList = CartRule::whereIn('id',$cartRuleIdArray)->get();
-        return $cartRuleList;
+        $cartRule = CartRule::whereIn('id',$cartRuleIdArray)->where('status',1)->orderBy('priority','desc')->first();
+        return $cartRule;
     }
 
 }

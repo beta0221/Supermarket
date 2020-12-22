@@ -7,64 +7,65 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 class CartHandler{
 
     /**小記 */
-    private $subtotal = 0;
+    public $subtotal = 0;
     /**運費 */
-    private $shipping_fee = 0;
+    public $shipping_fee = 0;
     /**手續費 */
-    private $transfer_fee = 0;
+    public $transfer_fee = 0;
     /**折扣 */
-    private $discount = 0;
+    public $discount = 0;
     /**總額 */
-    private $total = 0;
+    public $total = 0;
 
     /**購物車中的物品 */
-    private $cartItems;
+    public $cartItems;
     /**購物車規則 */
-    private $cartRules = [];
+    public $cartRules = [];
     private $cartRulesDict = [];
 
     public function __construct(){
+        $this->subtotal = Cart::subtotal();
         $this->cartItems = Cart::content();
-        $this->getValidCartRules();
+        $this->caculate();
     }
 
-    /**取出所有符合條件的CartRule */
-    private function getValidCartRules(){
-        //by Category
-        $categoryIdArray = $this->getCategoryIdArray();
-        $cartRuleList = CartRule::getCartRulesByCategoryIdArray($categoryIdArray);
-        $this->setCartRules($cartRuleList);
-        //by Coupon Code
-        
+    /**計算總額 */
+    private function caculate(){
+        foreach ($this->cartItems as $cartItem) {
+            $categoryIdArray = $cartItem->model->categories()->pluck('category_id');
+            // echo json_encode($categoryIdArray);
+            if($cartRule = CartRule::getCartRuleByCategoryIdArray($categoryIdArray)){
+                $this->handleCartItem($cartItem,$cartRule);
+            }
+        }
+    }
+
+
+    private function handleCartItem($cartItem,CartRule $cartRule){
+        $discount = 0;
+        $price = $cartItem->price;
+        switch ($cartRule->discount_type) {
+            case CartRule::TYPE_AMOUNT:
+                $discount = $cartRule->reduction_amount;
+                break;
+            case CartRule::TYPE_DICIMAL:
+                $discount = intval(strval($price * $cartRule->reduction_amount));
+                break;
+            default:
+                break;
+        }
+        $this->discount += $discount;
+        $this->logCartRules($cartRule);
     }
 
     /**
      * 把CartRuleList放進 $this->cartRules (不重複)
      * @param array $cartRuleList
      */
-    private function setCartRules($cartRuleList){
-        foreach ($cartRuleList as $cartRule) {
-            if(isset($this->cartRulesDict[$cartRule->id])){continue;}
-            $this->cartRules[] = $cartRule;
-            $this->cartRulesDict[$cartRule->id] = true;
-        }
-    }
-
-    /**
-     * 取得購物車中所有Category 的 id 
-     * @return array
-     * */
-    private function getCategoryIdArray(){
-        $categoryIdArray = [];
-        foreach ($this->cartItems as $item) {
-            $categoryList = $item->model->categories()->get();
-            foreach ($categoryList as $category) {
-                if(!in_array($category->id,$categoryIdArray)){
-                    $categoryIdArray[] = $category->id;
-                }
-            }
-        }
-        return $categoryIdArray;
+    private function logCartRules($cartRule){
+        if(isset($this->cartRulesDict[$cartRule->id])){ return; }
+        $this->cartRules[] = $cartRule;
+        $this->cartRulesDict[$cartRule->id] = true;
     }
 
 

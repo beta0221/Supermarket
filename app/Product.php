@@ -108,7 +108,7 @@ class Product extends Model implements Buyable {
         return $this->id;
     }
     public function getBuyableDescription($options = null){
-        return '哈哈哈';
+        return $this->name;
     }
     public function getBuyablePrice($options = null){
         return $this->getPriceOnSale();
