@@ -32,8 +32,7 @@ class CartHandler{
     /**計算總額 */
     private function caculate(){
         foreach ($this->cartItems as $cartItem) {
-            $categoryIdArray = $cartItem->model->categories()->pluck('category_id');
-            // echo json_encode($categoryIdArray);
+            $categoryIdArray = $cartItem->model->categories()->pluck('category_id');        
             if($cartRule = CartRule::getCartRuleByCategoryIdArray($categoryIdArray)){
                 $this->handleCartItem($cartItem,$cartRule);
             }
