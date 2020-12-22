@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Address;
+use App\Helpers\CartHandler;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Order;
@@ -120,6 +121,11 @@ class CartController extends Controller
 
         return redirect()->route('thankyou',['order_numero'=>$order_numero]);
         
+    }
+
+    public function test(){
+        $cartHandler = new CartHandler();
+        return response()->json($cartHandler);
     }
     
 }

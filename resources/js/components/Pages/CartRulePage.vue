@@ -44,7 +44,7 @@ export default {
                 {key:'start_date',type:'text',label:'開始日期 ex:2020-12-19 00:00:00'},
                 {key:'expiration_date',type:'text',label:'結束日期 ex:2020-12-19 00:00:00'},
                 {key:'status',type:'single_selector',label:'狀態',relationUrl:'/api/cartRuleStatus/all',trackBy:'name'},
-                {key:'highlight',type:'single_selector',label:'狀態',relationUrl:'/api/cartRuleHeightlight/all',trackBy:'name'},
+                {key:'highlight',type:'single_selector',label:'Hightlight',relationUrl:'/api/cartRuleHeightlight/all',trackBy:'name'},
                 {key:'minimum_amount',type:'text',label:'數量門檻'},
                 {key:'free_delivery',type:'single_selector',label:'免運',relationUrl:'/api/cartRuleFreeDelivery/all',trackBy:'name'},
                 {key:'total_available',type:'text',label:'使用次數'},
