@@ -48,6 +48,10 @@ class Product extends Model implements Buyable {
     public function categories(){
         return $this->belongsToMany('App\Category','category_products','product_id','category_id');
     }
+    /**關聯 cart_rules */
+    public function cartRules(){
+        return $this->belongsToMany('App\CartRule','cart_rule_products','product_id','cart_rule_id');
+    }
 
     /**
      * 取得第一個有效的特價 SpecificPrice 

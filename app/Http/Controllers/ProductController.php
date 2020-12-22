@@ -74,6 +74,20 @@ class ProductController extends Controller
         return response($categories);
     }
 
+    /**取得關聯得 CartRule */
+    public function getCartRules($id){
+        $product = Product::find($id);
+        $cartRules = $product->cartRules()->get();
+        return response($cartRules);
+    }
+    /**更新關聯的 CartRule */
+    public function syncCartRules(Request $request,$id){
+        $product = Product::find($id);
+        $product->cartRules()->sync($request->syncArray);
+        $cartRules = $product->cartRules()->get();
+        return response($cartRules);
+    }
+
     /**取得商品圖片 */
     public function getImages($sku){
         $product = Product::where('sku',$sku)->firstOrFail();

@@ -48,7 +48,8 @@ export default {
                 {key:'active',type:'single_selector',label:'上下架',relationUrl:'/api/activeStatus/all',trackBy:'name'},
                 {key:'_',type:'multiple_selector',label:'標籤',url:'/api/product',relation:'attributes',relationUrl:'/api/attribute/all',trackBy:'name'},
                 {key:'__',type:'multiple_selector',label:'分類',url:'/api/product',relation:'categories',relationUrl:'/api/category/all',trackBy:'name'},
-                {key:'description',type:'text_editor',label:'說明',uploadUrl:'/'}
+                {key:'___',type:'multiple_selector',label:'配合活動',url:'/api/product',relation:'cartRules',relationUrl:'/api/cartRule/all',trackBy:'name'},
+                {key:'description',type:'text_editor',label:'說明',uploadUrl:'/'},
             ]
         }
     }
