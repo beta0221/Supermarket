@@ -45,6 +45,16 @@ class CartRule extends Model
         return $this->belongsToMany('App\Category','cart_rule_categories','cart_rule_id','category_id');
     }
 
+    public static function getCartRuleByProductId($product_id,$qty){
+        $cartRuleIdArray = DB::table('cart_rule_products')->where('product_id',$product_id)->pluck('cart_rule_id');
+        $cartRule = CartRule::whereIn('id',$cartRuleIdArray)
+            ->where('status',1)
+            ->where('minimum_amount','<=',$qty)
+            ->orderBy('priority','desc')
+            ->first();
+        return $cartRule;
+    }
+
     public static function getCartRuleByCategoryIdArray($categoryIdArray){
         $cartRuleIdArray = DB::table('cart_rule_categories')->whereIn('category_id',$categoryIdArray)->pluck('cart_rule_id');
         $cartRule = CartRule::whereIn('id',$cartRuleIdArray)->where('status',1)->orderBy('priority','desc')->first();

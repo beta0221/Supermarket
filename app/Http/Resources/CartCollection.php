@@ -26,7 +26,7 @@ class CartCollection extends ResourceCollection
                 $resource->{$column} = $item->{$column};
             }
 
-            $resource->model = new CartProductResource($item->model);;
+            $resource->product = new CartProductResource($item->product);;
 
             return $resource;
         });

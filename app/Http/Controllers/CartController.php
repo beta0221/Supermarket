@@ -29,12 +29,12 @@ class CartController extends Controller
 
     /**取得購物車內容 */
     public function getItems(){
-        $carts = Cart::content();
-        $cartItems = new CartCollection($carts);
+        $cartHandler = new CartHandler();
+        $cartItems = new CartCollection($cartHandler->finalCartItems);
         return response([
             'items'=>$cartItems,
-            'count'=>$carts->count(),
-            'total'=>Cart::subtotal(),
+            'count'=>$cartHandler->cartItems->count(),
+            'total'=>$cartHandler->total,
         ]);
     }
     /**加入購物車 */

@@ -37,10 +37,10 @@
                         </thead>
                         <tbody>
                             
-                            @foreach (Cart::content() as $row)
+                            @foreach ($cartHandler->finalCartItems as $row)
                             <tr>
                                 <td class="shoping__cart__item">
-                                    <img style="width:100px;height:100" src="{{$row->model->getFirstImageUrl()}}">
+                                    <img style="width:100px;height:100" src="{{$row->product->getFirstImageUrl()}}">
                                     <h5>{{$row->name}}</h5>
                                 </td>
                                 <td class="shoping__cart__price">
@@ -198,12 +198,9 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="checkout__order">
                             <h4>Your Order</h4>
-                            <div class="checkout__order__products">Subtotal <span>${{Cart::subtotal()}}</span></div>
-                            <div class="checkout__order__products">運費 <span>${{Cart::tax()}}</span></div>
-                            
-                            <div class="checkout__order__subtotal">Total <span>${{Cart::total()}}</span></div>
-
-
+                            <div class="checkout__order__products">Subtotal <span>${{$cartHandler->subtotal}}</span></div>
+                            <div class="checkout__order__products">Discount <span>${{$cartHandler->discount}}</span></div>
+                            <div class="checkout__order__subtotal">Total <span>${{$cartHandler->total}}</span></div>
 
                             <div class="checkout__input__checkbox">
                                 <label for="acc-or">

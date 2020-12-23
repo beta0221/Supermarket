@@ -106,6 +106,21 @@ class Product extends Model implements Buyable {
         $productIdArray = SpecificPrice::whereDate('expiration_date', '>', $today->format('Y-m-d'))->pluck('product_id');
         return Product::whereIn('id',$productIdArray)->get();
     }
+    public function cartRulePrice(CartRule $cartRule){
+        $price = $this->price;
+        switch ($cartRule->discount_type) {
+            case CartRule::TYPE_AMOUNT:
+                $price -= $cartRule->reduction_amount;
+                break;
+            case CartRule::TYPE_DICIMAL:
+                $price = intval(strval($this->price * $cartRule->reduction_amount));
+                break;
+            default:
+                break;
+        }
+        return $price;
+    }
+
 
     //Buyable Interface
     public function getBuyableIdentifier($options = null){

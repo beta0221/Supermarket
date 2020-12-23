@@ -19,43 +19,58 @@ class CartHandler{
 
     /**購物車中的物品 */
     public $cartItems;
+    /**經過計算折扣的物品 */
+    public $finalCartItems = [];
     /**購物車規則 */
     public $cartRules = [];
     private $cartRulesDict = [];
 
     public function __construct(){
-        $this->subtotal = Cart::subtotal();
         $this->cartItems = Cart::content();
         $this->caculate();
     }
 
     /**計算總額 */
     private function caculate(){
+
         foreach ($this->cartItems as $cartItem) {
-            $categoryIdArray = $cartItem->model->categories()->pluck('category_id');        
-            if($cartRule = CartRule::getCartRuleByCategoryIdArray($categoryIdArray)){
-                $this->handleCartItem($cartItem,$cartRule);
-            }
+            $cartRule = CartRule::getCartRuleByProductId($cartItem->model->id,$cartItem->qty);
+            if($cartRule){ $this->logCartRules($cartRule); }
+            $finalCartItem = FinalCartItem::getInstance($cartItem,$cartRule);
+            $this->subtotal += $finalCartItem->subtotal;
+            $this->finalCartItems[] = $finalCartItem;
         }
+
+        // foreach ($this->finalCartItems as $cartItem) {
+        //     $categoryIdArray = $cartItem->model->categories()->pluck('category_id');        
+        //     if($cartRule = CartRule::getCartRuleByCategoryIdArray($categoryIdArray)){
+        //         $this->handleCartItem($cartItem,$cartRule);
+        //     }
+        // }
+
+        $this->caculateTotal();
     }
 
-
-    private function handleCartItem($cartItem,CartRule $cartRule){
-        $discount = 0;
-        $price = $cartItem->price;
-        switch ($cartRule->discount_type) {
-            case CartRule::TYPE_AMOUNT:
-                $discount = $cartRule->reduction_amount;
-                break;
-            case CartRule::TYPE_DICIMAL:
-                $discount = intval(strval($price * $cartRule->reduction_amount));
-                break;
-            default:
-                break;
-        }
-        $this->discount += $discount;
-        $this->logCartRules($cartRule);
+    private function caculateTotal(){
+        $this->total = $this->subtotal - $this->discount;
     }
+
+    // private function handleCartItem($cartItem,CartRule $cartRule){
+    //     $discount = 0;
+    //     $price = $cartItem->price;
+    //     switch ($cartRule->discount_type) {
+    //         case CartRule::TYPE_AMOUNT:
+    //             $discount = $cartRule->reduction_amount;
+    //             break;
+    //         case CartRule::TYPE_DICIMAL:
+    //             $discount = intval(strval($price * (1 - $cartRule->reduction_amount)));
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    //     $this->discount += $discount;
+    //     $this->logCartRules($cartRule);
+    // }
 
     /**
      * 把CartRuleList放進 $this->cartRules (不重複)

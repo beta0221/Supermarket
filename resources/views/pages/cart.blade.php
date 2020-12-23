@@ -30,15 +30,15 @@
                             <form id="cart-content-form" action="/cart/update" method="POST">
                             <input name="_method" type="hidden" value="PUT">
                             @csrf
-                            @foreach (Cart::content() as $row)
+                            @foreach ($cartHandler->finalCartItems as $row)
                             <input name="rowIdArray[]" type="hidden" value="{{$row->rowId}}">
                                 <tr>
                                     <td class="shoping__cart__item">
-                                        <img style="width:100px;height:100" src="{{$row->model->getFirstImageUrl()}}">
+                                        <img style="width:100px;height:100" src="{{$row->product->getFirstImageUrl()}}">
                                         <h5>{{$row->name}}</h5>
                                     </td>
                                     <td class="shoping__cart__price">
-                                        ${{$row->model->getPriceOnSale()}}
+                                        ${{$row->price}}
                                     </td>
                                     <td class="shoping__cart__quantity">
                                         <div class="quantity">
@@ -84,9 +84,9 @@
                 <div class="shoping__checkout">
                     <h5>Cart Total</h5>
                     <ul>
-                        <li>Subtotal <span>${{Cart::subtotal()}}</span></li>
-                        <li>Tax <span>${{Cart::tax()}}</span></li>
-                        <li>Total <span>${{Cart::total()}}</span></li>
+                        <li>Subtotal <span>${{$cartHandler->subtotal}}</span></li>
+                        <li>Discount <span>${{$cartHandler->discount}}</span></li>
+                        <li>Total <span>${{$cartHandler->total}}</span></li>
                     </ul>
                     <a href="{{route('checkout')}}" class="primary-btn">PROCEED TO CHECKOUT</a>
                 </div>

@@ -6,6 +6,7 @@ use App\Category;
 use App\Country;
 use App\Product;
 use App\Carrier;
+use App\Helpers\CartHandler;
 use App\Helpers\Pagination;
 use App\Helpers\TaiwanDistrict;
 use App\Http\Resources\ProductCollection;
@@ -54,13 +55,16 @@ class PageController extends Controller
 
     /**購物車頁面 */
     public function cart(){
-        return view('pages.cart');
+        return view('pages.cart',[
+            'cartHandler' => new CartHandler(),
+        ]);
     }
 
     /**結帳頁面 */
     public function checkout(){
 
         return view('pages.checkout',[
+            'cartHandler' => new CartHandler(),
             'countries'=>Country::all(),
             'counties'=>TaiwanDistrict::COUNTY,
             'cities'=>TaiwanDistrict::CITY,
