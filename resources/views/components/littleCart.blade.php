@@ -13,7 +13,7 @@
         <div class="shopping-cart-header">
             <i class="fa fa-shopping-cart cart-icon"></i>
             <div class="shopping-cart-total">
-                <span class="lighter-text">Total:</span>
+                <span class="lighter-text">小記:</span>
                 <span id="shopping-cart-total" class="main-color-text"></span>
             </div>
         </div>

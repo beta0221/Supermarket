@@ -34,6 +34,7 @@ class CartController extends Controller
         return response([
             'items'=>$cartItems,
             'count'=>$cartHandler->cartItems->count(),
+            'subtotal'=>$cartHandler->subtotal,
             'total'=>$cartHandler->total,
         ]);
     }

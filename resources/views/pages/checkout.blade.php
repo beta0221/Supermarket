@@ -199,7 +199,8 @@
                         <div class="checkout__order">
                             <h4>Your Order</h4>
                             <div class="checkout__order__products">Subtotal <span>${{$cartHandler->subtotal}}</span></div>
-                            <div class="checkout__order__products">Discount <span>${{$cartHandler->discount}}</span></div>
+                            <div class="checkout__order__products">運費 <span>${{$cartHandler->delivery_fee}}</span></div>
+                            <div class="checkout__order__products">Discount <span>-${{$cartHandler->discount}}</span></div>
                             <div class="checkout__order__subtotal">Total <span>${{$cartHandler->total}}</span></div>
 
                             <div class="checkout__input__checkbox">

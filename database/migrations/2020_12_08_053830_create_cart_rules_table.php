@@ -22,6 +22,7 @@ class CreateCartRulesTable extends Migration
             $table->dateTime('expiration_date')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->tinyInteger('highlight')->default(0);
+            $table->integer('minimum_total')->nullable();
             $table->integer('minimum_amount')->default(0);
             $table->tinyInteger('free_delivery')->default(0);
             $table->integer('total_available')->default(0);

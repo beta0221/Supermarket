@@ -85,7 +85,8 @@
                     <h5>Cart Total</h5>
                     <ul>
                         <li>Subtotal <span>${{$cartHandler->subtotal}}</span></li>
-                        <li>Discount <span>${{$cartHandler->discount}}</span></li>
+                        <li>運費 <span>${{$cartHandler->delivery_fee}}</span></li>
+                        <li>Discount <span>-${{$cartHandler->discount}}</span></li>
                         <li>Total <span>${{$cartHandler->total}}</span></li>
                     </ul>
                     <a href="{{route('checkout')}}" class="primary-btn">PROCEED TO CHECKOUT</a>

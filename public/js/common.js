@@ -26,7 +26,7 @@ function getCartItems(){
         url: "/cart/getItems",
         dataType: "json",
         success: function (res) {
-            $('#shopping-cart-total').html('$' + res.total);
+            $('#shopping-cart-total').html('$' + res.subtotal);
             $('#little-cart-count').html(res.count);
             Object.keys(res.items).forEach(key => {
                 let item = res.items[key];

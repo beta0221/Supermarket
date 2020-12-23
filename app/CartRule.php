@@ -23,6 +23,7 @@ class CartRule extends Model
         'expiration_date',
         'status',
         'highlight',
+        'minimum_total',
         'minimum_amount',
         'free_delivery',
         'total_available',
@@ -43,6 +44,14 @@ class CartRule extends Model
 
     public function categories(){
         return $this->belongsToMany('App\Category','cart_rule_categories','cart_rule_id','category_id');
+    }
+
+    public static function getCartRuleByMinimumTotal($total){
+        $cartRule = CartRule::where('status',1)
+            ->where('minimum_total','<=',$total)
+            ->orderBy('priority','desc')
+            ->first();
+        return $cartRule;
     }
 
     public static function getCartRuleByProductId($product_id,$qty){

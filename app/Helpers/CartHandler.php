@@ -9,7 +9,7 @@ class CartHandler{
     /**小記 */
     public $subtotal = 0;
     /**運費 */
-    public $shipping_fee = 0;
+    public $delivery_fee = 150;
     /**手續費 */
     public $transfer_fee = 0;
     /**折扣 */
@@ -47,12 +47,20 @@ class CartHandler{
         //         $this->handleCartItem($cartItem,$cartRule);
         //     }
         // }
-
+        $this->caculateDeliveryFee();
         $this->caculateTotal();
     }
 
+    private function caculateDeliveryFee(){
+        if($cartRule = CartRule::getCartRuleByMinimumTotal($this->subtotal)){
+            if($cartRule->free_delivery){
+                $this->delivery_fee = 0;
+            }
+        }
+    }
+
     private function caculateTotal(){
-        $this->total = $this->subtotal - $this->discount;
+        $this->total = $this->subtotal - $this->discount + $this->delivery_fee + $this->transfer_fee;
     }
 
     // private function handleCartItem($cartItem,CartRule $cartRule){
