@@ -48,6 +48,7 @@ Vue.component('SingleSelector',require('./components/SingleSelector').default);
 Vue.component('MultipleSelector',require('./components/MultipleSelector').default);
 Vue.component('TextEditor',require('./components/TextEditor').default);
 Vue.component('ImageInput',require('./components/ImageInput').default);
+Vue.component('OrderDetailModal',require('./components/OrderDetailModal').default);
 
 
 

@@ -51,7 +51,7 @@
               size="sm"
               color="info"
               class="ml-1"
-              @click="orderDetail(item.order_numero)"
+              @click="showDetail(item.order_numero)"
               >詳細</CButton
             >
           </td>
@@ -64,8 +64,9 @@
         align="start"
         v-on:update:activePage="reloadData"
       />
-
-      <CModal
+      <OrderDetailModal
+      />
+      <!-- <CModal
       title="訂單內容"
       color="info"
       :show.sync="show"
@@ -88,7 +89,7 @@
               
             </template>
           </CDataTable>
-      </CModal>
+      </CModal> -->
 
     </CCardBody>
   </div>
@@ -243,7 +244,10 @@ export default {
       .catch(err => {
         console.error(err); 
       })
-    }
+    },
+    showDetail(order_numero){
+            EventBus.$emit("showDetailModal",order_numero);
+        }
   },
 };
 </script>
