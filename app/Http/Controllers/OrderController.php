@@ -13,6 +13,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\OrderExport;
+use App\Http\Resources\OrderCollection;
 
 class OrderController extends Controller
 {
@@ -26,9 +27,10 @@ class OrderController extends Controller
             ->take($p->rows)
             ->orderBy($p->orderBy,$p->order)
             ->get();
+        $order = new OrderCollection($modelList);
 
         return response([
-            'data'=>$modelList,
+            'data'=>$order->withUserName()->toArray(),
             'pagination'=>$p,
         ]);
     }

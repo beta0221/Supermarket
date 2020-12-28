@@ -32,7 +32,8 @@
                 '5' => 'btn btn-secondary',
                 '6' => 'btn btn-danger',
                 ]; ?>
-                @foreach ($myOrderList as $myOrder)
+                <tbody>
+                    @foreach ($myOrderList as $myOrder)
                     <tr>
                         <td class="align-middle">{{ $myOrder->order_numero }}</td>
                         <td class="align-middle">
@@ -47,7 +48,18 @@
                         </td>
                     </tr>
                 @endforeach
-
+                </tbody>
+                <tfoot  class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <tr class="mr-2">
+                                <td class="mr-2">
+                                    @include('components.pagination')
+                                </td>
+                            </tr>  
+                        </div>        
+                    </div>       
+                </tfoot>
             </table>
         </div>
     </div>
