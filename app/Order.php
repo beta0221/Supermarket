@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\CartHandler;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Cart;
@@ -52,8 +53,8 @@ class Order extends Model
      * @param int $address_id
      * @return Order
      */
-    public static function insert_row(Request $request,int $address_id){
-        $carts_total = Cart::subtotal();
+    public static function insert_row(Request $request,int $address_id,CartHandler $cartHandler){
+
         $order = new Order();
         $order->order_numero = uniqid();
         $order->user_id = $request->user()->id;
@@ -66,11 +67,11 @@ class Order extends Model
         $order->currency_id = 1;
         $order->comment = $request->comment;
 
-        $order->total_discount = 0;
+        $order->total_discount = floatval($cartHandler->discount);
         $order->total_discount_tax = 0;
-        $order->total_shipping = 0;
+        $order->total_shipping = floatval($cartHandler->delivery_fee);
         $order->total_shipping_tax = 0;
-        $order->total = floatval($carts_total);
+        $order->total = floatval($cartHandler->total);
         $order->total_tax = 0;
         $order->save();
 

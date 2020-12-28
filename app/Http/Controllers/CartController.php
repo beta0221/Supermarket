@@ -79,34 +79,33 @@ class CartController extends Controller
     }
 
     public function checkout(Request $request){
-
-        $address = Address::insert_row($request);
-        $order = Order::insert_row($request,$address->id);
-        $carts = Cart::content();
         
+        $cartHandler = new CartHandler();
+        $address = Address::insert_row($request);
+        $order = Order::insert_row($request,$address->id,$cartHandler);
+        $order_numero = $order->order_numero;
+
         $items=[];
-        foreach ($carts as $cart){
+        foreach ($cartHandler->finalCartItems as $item){
 
             $orderProduct =  new OrderProduct();      
-            $orderProduct->name = $cart->name;
-            $orderProduct->price = $cart->price;            
-            $orderProduct->quantity = $cart->qty;
+            $orderProduct->name = $item->name;
+            $orderProduct->price = $item->price;            
+            $orderProduct->quantity = $item->qty;
             $orderProduct->price_with_tax = 0;
-            $orderProduct->sku = $cart->model->sku;
-            $orderProduct->product_id = $cart->model->id;
+            $orderProduct->sku = $item->product->sku;
+            $orderProduct->product_id = $item->product->id;
             $orderProduct->order_id = $order->id;
+            $orderProduct->save();
 
             $items[] = [
-                'name' => $cart->name,
-                'qty' => $cart->qty,
+                'name' => $item->name,
+                'qty' => $item->qty,
                 'unit' => '個',
-                'price' => $cart->price,
+                'price' => $item->price,
             ];
-
-            $orderProduct->save();
         };
         Cart::destroy();
-        $order_numero = $order->order_numero;
 
         $formData = [
             'OrderId'=>$order_numero,
