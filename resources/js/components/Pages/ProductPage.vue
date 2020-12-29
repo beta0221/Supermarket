@@ -35,6 +35,7 @@ export default {
             fields:[
                 {key:'index',label:'#'},
                 {key:'name',label:'商品名稱'},
+                {key:'active',label:'上下架'},
                 {key:'edit',label:'-'},
             ],
             columns:[

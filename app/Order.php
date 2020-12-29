@@ -92,6 +92,20 @@ class Order extends Model
         ]);
         return 1;
     }
+    public static function updateToLastStatus($order_numero){
+        $first = Order::where('order_numero',$order_numero)->first();
+        if(!$first){
+            return 0;
+        }
+        // if($first->status_id == Order::STATUS_INVALID){
+        //     return -1;
+        // }
+        $lastStatus = $first->status_id - 1;
+        Order::where('order_numero',$order_numero)->update([
+            'status_id'=>$lastStatus
+        ]);
+        return 1;
+    }
     
 
 }

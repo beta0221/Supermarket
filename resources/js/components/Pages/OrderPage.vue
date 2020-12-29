@@ -9,6 +9,13 @@
         size="sm"
         color="info"
         class="ml-1"
+        @click="groupLastStatus"
+        >上階段</CButton
+      >
+      <CButton
+        size="sm"
+        color="info"
+        class="ml-1"
         @click="groupNextStatus"
         >下階段</CButton
       >
@@ -66,30 +73,6 @@
       />
       <OrderDetailModal
       />
-      <!-- <CModal
-      title="訂單內容"
-      color="info"
-      :show.sync="show"
-      size="lg"
-      >
-          <CDataTable
-          :items="orderProduct"
-          :fields="orderProductFields"
-          >
-          <template #imageUrl="{item}">
-            <td>
-              <img
-                :src="item.imageUrl"
-                width="90px"
-                height="90px"
-                class="mt-1"
-                style="align-middle"
-              />
-            </td>
-              
-            </template>
-          </CDataTable>
-      </CModal> -->
 
     </CCardBody>
   </div>
@@ -224,6 +207,22 @@ export default {
                 return;
             }
             axios.post('/api/order/groupNextStatus',{
+                'order_numero_array':JSON.stringify(order_numero_array)
+            })
+            .then(res => {
+                this.$router.go('/admin/order');
+            })
+            .catch(err => {
+                console.error(err); 
+            })
+        },
+    groupLastStatus(){
+            let order_numero_array = this.getCheckedOrderNumero();
+            if(order_numero_array.length == 0){
+                alert('請勾選');
+                return;
+            }
+            axios.post('/api/order/groupLastStatus',{
                 'order_numero_array':JSON.stringify(order_numero_array)
             })
             .then(res => {

@@ -81,6 +81,8 @@ Route::group(['prefix'=>'order'],function(){
     Route::get('getOrderDetail/{order_numero}','OrderController@getOrderDetail');
     Route::post('nextStatus','OrderController@nextStatus');
     Route::post('groupNextStatus','OrderController@groupNextStatus');
+    Route::post('lastStatus','OrderController@lastStatus');
+    Route::post('groupLastStatus','OrderController@groupLastStatus');
 });
 Route::get('member','MemberController@getMembers');
 Route::get('userOrder/{id}','MemberController@userOrderList');

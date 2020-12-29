@@ -116,14 +116,21 @@ class OrderController extends Controller
     public function nextStatus(Request $request){
         $this->validate($request,[
             'order_numero'=>'required',
-        ]);
-        // $user = request()->user();
-        // if(!$user->hasRole('Admin')){
-        //     return response('此操作身份必須為"廠商"',403);
-        // }ㄌ
-        
+        ]);     
         $result = Order::updateToNextStatus($request->order_numero);
-    
+        if($result == 0){
+            return response(['s'=>0,'m'=>'系統錯誤']);
+        }else if($result == -1){
+            return response(['s'=>0,'m'=>'已作廢']);
+        }
+
+        return response(['s'=>1,'m'=>'更新成功']);
+    }
+    public function lastStatus(Request $request){
+        $this->validate($request,[
+            'order_numero'=>'required',
+        ]);     
+        $result = Order::updateToLastStatus($request->order_numero);
         if($result == 0){
             return response(['s'=>0,'m'=>'系統錯誤']);
         }else if($result == -1){
@@ -143,6 +150,17 @@ class OrderController extends Controller
         $order_numero_array = json_decode($request->order_numero_array,true);
         foreach ($order_numero_array as $order_numero) {
             Order::updateToNextStatus($order_numero);
+        }
+        return response('success');
+    }
+
+    public function groupLastStatus(Request $request){
+        $this->validate($request,[
+            'order_numero_array'=>'required',
+        ]);
+        $order_numero_array = json_decode($request->order_numero_array,true);
+        foreach ($order_numero_array as $order_numero) {
+            Order::updateToLastStatus($order_numero);
         }
         return response('success');
     }
