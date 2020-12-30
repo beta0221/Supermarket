@@ -21,16 +21,31 @@ class OrderController extends Controller
     public function getOrderList(Request $request)
     {  
         $p = new Pagination($request);
-        $p->cacuTotalPage(Order::count());
-        
-        $modelList = Order::skip($p->skip)
+        $query = new Order();
+        if($request->has('column') && $request->has('value')){
+            if($request->column == 'created_at'){
+                $query =$query->whereDate($request->column,date('Y-m-d',strtotime($request->value)));
+            }
+            else if($request->column == 'buyer'){
+                $user_id_array = User::where('name','like','%'.$request->value.'%')->pluck('id');
+                $query = $query->whereIn('user_id',$user_id_array);
+            }
+            else{
+                $query = $query->where($request->column,'like','%'.$request->value.'%'); 
+            }
+               
+        }    
+        $p->cacuTotalPage($query->count()); 
+
+        $modelList = $query->skip($p->skip)
             ->take($p->rows)
             ->orderBy($p->orderBy,$p->order)
             ->get();
         $order = new OrderCollection($modelList);
-
+        
+        $new = $order->withUserName()->toArray();
         return response([
-            'data'=>$order->withUserName()->toArray(),
+            'data'=>$new,
             'pagination'=>$p,
         ]);
     }

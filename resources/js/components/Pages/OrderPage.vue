@@ -26,6 +26,12 @@
         @click="groupExportExcel"
         >匯出</CButton
       >
+      <CSelect :value.sync="searchColumn" :options="columns" label="搜尋欄位"></CSelect>
+      <CSelect v-if="(searchColumn=='status_id')" :value.sync="searchValue" :options="statusValue" placeholder="選擇狀態" @change="searchByColumn"></CSelect>
+      <CInput v-if="(searchColumn=='buyer')" type="text" :value.sync="searchValue" @keyup.native.enter="searchByColumn"></CInput>
+      <CInput v-if="(searchColumn=='order_numero')" type="text" :value.sync="searchValue" @keyup.native.enter="searchByColumn"></CInput>
+      <CInput v-if="(searchColumn=='created_at')" type="date" :value.sync="searchValue"  @keyup.native.enter="searchByColumn"></CInput>
+      
       <CDataTable
         :items="items"
         :fields="fields"
@@ -95,7 +101,24 @@ export default {
         //orderBy:'id',
         //order:'desc',
       },
-
+      searchColumn:null,
+      searchValue: null,
+      columns:[
+        { label:"請選擇欄位" ,value:null},
+        { label: "訂單編號" ,value:'order_numero' },
+        { label: "狀態" ,value:'status_id'},
+        { label: "訂購人" ,value:'buyer'},
+        { label: "日期" ,value:'created_at'},
+      ],
+      statusValue:[
+        { label: "代付款" ,value:'0' },
+        { label: "待出貨" ,value:'1'},
+        { label: "準備中" ,value:'2'},
+        { label: "已出貨" ,value:'3'},
+        { label: "已到貨" ,value:'4'},
+        { label: "結案" ,value:'5'},
+        { label: "作廢" ,value:'6'},
+      ],
       fields: [
         { key: "checkbox", label: "#" },
         { key: "order_numero", label: "訂單編號" },
@@ -130,6 +153,20 @@ export default {
       ]
     };
   },
+  watch:{
+        searchColumn(val){
+            this.searchValue = null;
+            if(val == null){
+                this.pagination.page = 1;
+                this.reloadData();
+            }
+        },
+        // pagination: {
+        //     handler(){
+        //         this.reloadData();
+        //     }
+        // }
+    },
   created() {
     this.reloadData();
   },
@@ -146,10 +183,18 @@ export default {
       this.pagination.rows = value;
       this.reloadData();
     },
+    searchByColumn(){
+            this.pagination.page = 1;
+            this.reloadData();
+        },
     reloadData() {
       axios
         .get("/api/order/getOrderList", {
-          params: this.pagination,
+          params: {
+            pagination:this.pagination,
+            column:this.searchColumn,
+            value:this.searchValue,
+            },
         })
         .then((res) => {
           this.items = res.data.data;

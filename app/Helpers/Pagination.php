@@ -21,6 +21,25 @@ class Pagination{
 
     public function __construct(Request $request)
     {
+
+        if($request->has('pagination')){
+            $pagination = json_decode($request->pagination,true);
+            $this->loadPagination($pagination);
+        }else{
+            $this->loadRequest($request);
+        }
+        
+    }
+
+    private function loadPagination($pagination){
+        $request = new Request();
+        foreach ($pagination as $key => $value) {
+            $request->merge([$key=>$value]);
+        }
+        $this->loadRequest($request);
+    }
+
+    private function loadRequest(Request $request){
         if($request->has('page')){
             $this->page = (int)$request->page;
         }
