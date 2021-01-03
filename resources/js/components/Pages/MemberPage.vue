@@ -1,6 +1,41 @@
 <template>
   <div>
     <NavBar :title="'會員管理'" />
+     <CRow class="mt-3 mx-2">
+        <CCol md="2">
+          <CSelect
+            :value.sync="searchColumn"
+            :options="columns"
+          ></CSelect>
+        </CCol>
+        <CCol md="2">
+          <CSelect
+            v-if="searchColumn == 'active'"
+            :value.sync="searchValue"
+            :options="activeValue"
+            placeholder="選擇狀態"
+            @change="searchByColumn"
+          ></CSelect>
+          <CInput
+            v-if="searchColumn == 'name'"
+            type="text"
+            :value.sync="searchValue"
+            @keyup.native.enter="searchByColumn"
+          ></CInput>
+          <CInput
+            v-if="searchColumn == 'email'"
+            type="text"
+            :value.sync="searchValue"
+            @keyup.native.enter="searchByColumn"
+          ></CInput>
+          <CInput
+            v-if="searchColumn == 'created_at'"
+            type="date"
+            :value.sync="searchValue"
+            @keyup.native.enter="searchByColumn"
+          ></CInput>
+        </CCol>
+      </CRow>
     <CCardBody>
       <CDataTable
         :items="items"
@@ -109,6 +144,8 @@ export default {
       userOrder:[],
       userId:null,
       show:false,
+      searchColumn: null,
+      searchValue: null,
       pagination: {
         page: 1,
         rows: 10,
@@ -137,6 +174,17 @@ export default {
           filter: false,
         },
       ],
+      columns: [
+        { label: "請選擇欄位", value: null },
+        { label: "會員名稱", value: "name" },
+        { label: "狀態", value: "active" },
+        { label: "Email", value: "email" },
+        { label: "日期", value: "created_at" },
+      ],
+      activeValue:[
+        {label:'啟用中',value:"1"},
+        {label:'未啟用',value:"0"}
+      ],
       activeDict:{
           0:'未啟用',
           1:'啟用中'
@@ -155,6 +203,20 @@ export default {
       ]
     };
   },
+  watch: {
+    searchColumn(val) {
+      this.searchValue = null;
+      if (val == null) {
+        this.pagination.page = 1;
+        this.reloadData();
+      }
+    },
+    // pagination: {
+    //     handler(){
+    //         this.reloadData();
+    //     }
+    // }
+  },
   created() {
     this.reloadData();
   },
@@ -170,7 +232,11 @@ export default {
     reloadData() {
       axios
         .get("/api/member", {
-          params: this.pagination,
+          params: {
+            pagination: this.pagination,
+            column: this.searchColumn,
+            value: this.searchValue,
+          },
         })
         .then((res) => {
           this.items = res.data.data;
@@ -203,7 +269,11 @@ export default {
     },
     showDetail(order_numero){
             EventBus.$emit("showDetailModal",order_numero);
-        }
+        },
+        searchByColumn() {
+      this.pagination.page = 1;
+      this.reloadData();
+    },
   },
 };
 </script>

@@ -5,33 +5,51 @@
       <CButton size="sm" color="info" class="ml-1" @click="selectAll"
         >全選</CButton
       >
-      <CButton
-        size="sm"
-        color="info"
-        class="ml-1"
-        @click="groupLastStatus"
+      <CButton size="sm" color="info" class="ml-1" @click="groupLastStatus"
         >上階段</CButton
       >
-      <CButton
-        size="sm"
-        color="info"
-        class="ml-1"
-        @click="groupNextStatus"
+      <CButton size="sm" color="info" class="ml-1" @click="groupNextStatus"
         >下階段</CButton
       >
-      <CButton
-        size="sm"
-        color="info"
-        class="ml-1"
-        @click="groupExportExcel"
+      <CButton size="sm" color="info" class="ml-1" @click="groupExportExcel"
         >匯出</CButton
       >
-      <CSelect :value.sync="searchColumn" :options="columns" label="搜尋欄位"></CSelect>
-      <CSelect v-if="(searchColumn=='status_id')" :value.sync="searchValue" :options="statusValue" placeholder="選擇狀態" @change="searchByColumn"></CSelect>
-      <CInput v-if="(searchColumn=='buyer')" type="text" :value.sync="searchValue" @keyup.native.enter="searchByColumn"></CInput>
-      <CInput v-if="(searchColumn=='order_numero')" type="text" :value.sync="searchValue" @keyup.native.enter="searchByColumn"></CInput>
-      <CInput v-if="(searchColumn=='created_at')" type="date" :value.sync="searchValue"  @keyup.native.enter="searchByColumn"></CInput>
-      
+      <CRow class="mt-3">
+        <CCol md="2">
+          <CSelect
+            :value.sync="searchColumn"
+            :options="columns"
+          ></CSelect>
+        </CCol>
+        <CCol md="2">
+          <CSelect
+            v-if="searchColumn == 'status_id'"
+            :value.sync="searchValue"
+            :options="statusValue"
+            placeholder="選擇狀態"
+            @change="searchByColumn"
+          ></CSelect>
+          <CInput
+            v-if="searchColumn == 'buyer'"
+            type="text"
+            :value.sync="searchValue"
+            @keyup.native.enter="searchByColumn"
+          ></CInput>
+          <CInput
+            v-if="searchColumn == 'order_numero'"
+            type="text"
+            :value.sync="searchValue"
+            @keyup.native.enter="searchByColumn"
+          ></CInput>
+          <CInput
+            v-if="searchColumn == 'created_at'"
+            type="date"
+            :value.sync="searchValue"
+            @keyup.native.enter="searchByColumn"
+          ></CInput>
+        </CCol>
+      </CRow>
+
       <CDataTable
         :items="items"
         :fields="fields"
@@ -51,8 +69,10 @@
 
         <template #status="{ item }">
           <td>
-            <CButton :color="colorDict[item.status_id]"
-            @click="nextStatus(item.order_numero)">
+            <CButton
+              :color="colorDict[item.status_id]"
+              @click="nextStatus(item.order_numero)"
+            >
               {{ statusDict[item.status_id] }}
             </CButton>
           </td>
@@ -77,9 +97,7 @@
         align="start"
         v-on:update:activePage="reloadData"
       />
-      <OrderDetailModal
-      />
-
+      <OrderDetailModal />
     </CCardBody>
   </div>
 </template>
@@ -89,11 +107,11 @@ export default {
   components: {},
   data() {
     return {
-      show:false,
+      show: false,
       checked: false,
       isSelectAll: false,
       items: [],
-      orderProduct:[],
+      orderProduct: [],
       pagination: {
         page: 1,
         rows: 10,
@@ -101,23 +119,23 @@ export default {
         //orderBy:'id',
         //order:'desc',
       },
-      searchColumn:null,
+      searchColumn: null,
       searchValue: null,
-      columns:[
-        { label:"請選擇欄位" ,value:null},
-        { label: "訂單編號" ,value:'order_numero' },
-        { label: "狀態" ,value:'status_id'},
-        { label: "訂購人" ,value:'buyer'},
-        { label: "日期" ,value:'created_at'},
+      columns: [
+        { label: "請選擇欄位", value: null },
+        { label: "訂單編號", value: "order_numero" },
+        { label: "狀態", value: "status_id" },
+        { label: "訂購人", value: "buyer" },
+        { label: "日期", value: "created_at" },
       ],
-      statusValue:[
-        { label: "代付款" ,value:'0' },
-        { label: "待出貨" ,value:'1'},
-        { label: "準備中" ,value:'2'},
-        { label: "已出貨" ,value:'3'},
-        { label: "已到貨" ,value:'4'},
-        { label: "結案" ,value:'5'},
-        { label: "作廢" ,value:'6'},
+      statusValue: [
+        { label: "代付款", value: "0" },
+        { label: "待出貨", value: "1" },
+        { label: "準備中", value: "2" },
+        { label: "已出貨", value: "3" },
+        { label: "已到貨", value: "4" },
+        { label: "結案", value: "5" },
+        { label: "作廢", value: "6" },
       ],
       fields: [
         { key: "checkbox", label: "#" },
@@ -145,28 +163,28 @@ export default {
         5: "結案",
         6: "作廢",
       },
-      orderProductFields : [
+      orderProductFields: [
         { key: "name", label: "商品" },
         { key: "imageUrl", label: "圖片" },
         { key: "price", label: "價錢" },
         { key: "quantity", label: "數量" },
-      ]
+      ],
     };
   },
-  watch:{
-        searchColumn(val){
-            this.searchValue = null;
-            if(val == null){
-                this.pagination.page = 1;
-                this.reloadData();
-            }
-        },
-        // pagination: {
-        //     handler(){
-        //         this.reloadData();
-        //     }
-        // }
+  watch: {
+    searchColumn(val) {
+      this.searchValue = null;
+      if (val == null) {
+        this.pagination.page = 1;
+        this.reloadData();
+      }
     },
+    // pagination: {
+    //     handler(){
+    //         this.reloadData();
+    //     }
+    // }
+  },
   created() {
     this.reloadData();
   },
@@ -183,18 +201,18 @@ export default {
       this.pagination.rows = value;
       this.reloadData();
     },
-    searchByColumn(){
-            this.pagination.page = 1;
-            this.reloadData();
-        },
+    searchByColumn() {
+      this.pagination.page = 1;
+      this.reloadData();
+    },
     reloadData() {
       axios
         .get("/api/order/getOrderList", {
           params: {
-            pagination:this.pagination,
-            column:this.searchColumn,
-            value:this.searchValue,
-            },
+            pagination: this.pagination,
+            column: this.searchColumn,
+            value: this.searchValue,
+          },
         })
         .then((res) => {
           this.items = res.data.data;
@@ -209,7 +227,7 @@ export default {
     },
     orderDetail($order_numero) {
       axios
-        .get("/api/order/getOrderDetail/"+$order_numero )
+        .get("/api/order/getOrderDetail/" + $order_numero)
         .then((res) => {
           this.show = true;
           this.orderProduct = res.data.orderProduct;
@@ -237,61 +255,69 @@ export default {
       });
       return numeroArray;
     },
-    groupExportExcel(){
-            let order_numero_array = this.getCheckedOrderNumero();
-            if(order_numero_array.length == 0){
-                alert('請勾選');
-                return;
-            }
-            window.open('/order/downloadOrderExcel?token='+localStorage.getItem('token') + '&order_numero_array='+order_numero_array.join(','))
-        },
-    groupNextStatus(){
-            let order_numero_array = this.getCheckedOrderNumero();
-            if(order_numero_array.length == 0){
-                alert('請勾選');
-                return;
-            }
-            axios.post('/api/order/groupNextStatus',{
-                'order_numero_array':JSON.stringify(order_numero_array)
-            })
-            .then(res => {
-                this.$router.go('/admin/order');
-            })
-            .catch(err => {
-                console.error(err); 
-            })
-        },
-    groupLastStatus(){
-            let order_numero_array = this.getCheckedOrderNumero();
-            if(order_numero_array.length == 0){
-                alert('請勾選');
-                return;
-            }
-            axios.post('/api/order/groupLastStatus',{
-                'order_numero_array':JSON.stringify(order_numero_array)
-            })
-            .then(res => {
-                this.$router.go('/admin/order');
-            })
-            .catch(err => {
-                console.error(err); 
-            })
-        },
-    nextStatus($order_numero){
-      axios.post('/api/order/nextStatus/',{
-                'order_numero':$order_numero
-            })
-      .then(res => {
-        console.log(res);
-        this.reloadData();
-      })
-      .catch(err => {
-        console.error(err); 
-      })
+    groupExportExcel() {
+      let order_numero_array = this.getCheckedOrderNumero();
+      if (order_numero_array.length == 0) {
+        alert("請勾選");
+        return;
+      }
+      window.open(
+        "/order/downloadOrderExcel?token=" +
+          localStorage.getItem("token") +
+          "&order_numero_array=" +
+          order_numero_array.join(",")
+      );
     },
-    showDetail(order_numero){
-            EventBus.$emit("showDetailModal",order_numero);
-        }
+    groupNextStatus() {
+      let order_numero_array = this.getCheckedOrderNumero();
+      if (order_numero_array.length == 0) {
+        alert("請勾選");
+        return;
+      }
+      axios
+        .post("/api/order/groupNextStatus", {
+          order_numero_array: JSON.stringify(order_numero_array),
+        })
+        .then((res) => {
+          this.$router.go("/admin/order");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    groupLastStatus() {
+      let order_numero_array = this.getCheckedOrderNumero();
+      if (order_numero_array.length == 0) {
+        alert("請勾選");
+        return;
+      }
+      axios
+        .post("/api/order/groupLastStatus", {
+          order_numero_array: JSON.stringify(order_numero_array),
+        })
+        .then((res) => {
+          this.$router.go("/admin/order");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    nextStatus($order_numero) {
+      axios
+        .post("/api/order/nextStatus/", {
+          order_numero: $order_numero,
+        })
+        .then((res) => {
+          console.log(res);
+          this.reloadData();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    showDetail(order_numero) {
+      EventBus.$emit("showDetailModal", order_numero);
+    },
   },
 };
 </script>
