@@ -6,6 +6,7 @@
       items-per-page-select
       :items-per-page="10"
       v-on:pagination-change="setRows"
+      table-filter
     >
       <template #index="{ item, index }">
         <td>{{ index + 1 }}</td>

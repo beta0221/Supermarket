@@ -30,7 +30,6 @@
 
             <CSidebarNavDropdown :name="'會員管理'">
                 <CSidebarNavItem :name="'會員管理'" to="/admin/member"></CSidebarNavItem>
-                <CSidebarNavItem :name="'hello'"></CSidebarNavItem>
             </CSidebarNavDropdown>
 
             <CSidebarNavDropdown :name="'訂單管理'">

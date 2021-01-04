@@ -97,7 +97,7 @@
                                 <div> <a href="/shop"><i class="fa fa-user"></i>{{ auth()->user()->name }}</a></div>
                                 <span class="arrow_carrot-down"></span>
                                 <ul>
-                                    <li><a href="/order/myOrder" style="color:black">My Order</a></li>
+                                    <li><a href="/order/myOrder" >My Order</a></li>
                                     <li>
                                         <form action="{{ route('logout') }}" method="post">
                                             @csrf

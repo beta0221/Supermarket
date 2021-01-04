@@ -335,7 +335,12 @@ ol {
 	opacity: 1;
 	visibility: visible;
 }
-
+.header__top__right__language ul li a:hover{
+	color:#7fad39;
+}
+.header__top__right__language ul li form button:hover{
+	color:#7fad39;
+}
 .header__top__right__language:after {
 	position: absolute;
 	right: -21px;
@@ -366,7 +371,9 @@ ol {
 }
 
 .header__top__right__language ul {
-	background: #d8d8d8;
+	background: #ffffff;
+	border:1px solid;
+	border-radius: 3px;
 	width: 100px;
 	text-align: left;
 	padding: 5px 0;
@@ -386,11 +393,12 @@ ol {
 .header__top__right__language ul li {
 	list-style: none;
 	text-align: center;
+	margin-top: 0.1rem;
 }
 
 .header__top__right__language ul li a {
 	font-size: 14px;
-	color: #ffffff;
+	color: #030303;
 	padding: 5px 10px;
 }
 
