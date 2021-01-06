@@ -14,32 +14,14 @@
 <section class="categories">
     <div class="container">
         <div class="row">
-            <div class="categories__slider owl-carousel">
+            <div class="categories__slider owl-carousel">        
+                @foreach ($categoryWithoutSub as $category)
                 <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="img/categories/cat-1.jpg">
-                        <h5><a href="#">Fresh Fruit</a></h5>
+                    <div class="categories__item set-bg" data-setbg="{{$category->imageUrl}}">
+                        <h5><a href="/shop/{{$category->slug}}">{{$category->name}}</a></h5>
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="img/categories/cat-2.jpg">
-                        <h5><a href="#">Dried Fruit</a></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="img/categories/cat-3.jpg">
-                        <h5><a href="#">Vegetables</a></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="img/categories/cat-4.jpg">
-                        <h5><a href="#">drink fruits</a></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="img/categories/cat-5.jpg">
-                        <h5><a href="#">drink fruits</a></h5>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -57,31 +39,40 @@
                 <div class="featured__controls">
                     <ul>
                         <li class="active" data-filter="*">All</li>
-                        <li data-filter=".oranges">Oranges</li>
-                        <li data-filter=".fresh-meat">Fresh Meat</li>
-                        <li data-filter=".vegetables">Vegetables</li>
-                        <li data-filter=".fastfood">Fastfood</li>
+                        @foreach ($categoryWithoutSub as $category)
+                            <li data-filter=".cat_{{$category->id}}">{{$category->name}}</li>
+                        @endforeach
+                        <li data-filter=".micky">Micky</li>
                     </ul>
                 </div>
             </div>
         </div>
+        
         <div class="row featured__filter">
-            <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-1.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
+            @foreach ($products as $product)
+                <div class="col-lg-3 col-md-4 col-sm-6 mix @foreach($product->catIdArray as $catId) {{'cat_' . $catId}} @endforeach">
+                    <div class="featured__item">
+                        <div class="featured__item__pic set-bg" data-setbg="{{$product->imageUrl}}">
+                            <ul class="featured__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a href="#">{{$product->name}}</a></h6>
+                            @if ($product->priceOnSale)
+                            <h5>{{$product->priceOnSale}}</h5>    
+                            @else    
+                            <h5>{{$product->price}}</h5>
+                            @endif
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fastfood">
+              @endforeach
+            
+
+            <div class="col-lg-3 col-md-4 col-sm-6 mix micky 123123 ">
                 <div class="featured__item">
                     <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-2.jpg">
                         <ul class="featured__item__pic__hover">
@@ -91,97 +82,7 @@
                         </ul>
                     </div>
                     <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fresh-meat">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-3.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix fastfood oranges">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-4.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat vegetables">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-5.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fastfood">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-6.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat vegetables">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-7.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix fastfood vegetables">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-8.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
+                        <h6><a href="#">micky</a></h6>
                         <h5>$30.00</h5>
                     </div>
                 </div>

@@ -9,17 +9,20 @@
                         <span>產品</span>
                     </div>
                     <ul>
-                        <li><a href="#">Fresh Meat</a></li>
-                        <li><a href="#">Vegetables</a></li>
-                        <li><a href="#">Fruit & Nut Gifts</a></li>
-                        <li><a href="#">Fresh Berries</a></li>
-                        <li><a href="#">Ocean Foods</a></li>
-                        <li><a href="#">Butter & Eggs</a></li>
-                        <li><a href="#">Fastfood</a></li>
-                        <li><a href="#">Fresh Onion</a></li>
-                        <li><a href="#">Papayaya & Crisps</a></li>
-                        <li><a href="#">Oatmeal</a></li>
-                        <li><a href="#">Fresh Bananas</a></li>
+                        @foreach ($categories as $category)
+                        <li>
+                            <a href="/shop/{{$category->slug}}">{{$category->name}}</a>
+                            @if (isset($category->subCategoryList))
+                            <ul>
+                                @foreach ($category->subCategoryList as $cat)
+                                <li class="ml-4">
+                                    <a href="/shop/{{$cat->slug}}">{{$cat->name}}</a>
+                                </li>
+                                @endforeach
+                            </ul>
+                            @endif
+                        </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -50,7 +53,7 @@
                         <span>FRUIT FRESH</span>
                         <h2>Vegetable <br />100% Organic</h2>
                         <p>Free Pickup and Delivery Available</p>
-                        <a href="#" class="primary-btn">SHOP NOW</a>
+                        <a href="/shop" class="primary-btn">SHOP NOW</a>
                     </div>
                 </div>
             </div>

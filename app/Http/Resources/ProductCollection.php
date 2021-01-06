@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Category;
+use App\Product;
 use App\ProductImage;
 use App\SpecificPrice;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -16,6 +18,7 @@ class ProductCollection extends ResourceCollection
     private $initColumn = ['name','sku','price','stock'];
     private $firstImageDict = null;
     private $firstSpecificPriceDict = null;
+    private $catIdDict = null;
     
     public function __construct($resource){
         parent::__construct($resource);
@@ -40,6 +43,17 @@ class ProductCollection extends ResourceCollection
         return $this;
     }
     
+    public function withCategoryArray(){
+        
+        foreach ($this as $product){
+            $catId = $product->categories()->pluck('category_id');
+            $this->catIdDict[$product->id] = $catId;
+        }
+        return $this;
+        // foreach ($categories as $category){
+        //     $this->categoryNameDict[$category->id] = $categor
+        // } 
+    }
     
 
     /**
@@ -84,6 +98,14 @@ class ProductCollection extends ResourceCollection
                 }
                 $resource->priceOnSale = $priceOnSale;
                 $resource->discount = $discount;
+            }
+
+            if(!is_null($this->catIdDict)){
+                $resource->catIdArray = [];
+                if(isset($this->catIdDict[$model->id])){
+                    $resource->catIdArray = $this->catIdDict[$model->id];
+                }
+                
             }
 
             return $resource;

@@ -23,6 +23,13 @@
             :relationUrl="column.relationUrl"
             :trackBy="column.trackBy"
             />
+            
+            <ImageInput 
+                v-if="column.type == 'image_input'"
+                :label="column.label"
+                :slug="slug"
+                :addImageUrl="column.addImageUrl"
+                :url="column.url"/>
 
         </div>
 

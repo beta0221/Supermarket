@@ -27,7 +27,7 @@
 <script>
 export default {
     props:[
-        'label','slug','url'
+        'label','slug','url','addImageUrl'
     ],
     data(){
         return{
@@ -58,7 +58,7 @@ export default {
             let file = this.$refs.file.files[0];
             let formData = new FormData();
             formData.append('file', file);
-            axios.post(`/api/product/${this.id}/addImage`,formData,{
+            axios.post(`/api/${this.addImageUrl}/${this.id}/addImage`,formData,{
                 headers:{
                     'content-type': 'multipart/form-data',
                 }
@@ -72,7 +72,7 @@ export default {
             })
         },
         deleteImage(id){
-            axios.post(`/api/product/${this.id}/deleteImage`,{
+            axios.post(`/api/${this.addImageUrl}/${this.id}/deleteImage`,{
                 '_method':'DELETE',
                 'id':id,
             })

@@ -41,6 +41,7 @@ export default {
                 {key:'slug',type:'text',label:'代號',readonly:true},
                 {key:'name',type:'text',label:'分類'},
                 {key:'_',type:'multiple_selector',label:'配合活動',url:'/api/category',relation:'cartRules',relationUrl:'/api/cartRule/all',trackBy:'name'},
+                 {key:'image',type:'image_input',addImageUrl:'category',label:'商品圖片',url:'/api/category/images'},
             ]
         }
     }

@@ -73,6 +73,9 @@ Route::group(['prefix' => 'category'], function () {
     Route::get('/{slug}/subCategory','CategoryController@getSubCategory');
     Route::post('/{slug}/subCategory','CategoryController@addSubCategory');
     Route::delete('/removeFromParentCategory/{slug}','CategoryController@removeFromParentCategory');
+    Route::get('/images/{slug}','CategoryController@getImages');
+    Route::post('/{slug}/addImage','CategoryController@addImage');
+    Route::delete('/{slug}/deleteImage','CategoryController@deleteImage');
 });
 
 //後台

@@ -7,6 +7,8 @@ use App\Helpers\Pagination;
 use Illuminate\Http\Request;
 use App\Traits\CrudTrait;
 use App\Rules\SlugRule;
+use App\Helpers\StorageHelper;
+use App\Helpers\StorageType;
 
 class CategoryController extends Controller
 {
@@ -92,6 +94,43 @@ class CategoryController extends Controller
         $category->cartRules()->sync($request->syncArray);
         $cartRules = $category->cartRules()->get();
         return response($cartRules);
+    }
+    /**取得商品圖片 */
+    public function getImages($slug){
+        $category = Category::where('slug',$slug)->firstOrFail();
+        $imagesUrl = $category->imagesUrl();
+        return response($imagesUrl);
+    }
+    public function addImage(Request $request,$slug){
+        
+        if (!$request->has('file')) { return response('Error',400); }
+        $category = Category::where('slug',$slug)->firstOrFail();
+
+
+        if(!$path = StorageHelper::path(StorageType::TYPE_CATEGORY,$category->slug)->store($request->file('file'))){
+            return response('Error',500);
+        }
+                
+        $category->images()->create(['name'=>$path]);
+
+        $imageUrl = config('app.static_host') . '/' . $path;
+        return response($imageUrl);
+    }
+
+    public function deleteImage(Request $request,$slug){
+        
+        if (!$request->has('id')) { return response('Error',400); }
+        $category = Category::where('slug',$slug)->firstOrFail();
+        
+        $image = $category->images()->find($request->id);
+
+        $storageHelper = new StorageHelper();
+        $storageHelper->delete($image->name);
+
+        $image->forceDelete();
+        
+        return response($image);
+
     }
 
 

@@ -31,6 +31,9 @@ class Category extends Model
     public function cartRules(){
         return $this->belongsToMany('App\CartRule','cart_rule_categories','category_id','cart_rule_id');
     }
+    public function images(){
+        return $this->hasMany('App\CategoryImage');
+    }
 
     /**取得巢狀階層的 Category List */
     public static function getNestedCategoryList(){
@@ -51,5 +54,22 @@ class Category extends Model
         }
         return $list;
     }    
+
+    public function getDefaultImageUrl(){
+        return config('app.static_host') . '/default_product_image.png';
+    }
+
+    public function imagesUrl(){
+        $images = $this->images()->get();
+        $static_host = config('app.static_host') . '/';
+        $imagesUrl = [];
+        foreach ($images as $image) {
+            $imagesUrl[] = [
+                'id'=>$image->id,
+                'url'=>$static_host . $image->name,
+            ];
+        }
+        return $imagesUrl;
+    }
 
 }

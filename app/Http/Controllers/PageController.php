@@ -9,14 +9,46 @@ use App\Carrier;
 use App\Helpers\CartHandler;
 use App\Helpers\Pagination;
 use App\Helpers\TaiwanDistrict;
+use App\Http\Resources\CategoryCollection;
 use App\Http\Resources\ProductCollection;
 use App\Payment;
 
 class PageController extends Controller
 {
     /**首頁 */
-    public function index(){
-        return view('pages.index');
+    public function index(Request $request,$slug = null){
+        
+        $products = new Product();
+        if($slug){
+            $category = Category::where('slug',$slug)->firstOrFail();
+            $products = $category->products();
+        }
+        $categoryWithoutSub = Category::all();
+        $categoryWithoutSub = new CategoryCollection($categoryWithoutSub);
+        if(!$request->has('rows')){$request->merge(['rows'=>10]);}
+        $p = new Pagination($request);
+
+        $total = $products->where('active',1)->count();
+        $p->cacuTotalPage($total);
+
+        $products = $products->where('active',1)
+            ->skip($p->skip)
+            ->take($p->rows)
+            ->orderBy($p->orderBy,$p->order)
+            ->get();
+
+        $productCollection = new ProductCollection($products);
+        
+        $onSaleProducts = Product::getOnSaleProducts();
+        $onSaleProductCollection = new ProductCollection($onSaleProducts);
+
+        return view('pages.index',[
+            'categories'=>Category::getNestedCategoryList(),
+            'categoryWithoutSub'=> $categoryWithoutSub->withFirstImage()->toArray(),
+            'products'=>$productCollection->withFirstImage()->withFirstSpecificPrice()->withCategoryArray()->toArray(),
+            'onSaleProducts'=>$onSaleProductCollection->withFirstImage()->withFirstSpecificPrice()->toArray(),
+            'pagination'=>$p,
+        ]);
     }
     
     /**購物頁面 */

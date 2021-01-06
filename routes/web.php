@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'PageController@index');
 Route::get('/shop', 'PageController@shop')->name('shop');
+Route::get('/index', 'PageController@index')->name('index');
 Route::get('/shop/{slug}', 'PageController@shop');
 Route::get('/cart','PageController@cart')->name('cart');
 Route::get('/checkout','PageController@checkout')->name('checkout');
