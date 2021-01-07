@@ -9,12 +9,17 @@
 import MyUploadAdapter from '../MyUploadAdapter'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 export default {
-    props:['column','label','uploadUrl','text'],
+    props:['column','label','uploadUrl','text','slug'],
     created(){
         
     },
     mounted(){
-        
+        EventBus.$on("showDetailModal", item => {
+            this.id = item[this.slug];
+        });
+    },
+    destroyed(){
+        EventBus.$off("showDetailModal");
     },
     watch:{
         text(value){
@@ -26,13 +31,14 @@ export default {
     },
     data(){
         return{
+            id:null,
             editText:null,
             editor:ClassicEditor,
             editorConfig:{
                 placeholder: 'Type some text...',
                 extraPlugins:[(editor)=>{
                     editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
-                        return new MyUploadAdapter( loader , this.uploadUrl);
+                        return new MyUploadAdapter( loader , this.uploadUrl + this.id);
                     };
                 }]
             },

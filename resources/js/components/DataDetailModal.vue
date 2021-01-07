@@ -35,6 +35,7 @@
             <TextEditor
                 v-if="column.type == 'text_editor'"
                 :label="column.label"
+                :slug="slug"
                 :uploadUrl="column.uploadUrl"
                 :text="detailData[column.key]"
                 :column="column.key"

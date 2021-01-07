@@ -10,6 +10,7 @@ use App\Helpers\StorageHelper;
 use App\Helpers\StorageType;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResouce;
+use App\UploadProductDescriptionImageLog;
 use \Validator;
 
 class ProductController extends Controller
@@ -110,6 +111,23 @@ class ProductController extends Controller
 
         $imageUrl = config('app.static_host') . '/' . $path;
         return response($imageUrl);
+    }
+
+    /**上傳商品說明區的圖片 */
+    public function addImageInDescription(Request $request,$sku){
+        if (!$request->has('upload')) { return response('Error',400); }
+        $product = Product::where('sku',$sku)->firstOrFail();
+
+        if(!$path = StorageHelper::path(StorageType::TYPE_DESCRIPTION,$product->sku)->store($request->file('upload'))){
+            return response('Error',500);
+        }
+
+        $imageUrl = config('app.static_host') . '/' . $path;
+        UploadProductDescriptionImageLog::log($product->sku,$imageUrl,$path);
+
+        return response([
+            'url'=>$imageUrl,
+        ],200);
     }
     
     /**刪除圖片 */

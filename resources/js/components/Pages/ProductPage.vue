@@ -50,7 +50,7 @@ export default {
                 {key:'_',type:'multiple_selector',label:'標籤',url:'/api/product',relation:'attributes',relationUrl:'/api/attribute/all',trackBy:'name'},
                 {key:'__',type:'multiple_selector',label:'分類',url:'/api/product',relation:'categories',relationUrl:'/api/category/all',trackBy:'name'},
                 {key:'___',type:'multiple_selector',label:'配合活動',url:'/api/product',relation:'cartRules',relationUrl:'/api/cartRule/all',trackBy:'name'},
-                {key:'description',type:'text_editor',label:'說明',uploadUrl:'/'},
+                {key:'description',type:'text_editor',label:'說明',uploadUrl:'/api/product/addImageInDescription/'},
             ]
         }
     }
