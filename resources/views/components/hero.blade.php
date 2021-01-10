@@ -13,13 +13,13 @@
                         <li>
                             <a href="/shop/{{$category->slug}}">{{$category->name}}</a>
                             @if (isset($category->subCategoryList))
-                            <ul>
+                            
                                 @foreach ($category->subCategoryList as $cat)
                                 <li class="ml-4">
                                     <a href="/shop/{{$cat->slug}}">{{$cat->name}}</a>
                                 </li>
                                 @endforeach
-                            </ul>
+                            
                             @endif
                         </li>
                         @endforeach
@@ -48,7 +48,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="hero__item set-bg" data-setbg="/img/hero/banner.jpg">
+                @foreach ($banner as $img)
+                <div class="hero__item set-bg" data-setbg="{{$img}}">
                     <div class="hero__text">
                         <span>FRUIT FRESH</span>
                         <h2>Vegetable <br />100% Organic</h2>
@@ -56,6 +57,7 @@
                         <a href="/shop" class="primary-btn">SHOP NOW</a>
                     </div>
                 </div>
+                @endforeach
             </div>
         </div>
     </div>

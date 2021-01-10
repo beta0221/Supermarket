@@ -24,7 +24,7 @@
             </CSidebarNavDropdown>
 
             <CSidebarNavDropdown :name="'前台管理'">
-                <CSidebarNavItem name="列表管理"></CSidebarNavItem>
+                <CSidebarNavItem :name="'列表管理'" to="/admin/banner"></CSidebarNavItem>
             </CSidebarNavDropdown>
                 
 

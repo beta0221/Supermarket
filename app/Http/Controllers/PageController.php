@@ -12,6 +12,7 @@ use App\Helpers\TaiwanDistrict;
 use App\Http\Resources\CategoryCollection;
 use App\Http\Resources\ProductCollection;
 use App\Payment;
+use App\Banner;
 
 class PageController extends Controller
 {
@@ -42,7 +43,15 @@ class PageController extends Controller
         $onSaleProducts = Product::getOnSaleProducts();
         $onSaleProductCollection = new ProductCollection($onSaleProducts);
 
+        //取得Banner
+        $banners = Banner::all();
+        $static_host = config('app.static_host') . '/';
+        foreach($banners as $banner){
+            $imagesUrl = ['url'=>$static_host . $banner->image_path];
+        };
+
         return view('pages.index',[
+            'banner'=>$imagesUrl,
             'categories'=>Category::getNestedCategoryList(),
             'categoryWithoutSub'=> $categoryWithoutSub->withFirstImage()->toArray(),
             'products'=>$productCollection->withFirstImage()->withFirstSpecificPrice()->withCategoryArray()->toArray(),

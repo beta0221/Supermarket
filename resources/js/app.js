@@ -73,6 +73,7 @@ import CarrierPage from './components/Pages/CarrierPage'
 import PaymentPage from './components/Pages/PaymentPage'
 import CartRulePage from './components/Pages/CartRulePage'
 import MemberPage from './components/Pages/MemberPage'
+import BannerPage from './components/pages/BannerPage'
 const routes = [
     { path: '/admin/category',component: CategoryPage},
     { path: '/admin/attribute', component: AttributePage },
@@ -86,6 +87,7 @@ const routes = [
     { path: '/admin/payment',component: PaymentPage},
     { path: '/admin/cartRule',component: CartRulePage},
     { path: '/admin/member' ,component: MemberPage},
+    { path: '/admin/banner' , component: BannerPage},
 ]
 
 const router = new VueRouter({

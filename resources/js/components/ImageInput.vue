@@ -78,7 +78,9 @@ export default {
             })
             .then(res => {
                 messageHelper.success('刪除成功');
-                this.getImages();
+                if(this.addImageUrl!=='banner'){
+                    this.getImages();
+                }
             })
             .catch(error => {
                 errorHelper.handle(error);

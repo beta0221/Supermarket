@@ -91,8 +91,12 @@ Route::group(['prefix'=>'order'],function(){
 Route::get('member','MemberController@getMembers');
 Route::get('userOrder/{id}','MemberController@userOrderList');
 
+Route::get('banner/images/{slug}','BannerController@getImages');
+Route::post('banner/{slug}/addImage','BannerController@addImage');
+Route::delete('banner/{slug}/deleteImage','BannerController@deleteImage');
 
 
+Route::apiResource('banner','BannerController');
 Route::apiResource('category','CategoryController');
 Route::apiResource('attribute','AttributeController');
 Route::apiResource('attributeSet','AttributeSetController');
