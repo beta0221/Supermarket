@@ -46,8 +46,10 @@ class PageController extends Controller
         //取得Banner
         $banners = Banner::all();
         $static_host = config('app.static_host') . '/';
+        $imagesUrl = [];
         foreach($banners as $banner){
-            $imagesUrl = ['url'=>$static_host . $banner->image_path];
+            $imagesUrl[] = [
+                'url'=>$static_host . $banner->image_path];
         };
 
         return view('pages.index',[

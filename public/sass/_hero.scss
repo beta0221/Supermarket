@@ -201,3 +201,35 @@
         margin-bottom: 35px;
     }
 }
+.banner__slider {
+
+    .col-lg-3 {
+        max-width: 100%;
+    }
+
+    &.owl-carousel {
+
+        .owl-nav {
+
+            button {
+                font-size: 18px;
+                color: $normal-color;
+                height: 70px;
+                width: 30px;
+                line-height: 70px;
+                text-align: center;
+                border: 1px solid $border;
+                position: absolute;
+                left: -35px;
+                top: 50%;
+                -webkit-transform: translateY(-35px);
+                background: $white-color;
+
+                &.owl-next {
+                    left: auto;
+                    right: -35px;
+                }
+            }
+        }
+    }
+}
