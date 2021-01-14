@@ -110,6 +110,13 @@
           <template #index={item,index}>
                 <td>{{index + 1}}</td>
             </template>
+            <template #status="{ item }">
+              <td>
+                <CButton :color="statusColorDict[item.status_id]">
+                  {{ statusDict[item.status_id] }}
+                </CButton>
+             </td>
+            </template>
           <template #detail="{item}">
             <td>
               <CButton
@@ -192,6 +199,24 @@ export default {
       colorDict:{
           0:'danger',
           1:'success'
+      },
+      statusColorDict: {
+        0: "error",
+        1: "warning",
+        2: "info",
+        3: "primary",
+        4: "success",
+        5: "secondary",
+        6: "danger",
+      },
+      statusDict: {
+        0: "代付款",
+        1: "待出貨",
+        2: "準備中",
+        3: "已出貨",
+        4: "已到貨",
+        5: "結案",
+        6: "作廢",
       },
       userOrderFields : [
         { key: "index", label: "#" },

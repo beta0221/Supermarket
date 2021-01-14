@@ -7,6 +7,8 @@ use App\Helpers\Pagination;
 use Illuminate\Http\Request;
 use App\Helpers\StorageHelper;
 use App\Helpers\StorageType;
+use App\Rules\SlugRule;
+use \Validator;
 
 class BannerController extends Controller
 {
@@ -27,8 +29,22 @@ class BannerController extends Controller
             'pagination'=>$p,
         ]);
     }
+    public function update(Request $request,$slug){
+        $validator = Validator::make($request->all(),[
+            'key_word' => ['required','max:255','string'],
+        ]);
+        if ($validator->fails()) { return response($validator->messages(),400); }
+        $model = Banner::where('slug',$slug)->firstOrFail();
+        $model->update($request->all());
+        return response($model);
+    }
 
     public function store(Request $request){
+        $validator = Validator::make($request->all(),[
+            'slug'=>['required','unique:banners','max:255','string', new SlugRule],
+            'key_word' => ['required','max:255','string'],
+        ]);
+        if ($validator->fails()) { return response($validator->messages(),400); }
         $model = Banner::create($request->all());
         return response($model);
     }

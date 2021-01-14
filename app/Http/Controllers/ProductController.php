@@ -12,6 +12,7 @@ use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResouce;
 use App\UploadProductDescriptionImageLog;
 use \Validator;
+use Illuminate\Support\Facades\Cookie;
 
 class ProductController extends Controller
 {
@@ -188,7 +189,6 @@ class ProductController extends Controller
             ->products()
             ->get();
         $productCollection = new ProductCollection($relateToProducts);
-        
 
         return view('pages.product',[
             'product' => $product->toArray(),

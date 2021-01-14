@@ -13,6 +13,7 @@ use App\Http\Resources\CategoryCollection;
 use App\Http\Resources\ProductCollection;
 use App\Payment;
 use App\Banner;
+use Illuminate\Support\Facades\Cookie;
 
 class PageController extends Controller
 {
@@ -44,14 +45,16 @@ class PageController extends Controller
         $onSaleProductCollection = new ProductCollection($onSaleProducts);
 
         //取得Banner
-        $banners = Banner::all();
+        $banners = Banner::orderBy('id','desc')->get();
         $static_host = config('app.static_host') . '/';
         $imagesUrl = [];
         foreach($banners as $banner){
-            $imagesUrl[] = [
-                'url'=>$static_host . $banner->image_path];
+            if($banner->image_path){
+                $imagesUrl[] = [
+                    'url'=>$static_host . $banner->image_path];
+            }    
         };
-
+        
         return view('pages.index',[
             'banner'=>$imagesUrl,
             'categories'=>Category::getNestedCategoryList(),
