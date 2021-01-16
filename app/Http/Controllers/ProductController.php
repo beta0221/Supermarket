@@ -13,6 +13,8 @@ use App\Http\Resources\ProductResouce;
 use App\UploadProductDescriptionImageLog;
 use \Validator;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -178,8 +180,12 @@ class ProductController extends Controller
     }
 
     public function viewProductDetail($sku){
-
+        $user = Auth::user();
         $product = Product::where('sku',$sku)->firstOrFail();
+        if(!session('lastSeen')){
+            session()->put('lastSeen', []);
+        }        
+        Session::push('lastSeen',$product);
         $imageList= $product->imagesUrl();
         $product = new ProductResouce($product);
         

@@ -14,6 +14,7 @@ use App\Http\Resources\ProductCollection;
 use App\Payment;
 use App\Banner;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Session;
 
 class PageController extends Controller
 {
@@ -54,8 +55,12 @@ class PageController extends Controller
                     'url'=>$static_host . $banner->image_path];
             }    
         };
-        
+        if(session('lastSeen')){
+            $lastSeen = array_reverse(Session::get('lastSeen'));
+            $lastSeen = new ProductCollection($lastSeen);
+        }
         return view('pages.index',[
+            'lastSeen'=>$lastSeen->withFirstImage()->withFirstSpecificPrice()->toArray(),
             'banner'=>$imagesUrl,
             'categories'=>Category::getNestedCategoryList(),
             'categoryWithoutSub'=> $categoryWithoutSub->withFirstImage()->toArray(),

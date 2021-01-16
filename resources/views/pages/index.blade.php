@@ -233,64 +233,38 @@
                 <div class="latest-product__text">
                     <h4>Review Products</h4>
                     <div class="latest-product__slider owl-carousel">
+                        @if ($lastSeen!==[])
                         <div class="latest-prdouct__slider__item">
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="img/latest-product/lp-1.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="img/latest-product/lp-2.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="img/latest-product/lp-3.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
+                            @foreach ($lastSeen as $key =>$last) 
+                            @if ($key<=2)                          
+                                <a href="/product/{{$last->sku}}" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img src="{{$last->imageUrl}}" alt="">
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6>{{$last->name}}</h6>
+                                        <span>${{$last->price}}</span>
+                                    </div>
+                                </a>
+                                @endif 
+                            @endforeach
                         </div>
                         <div class="latest-prdouct__slider__item">
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="img/latest-product/lp-1.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="img/latest-product/lp-2.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="img/latest-product/lp-3.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
+                            @foreach ($lastSeen as $key =>$last) 
+                            @if ($key>2&&$key<6)                          
+                                <a href="/product/{{$last->sku}}" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img src="{{$last->imageUrl}}" alt="">
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6>{{$last->name}}</h6>
+                                        <span>${{$last->price}}</span>
+                                    </div>
+                                </a>
+                                @endif 
+                            @endforeach
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
