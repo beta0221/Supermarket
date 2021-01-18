@@ -73,7 +73,7 @@ import CarrierPage from './components/Pages/CarrierPage'
 import PaymentPage from './components/Pages/PaymentPage'
 import CartRulePage from './components/Pages/CartRulePage'
 import MemberPage from './components/Pages/MemberPage'
-import BannerPage from './components/pages/BannerPage'
+import BannerPage from './components/Pages/BannerPage'
 const routes = [
     { path: '/admin/category',component: CategoryPage},
     { path: '/admin/attribute', component: AttributePage },
