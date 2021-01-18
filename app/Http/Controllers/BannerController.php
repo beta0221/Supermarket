@@ -87,15 +87,15 @@ public function deleteImage(Request $request,$slug){
     
     if (!$request->has('id')) { return response('Error',400); }
     $banner = Banner::where('slug',$slug)->firstOrFail();
-    
-    $image = $banner->find($request->id);
 
     $storageHelper = new StorageHelper();
-    $storageHelper->delete($image->image_path);
+    $storageHelper->delete($banner->image_path);
 
-    $image->forceDelete();
+    $banner->update([
+        'image_path'=>null
+    ]);
     
-    return response($image);
+    return response($banner);
 
 }
 }
