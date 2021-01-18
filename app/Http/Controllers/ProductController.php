@@ -184,8 +184,14 @@ class ProductController extends Controller
         $product = Product::where('sku',$sku)->firstOrFail();
         if(!session('lastSeen')){
             session()->put('lastSeen', []);
-        }        
-        Session::push('lastSeen',$product);
+            Session::push('lastSeen',$product);
+        }else{
+            $lastSeen = Session::get('lastSeen');
+            if(!in_array($product,$lastSeen)){
+                Session::push('lastSeen',$product);
+            }
+        }
+        
         $imageList= $product->imagesUrl();
         $product = new ProductResouce($product);
         

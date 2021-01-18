@@ -233,10 +233,11 @@
                 <div class="latest-product__text">
                     <h4>Review Products</h4>
                     <div class="latest-product__slider owl-carousel">
-                        @if ($lastSeen!==[])
-                        <div class="latest-prdouct__slider__item">
-                            @foreach ($lastSeen as $key =>$last) 
-                            @if ($key<=2)                          
+                        @if (empty($lastSeen))
+                        @foreach ($lastSeen as $index =>$last)           
+                            @if($index % 3 == 0)
+                            <div class="latest-prdouct__slider__item">
+                            @endif
                                 <a href="/product/{{$last->sku}}" class="latest-product__item">
                                     <div class="latest-product__item__pic">
                                         <img src="{{$last->imageUrl}}" alt="">
@@ -246,24 +247,10 @@
                                         <span>${{$last->price}}</span>
                                     </div>
                                 </a>
-                                @endif 
-                            @endforeach
-                        </div>
-                        <div class="latest-prdouct__slider__item">
-                            @foreach ($lastSeen as $key =>$last) 
-                            @if ($key>2&&$key<6)                          
-                                <a href="/product/{{$last->sku}}" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="{{$last->imageUrl}}" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>{{$last->name}}</h6>
-                                        <span>${{$last->price}}</span>
-                                    </div>
-                                </a>
-                                @endif 
-                            @endforeach
-                        </div>
+                            @if(($index+1) % 3 == 0)
+                            </div>
+                            @endif
+                        @endforeach
                         @endif
                     </div>
                 </div>

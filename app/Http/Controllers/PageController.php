@@ -55,12 +55,20 @@ class PageController extends Controller
                     'url'=>$static_host . $banner->image_path];
             }    
         };
+
+
+        
+        $lastSeen = [];
         if(session('lastSeen')){
             $lastSeen = array_reverse(Session::get('lastSeen'));
             $lastSeen = new ProductCollection($lastSeen);
+            $lastSeen = $lastSeen->withFirstImage()->withFirstSpecificPrice()->toArray();
+        }else{
+            
         }
+
         return view('pages.index',[
-            'lastSeen'=>$lastSeen->withFirstImage()->withFirstSpecificPrice()->toArray(),
+            'lastSeen'=>$lastSeen,
             'banner'=>$imagesUrl,
             'categories'=>Category::getNestedCategoryList(),
             'categoryWithoutSub'=> $categoryWithoutSub->withFirstImage()->toArray(),
