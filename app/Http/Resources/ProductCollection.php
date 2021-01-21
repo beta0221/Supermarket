@@ -9,6 +9,7 @@ use App\SpecificPrice;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\DB;
 use stdClass;
+use DateTime;
 
 class ProductCollection extends ResourceCollection
 {
@@ -36,7 +37,9 @@ class ProductCollection extends ResourceCollection
 
     public function withFirstSpecificPrice(){
         $this->firstSpecificPriceDict = [];
-        $specificPrices = SpecificPrice::whereIn('product_id',$this->idArray)->orderBy('id','desc')->get();
+        $today = new DateTime();
+        $specificPrices = SpecificPrice::whereIn('product_id',$this->idArray)
+        ->whereDate('expiration_date', '>', $today->format('Y-m-d'))->orderBy('id','desc')->get();
         foreach ($specificPrices as $specificPrice) {
             $this->firstSpecificPriceDict[$specificPrice->product_id] = $specificPrice;
         }

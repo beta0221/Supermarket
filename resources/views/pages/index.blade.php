@@ -42,7 +42,6 @@
                         @foreach ($categoryWithoutSub as $category)
                             <li data-filter=".cat_{{$category->id}}">{{$category->name}}</li>
                         @endforeach
-                        <li data-filter=".micky">Micky</li>
                     </ul>
                 </div>
             </div>
@@ -63,9 +62,9 @@
                         <div class="featured__item__text">
                             <h6><a href="#">{{$product->name}}</a></h6>
                             @if ($product->priceOnSale)
-                            <h5>{{$product->priceOnSale}}</h5>    
+                            <h5 style="color: rgb(241, 64, 64)">${{$product->priceOnSale}}</h5>    
                             @else    
-                            <h5>{{$product->price}}</h5>
+                            <h5>${{$product->price}}</h5>
                             @endif
                         </div>
                     </div>
@@ -233,7 +232,7 @@
                 <div class="latest-product__text">
                     <h4>Review Products</h4>
                     <div class="latest-product__slider owl-carousel">
-                        @if (empty($lastSeen))
+                        @if (!empty($lastSeen))
                         @foreach ($lastSeen as $index =>$last)           
                             @if($index % 3 == 0)
                             <div class="latest-prdouct__slider__item">

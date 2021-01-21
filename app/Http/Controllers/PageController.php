@@ -15,6 +15,7 @@ use App\Payment;
 use App\Banner;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
+use DateTime;
 
 class PageController extends Controller
 {
@@ -56,8 +57,7 @@ class PageController extends Controller
             }    
         };
 
-
-        
+        //  get session
         $lastSeen = [];
         if(session('lastSeen')){
             $lastSeen = array_reverse(Session::get('lastSeen'));

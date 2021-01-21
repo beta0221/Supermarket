@@ -182,6 +182,8 @@ class ProductController extends Controller
     public function viewProductDetail($sku){
         $user = Auth::user();
         $product = Product::where('sku',$sku)->firstOrFail();
+
+        //save session
         if(!session('lastSeen')){
             session()->put('lastSeen', []);
             Session::push('lastSeen',$product);
