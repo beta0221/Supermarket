@@ -189,7 +189,11 @@ class ProductController extends Controller
             Session::push('lastSeen',$product);
         }else{
             $lastSeen = Session::get('lastSeen');
-            if(!in_array($product,$lastSeen)){
+            //刪除一樣的商品 並新增到最上面
+            if (($key = array_search($product,$lastSeen)) !== false) {
+                Session::pull('lastSeen.'.$key);
+                Session::push('lastSeen',$product);
+            }else{
                 Session::push('lastSeen',$product);
             }
         }

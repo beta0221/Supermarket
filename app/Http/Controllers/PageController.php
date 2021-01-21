@@ -66,7 +66,6 @@ class PageController extends Controller
         }else{
             
         }
-
         return view('pages.index',[
             'lastSeen'=>$lastSeen,
             'banner'=>$imagesUrl,
