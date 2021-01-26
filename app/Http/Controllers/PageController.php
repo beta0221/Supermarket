@@ -13,9 +13,11 @@ use App\Http\Resources\CategoryCollection;
 use App\Http\Resources\ProductCollection;
 use App\Payment;
 use App\Banner;
+use App\OrderProduct;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
 use DateTime;
+use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
@@ -66,7 +68,30 @@ class PageController extends Controller
         }else{
             
         }
+
+        //取得最熱銷 top3
+        $popularTop3 = [];
+        $Top3 = OrderProduct::select('product_id',DB::raw('COUNT(product_id) as count'))
+        ->groupBy('product_id')
+        ->orderBy('count', 'desc')
+        ->take(3)
+        ->get();
+        
+        $topArray = [];
+        foreach($Top3 as $top){
+            $topArray[] = $top->product_id;
+        }
+        $popular = Product::whereIn('id',$topArray)->get();
+        $popular = new ProductCollection($popular);
+        $popular = $popular->withFirstImage()->withFirstSpecificPrice()->toArray();
+
+        //判斷是否為空值
+        if($popular->first()){
+            $popularTop3 = $popular;
+        }
+    
         return view('pages.index',[
+            'popular' => $popularTop3,
             'lastSeen'=>$lastSeen,
             'banner'=>$imagesUrl,
             'categories'=>Category::getNestedCategoryList(),
