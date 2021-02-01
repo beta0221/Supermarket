@@ -1006,6 +1006,8 @@ ol {
 }
 
 .latest-product__item__pic img {
+	background-size: cover;
+    background-repeat: no-repeat;
 	height: 110px;
 	width: 110px;
 }

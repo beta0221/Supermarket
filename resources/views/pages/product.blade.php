@@ -163,8 +163,8 @@
                     </div>
                 </div>
             </div>
+            @if (!empty($relateToProducts))        
             <div class="row">
-                
                 @foreach ($relateToProducts as $item)
                     @if ($item->sku != $sku)
                     <div class="col-lg-3 col-md-4 col-sm-6">
@@ -185,8 +185,8 @@
                     </div>
                     @endif
                 @endforeach
-
             </div>
+            @endif
         </div>
     </section>
     <!-- Related Product Section End -->

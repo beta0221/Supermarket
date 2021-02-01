@@ -67,6 +67,7 @@ Route::group(['prefix' => 'product'], function () {
     Route::post('/addImageInDescription/{sku}','ProductController@addImageInDescription');
     Route::delete('/{sku}/deleteImage','ProductController@deleteImage');
     Route::post('/{sku}/addSpecificPrice','ProductController@addSpecificPrice');
+    Route::delete('/{sku}/deleteSpecificPrice','ProductController@deleteSpecifiPrice');
 });
 
 Route::group(['prefix' => 'category'], function () {
@@ -76,7 +77,7 @@ Route::group(['prefix' => 'category'], function () {
     Route::delete('/removeFromParentCategory/{slug}','CategoryController@removeFromParentCategory');
     Route::get('/images/{slug}','CategoryController@getImages');
     Route::post('/{slug}/addImage','CategoryController@addImage');
-    Route::delete('/{slug}/deleteImage','CategoryController@deleteImage');
+    Route::delete('/{id}/deleteImage','CategoryController@deleteImage');
 });
 
 //後台

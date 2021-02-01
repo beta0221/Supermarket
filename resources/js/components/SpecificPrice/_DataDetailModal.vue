@@ -25,7 +25,7 @@
                     <CCol lg="3">{{data.start_date}}</CCol>
                     <CCol lg="3">{{data.expiration_date}}</CCol>
                     <CCol lg="1">
-                        <CButton size="sm" color="danger">刪除</CButton>
+                        <CButton @click="deleteData(data.id)" size="sm" color="danger">刪除</CButton>
                     </CCol>
                 </CRow>
             </div>
@@ -111,6 +111,16 @@ export default {
             })
             .catch(err => {
                 errorHelper.handle(error);
+            })
+        },
+        deleteData(id){
+            axios.delete(`/api/product/${id}/deleteSpecificPrice`)
+            .then(res => {
+                console.log(res);
+                this.getDataList();
+            })
+            .catch(err => {
+                console.error(err); 
             })
         }
     }

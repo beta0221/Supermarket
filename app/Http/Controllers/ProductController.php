@@ -10,6 +10,7 @@ use App\Helpers\StorageHelper;
 use App\Helpers\StorageType;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResouce;
+use App\SpecificPrice;
 use App\UploadProductDescriptionImageLog;
 use \Validator;
 use Illuminate\Support\Facades\Cookie;
@@ -178,6 +179,12 @@ class ProductController extends Controller
 
         return response($specificPrice);
     }
+    public function deleteSpecifiPrice($id){
+       $specificPrice = SpecificPrice::where('id',$id)->firstOrFail();
+       $specificPrice->delete();
+
+       return response($specificPrice);
+    }
 
     public function viewProductDetail($sku){
         $user = Auth::user();
@@ -202,16 +209,23 @@ class ProductController extends Controller
         $product = new ProductResouce($product);
         
 
-        $relateToProducts = $product->categories()
+        $productCollection = [];
+        if($product->categories()->first()){
+            $relateToProducts = $product->categories()
             ->firstOrFail()
             ->products()
             ->get();
         $productCollection = new ProductCollection($relateToProducts);
+        $productCollection = $productCollection->withFirstImage()->toArray();
+        }else{
+           
+        }
+            
 
         return view('pages.product',[
             'product' => $product->toArray(),
             'imageList' => $imageList,
-            'relateToProducts' => $productCollection->withFirstImage()->toArray(),
+            'relateToProducts' => $productCollection,
             'sku'=>$sku
         ]);
     }
