@@ -14,8 +14,11 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__pic">
                         <div class="product__details__pic__item">
-                            <img class="product__details__pic__item--large"
-                        src="{{$imageList[0]["url"]}}">
+                            @if(count($imageList))
+                            <img class="product__details__pic__item--large" src="{{$imageList[0]["url"]}}">
+                            @else
+                            <img class="product__details__pic__item--large" src="/storage/default_product_image.png">
+                            @endif
                         </div>
                         <div class="product__details__pic__slider owl-carousel">
 

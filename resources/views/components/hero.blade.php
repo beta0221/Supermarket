@@ -49,17 +49,36 @@
                     </div>
                 </div>
                 <div class="banner__slider owl-carousel">
-                    @foreach ($banner as $img)
-                <div class="hero__item set-bg" data-setbg="{{$img['url']}}">
-                    <div class="hero__text">
-                        <span>FRUIT FRESH</span>
-                        <h2>Vegetable <br />100% Organic</h2>
-                        <p>Free Pickup and Delivery Available</p>
-                        <a href="/shop" class="primary-btn">SHOP NOW</a>
+
+                    @if(count($banner))
+
+                        @foreach ($banner as $img)
+
+                            <div class="hero__item set-bg" data-setbg="{{$img['url']}}">
+                                <div class="hero__text">
+                                    <span>FRUIT FRESH</span>
+                                    <h2>Vegetable <br />100% Organic</h2>
+                                    <p>Free Pickup and Delivery Available</p>
+                                    <a href="/shop" class="primary-btn">SHOP NOW</a>
+                                </div>
+                            </div>
+
+                        @endforeach
+                    
+                    @else
+
+                    <div class="hero__item set-bg" data-setbg="/storage/default_banner.jpg">
+                        <div class="hero__text">
+                            <span>FRUIT FRESH</span>
+                            <h2>Vegetable <br />100% Organic</h2>
+                            <p>Free Pickup and Delivery Available</p>
+                            <a href="/shop" class="primary-btn">SHOP NOW</a>
+                        </div>
                     </div>
+
+                    @endif
+
                 </div>
-                @endforeach
-            </div>
             </div>
         </div>
     </div>

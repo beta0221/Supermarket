@@ -1009,7 +1009,7 @@ ol {
 	background-size: cover;
     background-repeat: no-repeat;
 	height: 110px;
-	width: 110px;
+	width: 110px!important;
 }
 
 .latest-product__item__text {

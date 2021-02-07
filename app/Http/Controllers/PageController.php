@@ -14,9 +14,7 @@ use App\Http\Resources\ProductCollection;
 use App\Payment;
 use App\Banner;
 use App\OrderProduct;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
-use DateTime;
 use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
@@ -42,7 +40,6 @@ class PageController extends Controller
             ->take($p->rows)
             ->orderBy($p->orderBy,$p->order)
             ->get();
-
         $productCollection = new ProductCollection($products);
         
         $onSaleProducts = Product::getOnSaleProducts();
@@ -53,10 +50,7 @@ class PageController extends Controller
         $static_host = config('app.static_host') . '/';
         $imagesUrl = [];
         foreach($banners as $banner){
-            if($banner->image_path){
-                $imagesUrl[] = [
-                    'url'=>$static_host . $banner->image_path];
-            }    
+            if($banner->image_path){ $imagesUrl[] = ['url'=>$static_host . $banner->image_path]; }    
         };
 
         //  get session
@@ -70,24 +64,16 @@ class PageController extends Controller
         }
 
         //取得最熱銷 top3
-        $popularTop3 = [];
-        $Top3 = OrderProduct::select('product_id',DB::raw('COUNT(product_id) as count'))
-        ->groupBy('product_id')
-        ->orderBy('count', 'desc')
-        ->take(3)
-        ->get();
+        $topArray = OrderProduct::select('product_id',DB::raw('COUNT(product_id) as count'))
+            ->groupBy('product_id')
+            ->orderBy('count', 'desc')
+            ->take(3)
+            ->pluck('product_id');
         
-        $topArray = [];
-        foreach($Top3 as $top){
-            $topArray[] = $top->product_id;
-        }
-        $popular = Product::whereIn('id',$topArray)->get();
-        $popular = new ProductCollection($popular);
-        $popular = $popular->withFirstImage()->withFirstSpecificPrice()->toArray();
-
-        //判斷是否為空值
-        if($popular->first()){
-            $popularTop3 = $popular;
+        $popularTop3 = [];
+        if($popular = Product::whereIn('id',$topArray)->get()){
+            $popular = new ProductCollection($popular);
+            $popularTop3 = $popular->withFirstImage()->withFirstSpecificPrice()->toArray();
         }
     
         return view('pages.index',[
