@@ -47,6 +47,11 @@ class CartController extends Controller
     }
     /**更新購物車商品數量 */
     public function update(Request $request){
+
+        if($request->bonus_cost){
+            $request->session()->put('bonus_cost',$request->bonus_cost);
+        }
+
         foreach ($request->rowIdArray as $rowId) {
             $qty_rowId = "qty_$rowId";
             $qty = $request->{$qty_rowId};

@@ -3,6 +3,7 @@ namespace App\Helpers;
 
 use App\CartRule;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Session;
 
 class CartHandler{
 
@@ -14,6 +15,8 @@ class CartHandler{
     public $transfer_fee = 0;
     /**折扣 */
     public $discount = 0;
+    /**使用紅利 */
+    public $bonus_cost = 0;
     /**總額 */
     public $total = 0;
 
@@ -27,6 +30,12 @@ class CartHandler{
 
     public function __construct(){
         $this->cartItems = Cart::content();
+
+        if($bonus_cost = Session::get('bonus_cost')){
+            $this->bonus_cost = $bonus_cost - ($bonus_cost % 50);
+            $this->discount = floor($bonus_cost / 50);
+        }
+
         $this->caculate();
     }
 
