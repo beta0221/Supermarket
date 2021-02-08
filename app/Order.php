@@ -30,6 +30,7 @@ class Order extends Model
         'total_shipping_tax',
         'total',
         'total_tax',
+        'bonus_cost',
     ];
 
     public static $key = 'order_numero';
@@ -54,7 +55,6 @@ class Order extends Model
      * @return Order
      */
     public static function insert_row(Request $request,int $address_id,CartHandler $cartHandler){
-
         $order = new Order();
         $order->order_numero = uniqid();
         $order->user_id = $request->user()->id;
@@ -73,8 +73,8 @@ class Order extends Model
         $order->total_shipping_tax = 0;
         $order->total = floatval($cartHandler->total);
         $order->total_tax = 0;
+        $order->bonus_cost = $cartHandler->bonus_cost;
         $order->save();
-
         return $order;
     }
 

@@ -110,6 +110,11 @@ class CartController extends Controller
                 'price' => $item->price,
             ];
         };
+
+        if($cartHandler->bonus_cost){
+            $user = $request->user();
+            $user->updateBonus($cartHandler->bonus_cost);
+        }
         Cart::destroy();
 
         $formData = [

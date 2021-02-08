@@ -59,4 +59,12 @@ class User extends Authenticatable
         }
         return false;
     }
+    public function updateBonus($amount,$decrease = true){
+        if($decrease){
+            $this->bonus -= $amount;
+        }else{
+            $this->bonus += $amount;
+        }
+        $this->save();
+    }
 }
