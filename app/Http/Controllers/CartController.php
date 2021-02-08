@@ -122,7 +122,7 @@ class CartController extends Controller
         ];
 
         
-        return $this->checkout->setPostData($formData)->send();
+        return $this->checkout->setReturnUrl(config('app.url') . '/api/thankyou/' . $order_numero)->setPostData($formData)->send();
 
         return redirect()->route('thankyou',['order_numero'=>$order_numero]);
         

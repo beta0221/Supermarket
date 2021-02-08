@@ -20,6 +20,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/**綠界結帳成功導轉用 */
+Route::post('thankyou/{order_numero}',function($order_numero){
+    return redirect()->route('thankyou',['order_numero'=>$order_numero]);
+});
+
 //get all
 Route::get('/attribute/all','AttributeController@all');
 Route::get('/attributeSet/all','AttributeSetController@all');
