@@ -95,7 +95,8 @@ class CartController extends Controller
 
             $orderProduct =  new OrderProduct();      
             $orderProduct->name = $item->name;
-            $orderProduct->price = $item->price;            
+            $orderProduct->price = $item->price;     
+            $orderProduct->bonus_rate = $item->product->bonus_rate;
             $orderProduct->quantity = $item->qty;
             $orderProduct->price_with_tax = 0;
             $orderProduct->sku = $item->product->sku;
@@ -116,6 +117,7 @@ class CartController extends Controller
             $user->updateBonus($cartHandler->bonus_cost);
         }
         Cart::destroy();
+        $request->session()->forget('bonus_cost');
 
         $formData = [
             'OrderId'=>$order_numero,

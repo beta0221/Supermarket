@@ -106,6 +106,26 @@ class Order extends Model
         ]);
         return 1;
     }
+
+    /**
+     * 計算這筆訂單可以獲得多少紅利點數
+     * @return int
+     */
+    public function cacuOrderBonus(){
+        $bonus = 0;
+        $orderProducts = OrderProduct::where('order_id',$this->id)->get();
+        foreach ($orderProducts as $op) {
+            $bonus += $op->quantity * $op->price * $op->bonus_rate;
+        }   
+        return $bonus;
+    }
+
+    /**發送此筆訂單應該發的紅利給下單者 */
+    public function sendBonusToBuyer(){
+        $bonus = $this->cacuOrderBonus();
+        if(!$buyer = User::find($this->user_id)){ return; }
+        $buyer->updateBonus($bonus,false);
+    }
     
 
 }

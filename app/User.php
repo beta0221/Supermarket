@@ -59,6 +59,12 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    /**
+     * 更新使用者的紅利點數 
+     * @param int $amount
+     * @param bool $decrease true減少 false增加
+     * */
     public function updateBonus($amount,$decrease = true){
         if($decrease){
             $this->bonus -= $amount;

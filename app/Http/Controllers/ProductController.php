@@ -45,7 +45,7 @@ class ProductController extends Controller
             'stock' => ['required','integer'],
             'active' => ['required','integer'],
         ];
-        $this->updateColumns = ['group_id','attribute_set_id','name','description','price','stock','active'];
+        $this->updateColumns = ['group_id','attribute_set_id','name','description','price','bonus_rate','stock','active'];
     }
     
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddBonusToUsers extends Migration
+class AddBonusToOrderProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddBonusToUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('bonus')->default(0)->after('gender');
+        Schema::table('order_products', function (Blueprint $table) {
+            $table->decimal('bonus_rate')->after('price');
         });
     }
 
@@ -25,7 +25,7 @@ class AddBonusToUsers extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('order_products', function (Blueprint $table) {
             Schema::dropIfExists('bonus');
         });
     }

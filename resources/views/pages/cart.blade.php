@@ -4,8 +4,8 @@
 
 @section('css')
 <style>
-    #cart-content-form form input{
-        width: 255px;
+    .shoping__discount input{
+        width: 100%;
         height: 46px;
         border: 1px solid #cccccc;
         font-size: 16px;
@@ -81,15 +81,24 @@
             <div class="col-lg-6 offset-lg-6">
                 <div class="shoping__continue">
                     <div class="shoping__discount">
-                        <h5>折扣碼</h5>
+                        
+                        
                         {{-- <form action="#">    
                             <input type="text" placeholder="Enter your coupon code">
                             <button type="submit" class="site-btn">APPLY COUPON</button>
                         </form> --}}
-                        <input type="text" placeholder="coupon code">
+                        <h5 class="mb-1">折扣碼</h5>
+                        <input class="mb-3" type="text" placeholder="coupon code">
                         
-                        <h5>紅利折抵</h5>
-                        <input type="text" placeholder="紅利折抵" name="bonus_cost" value="{{$cartHandler->bonus_cost}}">
+                        <h5 class="mb-1">紅利折抵</h5>
+                        <input class="mb-3" type="text" placeholder="紅利折抵" name="bonus_cost" value="{{$cartHandler->bonus_cost}}">
+                        
+
+                        <div>
+                            <a href="javascript:;" onclick="updateCartQty()" class="primary-btn cart-btn"><span class="icon_loading"></span>
+                                計算金額</a>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -100,13 +109,12 @@
 
         <div class="row">
 
-            <div class="col-lg-12">
+            {{-- <div class="col-lg-12">
                 <div class="shoping__cart__btns">
                     <a href="{{route('shop')}}" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
-                    <a href="javascript:;" onclick="updateCartQty()" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
-                        Upadate Cart</a>
+                    
                 </div>
-            </div>
+            </div> --}}
 
             <div class="col-lg-6">
                 
@@ -121,7 +129,7 @@
                         <li>Discount <span>-${{$cartHandler->discount}}</span></li>
                         <li>Total <span>${{$cartHandler->total}}</span></li>
                     </ul>
-                    <a href="{{route('checkout')}}" class="primary-btn">PROCEED TO CHECKOUT</a>
+                    <a href="{{route('checkout')}}" class="primary-btn">確定結帳</a>
                 </div>
             </div>
 

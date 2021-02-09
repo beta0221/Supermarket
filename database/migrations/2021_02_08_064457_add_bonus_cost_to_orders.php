@@ -14,7 +14,7 @@ class AddBonusCostToOrders extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->integer('bonus_cost')->default(0);
+            $table->integer('bonus_cost')->default(0)->after('delivery_date');
         });
     }
 
@@ -26,7 +26,7 @@ class AddBonusCostToOrders extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-            //
+            Schema::dropIfExists('bonus_cost');
         });
     }
 }
