@@ -51,8 +51,8 @@ class CartHandler{
         }
 
         foreach ($this->finalCartItems as $cartItem) {
-            $product_group_id = $cartItem->product->group()->first()->id;        
-            if($cartRule = CartRule::getCartRuleByProductGroupId($product_group_id)){
+            if(!$productGroup = $cartItem->product->group()->first()){ continue; }
+            if($cartRule = CartRule::getCartRuleByProductGroupId($productGroup->id)){
                 $this->handleCartItem($cartItem,$cartRule);
             }
         }

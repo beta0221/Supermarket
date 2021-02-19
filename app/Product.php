@@ -25,8 +25,6 @@ class Product extends Model implements Buyable {
 
     /**關聯 ProductGroup */
     public function group(){
-
-        
         return $this->belongsTo('App\ProductGroup');
     }
     /**關聯 AttributeSet */
