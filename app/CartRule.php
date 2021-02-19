@@ -46,6 +46,10 @@ class CartRule extends Model
         return $this->belongsToMany('App\Category','cart_rule_categories','cart_rule_id','category_id');
     }
 
+    public function productGroups(){
+        return $this->belongsToMany('App\ProductGroup','cart_rule_product_groups','cart_rule_id','product_group_id');
+    }
+
     public static function getCartRuleByMinimumTotal($total){
         $cartRule = CartRule::where('status',1)
             ->where('minimum_total','<=',$total)
@@ -64,10 +68,14 @@ class CartRule extends Model
         return $cartRule;
     }
 
-    public static function getCartRuleByCategoryIdArray($categoryIdArray){
-        $cartRuleIdArray = DB::table('cart_rule_categories')->whereIn('category_id',$categoryIdArray)->pluck('cart_rule_id');
+    // public static function getCartRuleByCategoryIdArray($category_id){
+    //     $cartRuleIdArray = DB::table('cart_rule_categories')->where('category_id',$category_id)->pluck('cart_rule_id');
+    //     $cartRule = CartRule::whereIn('id',$cartRuleIdArray)->where('status',1)->orderBy('priority','desc')->first();
+    //     return $cartRule;
+    // }
+    public static function getCartRuleByProductGroupId($product_group_id){
+        $cartRuleIdArray = DB::table('cart_rule_product_groups')->where('product_group_id',$product_group_id)->pluck('cart_rule_id');
         $cartRule = CartRule::whereIn('id',$cartRuleIdArray)->where('status',1)->orderBy('priority','desc')->first();
         return $cartRule;
     }
-
 }

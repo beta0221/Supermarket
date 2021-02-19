@@ -50,12 +50,12 @@ class CartHandler{
             $this->finalCartItems[] = $finalCartItem;
         }
 
-        // foreach ($this->finalCartItems as $cartItem) {
-        //     $categoryIdArray = $cartItem->model->categories()->pluck('category_id');        
-        //     if($cartRule = CartRule::getCartRuleByCategoryIdArray($categoryIdArray)){
-        //         $this->handleCartItem($cartItem,$cartRule);
-        //     }
-        // }
+        foreach ($this->finalCartItems as $cartItem) {
+            $product_group_id = $cartItem->product->group()->first()->id;        
+            if($cartRule = CartRule::getCartRuleByProductGroupId($product_group_id)){
+                $this->handleCartItem($cartItem,$cartRule);
+            }
+        }
         $this->caculateDeliveryFee();
         $this->caculateTotal();
     }
@@ -72,22 +72,23 @@ class CartHandler{
         $this->total = $this->subtotal - $this->discount + $this->delivery_fee + $this->transfer_fee;
     }
 
-    // private function handleCartItem($cartItem,CartRule $cartRule){
-    //     $discount = 0;
-    //     $price = $cartItem->price;
-    //     switch ($cartRule->discount_type) {
-    //         case CartRule::TYPE_AMOUNT:
-    //             $discount = $cartRule->reduction_amount;
-    //             break;
-    //         case CartRule::TYPE_DICIMAL:
-    //             $discount = intval(strval($price * (1 - $cartRule->reduction_amount)));
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    //     $this->discount += $discount;
-    //     $this->logCartRules($cartRule);
-    // }
+    private function handleCartItem($cartItem,CartRule $cartRule){
+        $discount = 0;
+        $price = $cartItem->price;
+        $qty = $cartItem->qty;
+        switch ($cartRule->discount_type) {
+            case CartRule::TYPE_AMOUNT:
+                $discount = $cartRule->reduction_amount*$qty;
+                break;
+            case CartRule::TYPE_DICIMAL:
+                $discount = intval(strval($price * (1 - $cartRule->reduction_amount)))*$qty;
+                break;
+            default:
+                break;
+        }
+        $this->discount += $discount;
+        $this->logCartRules($cartRule);
+    }
 
     /**
      * 把CartRuleList放進 $this->cartRules (不重複)

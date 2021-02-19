@@ -21,4 +21,8 @@ class ProductGroup extends Model
         return $this->hasMany('App\Product','group_id');
     }
 
+    public function cartRules(){
+        return $this->belongsToMany('App\CartRule','cart_rule_product_groups','product_group_id','cart_rule_id');
+    }
+
 }
