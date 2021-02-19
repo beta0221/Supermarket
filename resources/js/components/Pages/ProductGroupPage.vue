@@ -39,6 +39,7 @@ export default {
             ],
             columns:[
                 {key:'name',type:'text',label:'群組名稱'},
+                {key:'_',type:'multiple_selector',label:'配合活動',url:'/api/category',relation:'cartRules',relationUrl:'/api/cartRule/all',trackBy:'name'},
             ]
         }
     }

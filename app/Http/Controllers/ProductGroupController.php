@@ -31,4 +31,18 @@ class ProductGroupController extends Controller
         $products = $productGroup->products()->get();
         return response($products);
     }
+
+        /**取得關聯得 CartRule */
+        public function getCartRules($id){
+            $productGroup = ProductGroup::find($id);
+            $cartRules = $productGroup->cartRules()->get();
+            return response($cartRules);
+         }
+         /**更新關聯的 CartRule */
+         public function syncCartRules(Request $request,$id){
+             $productGroup = ProductGroup::find($id);
+             $productGroup->cartRules()->sync($request->syncArray);
+             $cartRules = $productGroup->cartRules()->get();
+             return response($cartRules);
+         }
 }

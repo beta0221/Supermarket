@@ -55,6 +55,8 @@ Route::get('/category/{slug}/cartRules','CategoryController@getCartRules');
 Route::put('/category/{slug}/cartRules','CategoryController@syncCartRules');
 Route::get('/product/{id}/cartRules','ProductController@getCartRules');
 Route::put('/product/{id}/cartRules','ProductController@syncCartRules');
+Route::get('/productGroup/{id}/cartRules','ProductGroupController@getCartRules');
+Route::put('/productGroup/{id}/cartRules','ProductGroupController@syncCartRules');
 
 //一對多
 Route::get('/attributeSet/{id}/products','AttributeSetController@getProducts');
