@@ -10,6 +10,7 @@ use App\Order;
 use App\OrderProduct;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Http\Resources\CartCollection;
+use App\Payment;
 use \Validator;
 use TsaiYiHua\ECPay\Checkout;
 
@@ -90,7 +91,8 @@ class CartController extends Controller
         $order = Order::insert_row($request,$address->id,$cartHandler);
         $order_numero = $order->order_numero;
 
-        $items=[];
+        $itemsForECPay=[];
+        if(empty($cartHandler->finalCartItems)){ return redirect()->route('shop'); }
         foreach ($cartHandler->finalCartItems as $item){
 
             $orderProduct =  new OrderProduct();      
@@ -104,7 +106,7 @@ class CartController extends Controller
             $orderProduct->order_id = $order->id;
             $orderProduct->save();
 
-            $items[] = [
+            $itemsForECPay[] = [
                 'name' => $item->name,
                 'qty' => $item->qty,
                 'unit' => '個',
@@ -119,20 +121,28 @@ class CartController extends Controller
         Cart::destroy();
         $request->session()->forget('bonus_cost');
 
+        $paymentString = Payment::getPaymentString($request->payment_id);
         $formData = [
             'OrderId'=>$order_numero,
             'UserId' => 1, // 用戶ID , Optional
             'ItemDescription' => '產品簡介',
-            'Items' => $items,
+            'Items' => $itemsForECPay,
             'TotalAmount' => $order->total,
-            'PaymentMethod' => 'Credit', // ALL, Credit, ATM, WebATM
+            'PaymentMethod' => $paymentString, // ALL, Credit, ATM, WebATM
         ];
 
-        
-        return $this->checkout->setReturnUrl(config('app.url') . '/api/thankyou/' . $order_numero)->setPostData($formData)->send();
-
-        return redirect()->route('thankyou',['order_numero'=>$order_numero]);
-        
+        switch ($paymentString) {
+            case Payment::PAYMENT_CREDIT:
+            case Payment::PAYMENT_ATM:
+                return $this->checkout->setReturnUrl(config('app.url') . '/api/thankyou/' . $order_numero)->setPostData($formData)->send();
+                break;
+            case Payment::PAYMENT_COD:
+                return redirect()->route('thankyou',['order_numero'=>$order_numero]);
+                break;
+            default:
+                break;
+        }
+        return redirect()->route('shop');
     }
 
     public function test(){
