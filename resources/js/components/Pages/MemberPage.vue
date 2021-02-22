@@ -77,6 +77,7 @@
                   {{ item.name }}
                 </h4>
                  <p class="text-muted">生日: {{ item.birthday }}</p>
+                <p class="text-muted">紅利點數: {{ item.bonus }}</p>
                 <p class="text-muted">註冊日期: {{ item.created_at }}</p>
                 <CButton size="sm" color="info" class="">
                   User Settings

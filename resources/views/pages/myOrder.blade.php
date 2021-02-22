@@ -13,6 +13,7 @@
                     <tr>
                         <th style="border: 0px">
                             <h4>{{ $user->name }} 的訂單 <h4>
+                            <h4 style="color: red">剩餘紅利點數{{$user->bonus}}</h4>
                         </th>
                     </tr>
                     <tr>

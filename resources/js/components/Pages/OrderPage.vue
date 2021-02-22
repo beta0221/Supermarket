@@ -222,21 +222,21 @@ export default {
           errorHelper.handle(error);
         });
     },
-    showDetail(item) {
-      EventBus.$emit("showDetailModal", item);
+    showDetail(order_numero) {
+      EventBus.$emit("showDetailModal", order_numero);
     },
-    orderDetail($order_numero) {
-      axios
-        .get("/api/order/getOrderDetail/" + $order_numero)
-        .then((res) => {
-          this.show = true;
-          this.orderProduct = res.data.orderProduct;
-          console.log(this.orderProduct);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    },
+    // orderDetail($order_numero) {
+    //   axios
+    //     .get("/api/order/getOrderDetail/" + $order_numero)
+    //     .then((res) => {
+    //       this.show = true;
+    //       this.orderProduct = res.data.orderProduct;
+    //       console.log(this.orderProduct);
+    //     })
+    //     .catch((err) => {
+    //       console.error(err);
+    //     });
+    // },
     changeChecked(item) {
       item.isCheck = !item.isCheck;
     },
