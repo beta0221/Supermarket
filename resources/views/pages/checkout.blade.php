@@ -128,14 +128,46 @@
 
                         </div>
 
+                        <div class="checkout__input mb-0">
+                            <p class="mb-1">希望到貨日:</p>
+                        </div>
+
+                        <div>
+                            <input id="ship-date-null" type="radio" name="ship_date_radio" value="0" checked>
+                            <label class="mr-2" for="ship-date-null">不指定</label>
+                            <input id="ship-date-on" type="radio" name="ship_date_radio" value="1">
+                            <label class="mr-2" for="ship-date-on">指定</label>
+                        </div>
+                        
+                        <div id="ship-date-input" class="checkout__input" style="display: none">
+                            <input type="date" name="ship-date">
+                        </div>
+
+                        <?php $ship_time_array = config('shop.ship_time_array'); ?>
+                        
+                        @if (empty($ship_time_array))
+                        <input id="ship-time-null" type="radio" name="ship_time" value="" hidden checked>
+                        @else
+                        <div class="checkout__input mb-0">
+                            <p class="mb-1">到貨時段:</p>
+                        </div>
+                        <div>
+                            <input id="ship-time-null" type="radio" name="ship_time" value="" checked>
+                            <label class="mr-2" for="ship-time-null">不指定</label>
+                            @foreach ($ship_time_array as $index => $ship_time)
+                            <input id="ship-time-{{$index}}" type="radio" name="ship_time" value="{{$ship_time}}">
+                            <label class="mr-2" for="ship-time-{{$index}}">{{$ship_time}}</label>    
+                            @endforeach
+                        </div>
+                        @endif
                         
                         
 
-                        <div class="checkout__input">
-                            <p>Order notes<span>*</span></p>
+                        <div class="checkout__input mt-2">
+                            <p>備註</p>
                             <input type="text"
                                 name="comment"
-                                placeholder="Notes about your order, e.g. special notes for delivery.">
+                                placeholder="備註...">
                         </div>
 
                         {{-- <div class="checkout__input">

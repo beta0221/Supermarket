@@ -21,5 +21,15 @@ jQuery(function(){
         });
     });
 
+    $("input[name='ship_date_radio']").on('change',function(){
+        var ship_date_input = $('#ship-date-input');
+        if($(this).val() == 1){
+            ship_date_input.show();
+        }else{
+            $("input[name='ship-date']").val(null);
+            ship_date_input.hide();
+        }
+    });
+
 
 });

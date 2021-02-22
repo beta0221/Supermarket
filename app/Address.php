@@ -20,6 +20,7 @@ class Address extends Model
         $address->user_id = $request->user()->id;
 
         $address->country_id = $request->country_id;
+        $address->name = $request->name;
         
         $address->county = $request->county;
         $address->postal_code = $request->postal_code;
