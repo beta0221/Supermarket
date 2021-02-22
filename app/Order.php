@@ -73,6 +73,14 @@ class Order extends Model
         $order->total_shipping_tax = 0;
         $order->total = floatval($cartHandler->total);
         $order->total_tax = 0;
+
+        if($request->has('delivery_date')){
+            $order->delivery_date = $request->delivery_date;
+        }
+        if($request->has('delivery_time')){
+            $order->delivery_time = $request->delivery_time;
+        }
+
         $order->bonus_cost = $cartHandler->bonus_cost;
         $order->save();
         return $order;

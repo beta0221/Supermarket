@@ -133,30 +133,30 @@
                         </div>
 
                         <div>
-                            <input id="ship-date-null" type="radio" name="ship_date_radio" value="0" checked>
-                            <label class="mr-2" for="ship-date-null">不指定</label>
-                            <input id="ship-date-on" type="radio" name="ship_date_radio" value="1">
-                            <label class="mr-2" for="ship-date-on">指定</label>
+                            <input id="delivery-date-null" type="radio" name="delivery_date_radio" value="0" checked>
+                            <label class="mr-2" for="delivery-date-null">不指定</label>
+                            <input id="delivery-date-on" type="radio" name="delivery_date_radio" value="1">
+                            <label class="mr-2" for="delivery-date-on">指定</label>
                         </div>
                         
-                        <div id="ship-date-input" class="checkout__input" style="display: none">
-                            <input type="date" name="ship-date">
+                        <div id="delivery-date-input" class="checkout__input" style="display: none">
+                            <input type="date" name="delivery_date">
                         </div>
 
-                        <?php $ship_time_array = config('shop.ship_time_array'); ?>
+                        <?php $delivery_time_array = config('shop.delivery_time_array'); ?>
                         
-                        @if (empty($ship_time_array))
-                        <input id="ship-time-null" type="radio" name="ship_time" value="" hidden checked>
+                        @if (empty($delivery_time_array))
+                        <input id="delivery-time-null" type="radio" name="delivery_time" value="" hidden checked>
                         @else
                         <div class="checkout__input mb-0">
                             <p class="mb-1">到貨時段:</p>
                         </div>
                         <div>
-                            <input id="ship-time-null" type="radio" name="ship_time" value="" checked>
-                            <label class="mr-2" for="ship-time-null">不指定</label>
-                            @foreach ($ship_time_array as $index => $ship_time)
-                            <input id="ship-time-{{$index}}" type="radio" name="ship_time" value="{{$ship_time}}">
-                            <label class="mr-2" for="ship-time-{{$index}}">{{$ship_time}}</label>    
+                            <input id="delivery-time-null" type="radio" name="delivery_time" value="" checked>
+                            <label class="mr-2" for="delivery-time-null">不指定</label>
+                            @foreach ($delivery_time_array as $index => $delivery_time)
+                            <input id="delivery-time-{{$index}}" type="radio" name="delivery_time" value="{{$delivery_time}}">
+                            <label class="mr-2" for="delivery-time-{{$index}}">{{$delivery_time}}</label>    
                             @endforeach
                         </div>
                         @endif

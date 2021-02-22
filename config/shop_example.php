@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'ship_time_array'=>[],
+    'delivery_time_array'=>[],
 ];
