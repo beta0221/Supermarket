@@ -3,7 +3,12 @@
 @section('title','產品內容')
 
 @section('css')
-
+<style>
+    .product__priceList td{
+        padding: 8px 24px;
+        border: 1px solid gray;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -42,7 +47,24 @@
                             <span>(18 reviews)</span>
                         </div>
                         <div class="product__details__price">${{$product->lowest_price}}~${{$product->priceOnsale}}</div>
-                        <p>{!!$product->description!!}</p>
+                        
+                        @if (!empty($priceList))
+                        <div class="product__priceList mt-3 mb-3">
+                            <table class="text-center">
+                                <tr>
+                                    <td>數量</td>
+                                    <td>單價</td>
+                                </tr>
+                                @foreach ($priceList as $quantity => $price)
+                                    <tr>
+                                        <td>{{$quantity}}</td>
+                                        <td>${{$price}}</td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                        </div>
+                        @endif
+
                         <div class="product__details__quantity">
                             <div class="quantity">
                                 <div class="pro-qty">
@@ -50,8 +72,8 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="javascript:;" onclick="addQtyToCart()" class="primary-btn">ADD TO CARD</a>
-                        <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                        <a href="javascript:;" onclick="addQtyToCart()" class="primary-btn">加入購物車</a>
+                        
                         <ul>
                             <li><b>Availability</b> <span>In Stock</span></li>
                             <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
@@ -72,78 +94,36 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
-                                    aria-selected="true">Description</a>
+                                    aria-selected="true">產品資訊</a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
                                     aria-selected="false">Information</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
                                     aria-selected="false">Reviews <span>(1)</span></a>
-                            </li>
+                            </li> --}}
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
                                 <div class="product__details__tab__desc">
-                                    <h6>Products Infomation</h6>
-                                    <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                        Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus. Vivamus
-                                        suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam
-                                        vehicula elementum sed sit amet dui. Donec rutrum congue leo eget malesuada.
-                                        Vivamus suscipit tortor eget felis porttitor volutpat. Curabitur arcu erat,
-                                        accumsan id imperdiet et, porttitor at sem. Praesent sapien massa, convallis a
-                                        pellentesque nec, egestas non nisi. Vestibulum ac diam sit amet quam vehicula
-                                        elementum sed sit amet dui. Vestibulum ante ipsum primis in faucibus orci luctus
-                                        et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam
-                                        vel, ullamcorper sit amet ligula. Proin eget tortor risus.</p>
-                                        <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem
-                                        ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet
-                                        elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum
-                                        porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus
-                                        nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
-                                        Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed
-                                        porttitor lectus nibh. Vestibulum ac diam sit amet quam vehicula elementum
-                                        sed sit amet dui. Proin eget tortor risus.</p>
+                                    {{-- <h6>產品資訊</h6> --}}
+                                    <p>{!!$product->description!!}</p>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="tabs-2" role="tabpanel">
+                            {{-- <div class="tab-pane" id="tabs-2" role="tabpanel">
                                 <div class="product__details__tab__desc">
                                     <h6>Products Infomation</h6>
-                                    <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                        Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.
-                                        Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam
-                                        sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo
-                                        eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.
-                                        Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
-                                        sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac
-                                        diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante
-                                        ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-                                        Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
-                                        Proin eget tortor risus.</p>
-                                    <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem
-                                        ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet
-                                        elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum
-                                        porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus
-                                        nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.</p>
+                                    <p>Vestibulum ...</p>
                                 </div>
                             </div>
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
                                 <div class="product__details__tab__desc">
                                     <h6>Products Infomation</h6>
-                                    <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                        Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.
-                                        Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam
-                                        sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo
-                                        eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.
-                                        Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
-                                        sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac
-                                        diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante
-                                        ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-                                        Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
-                                        Proin eget tortor risus.</p>
+                                    <p>Vestibulum ...</p>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

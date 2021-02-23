@@ -106,6 +106,11 @@ class Product extends Model implements Buyable {
         $productIdArray = SpecificPrice::whereDate('expiration_date', '>', $today->format('Y-m-d'))->pluck('product_id');
         return Product::whereIn('id',$productIdArray)->get();
     }
+    /**
+     * 計算套用購物車規則夠的產品金額
+     * @param CartRule 購物車規則
+     * @return int
+     */
     public function cartRulePrice(CartRule $cartRule){
         $price = $this->price;
         switch ($cartRule->discount_type) {
@@ -119,6 +124,19 @@ class Product extends Model implements Buyable {
                 break;
         }
         return $price;
+    }
+    /**
+     * 取得商品每個數量區間的單價
+     * @return array
+     */
+    public function getPriceList(){
+        $cartRuleList = $this->cartRules()->orderBy('minimum_amount','asc')->get();
+        $priceList = [];
+        foreach ($cartRuleList as $cartRule) {
+            $price = $this->cartRulePrice($cartRule);
+            $priceList[$cartRule->minimum_amount] = $price;
+        }
+        return $priceList;
     }
 
 

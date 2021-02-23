@@ -188,8 +188,9 @@ class ProductController extends Controller
     }
 
     public function viewProductDetail($sku){
-        $user = Auth::user();
+
         $product = Product::where('sku',$sku)->firstOrFail();
+        $priceList = $product->getPriceList();
 
         //save session
         if(!session('lastSeen')){
@@ -224,6 +225,7 @@ class ProductController extends Controller
             
 
         return view('pages.product',[
+            'priceList'=>$priceList,
             'product' => $product->toArray(),
             'imageList' => $imageList,
             'relateToProducts' => $productCollection,

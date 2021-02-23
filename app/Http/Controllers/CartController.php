@@ -49,8 +49,10 @@ class CartController extends Controller
     /**更新購物車商品數量 */
     public function update(Request $request){
 
-        if($request->bonus_cost){
+        if($request->has('bonus_cost')){
             $request->session()->put('bonus_cost',$request->bonus_cost);
+        }else{
+            $request->session()->forget('bonus_cost');
         }
 
         foreach ($request->rowIdArray as $rowId) {
