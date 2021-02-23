@@ -14,6 +14,7 @@ class Product extends Model implements Buyable {
         'name',
         'description',
         'tax_id',
+        'lowest_price',
         'price',
         'bonus_rate',
         'stock',

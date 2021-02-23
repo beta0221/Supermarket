@@ -16,7 +16,7 @@ class ProductCollection extends ResourceCollection
 
     
     private $idArray = [];
-    private $initColumn = ['name','sku','price','stock'];
+    private $initColumn = ['name','sku','lowest_price','price','stock'];
     private $firstImageDict = null;
     private $firstSpecificPriceDict = null;
     private $catIdDict = null;

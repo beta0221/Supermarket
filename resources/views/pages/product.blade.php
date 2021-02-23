@@ -41,11 +41,7 @@
                             <i class="fa fa-star-half-o"></i>
                             <span>(18 reviews)</span>
                         </div>
-                        @if ($product->priceOnsale)
-                        <div class="product__details__price">{{$product->priceOnsale}}</div>           
-                        @else
-                        <div class="product__details__price">{{$product->price}}</div>
-                        @endif
+                        <div class="product__details__price">${{$product->lowest_price}}~${{$product->priceOnsale}}</div>
                         <p>{!!$product->description!!}</p>
                         <div class="product__details__quantity">
                             <div class="quantity">
@@ -182,7 +178,7 @@
                             </div>
                             <div class="product__item__text">
                                 <h6><a href="/product/{{$item->sku}}">{{$item->name}}</a></h6>
-                                 <h5>{{$item->price}}</h5>
+                                 <h5>${{$item->lowest_price}}~${{$item->price}}</h5>
                             </div>
                         </div>
                     </div>

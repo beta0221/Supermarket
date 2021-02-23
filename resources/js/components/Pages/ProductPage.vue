@@ -42,6 +42,7 @@ export default {
                 {key:'name',type:'text',label:'商品名稱'},
                 {key:'sku',type:'text',label:'商品代號',readonly:true},
                 {key:'stock',type:'text',label:'庫存'},
+                {key:'lowest_price',type:'text',label:'最低價'},
                 {key:'price',type:'text',label:'價格'},
                 {key:'bonus_rate',type:'text',label:'紅利回饋'},
                 {key:'image',type:'image_input',addImageUrl:'product',label:'商品圖片',url:'/api/product/images'},

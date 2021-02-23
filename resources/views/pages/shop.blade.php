@@ -257,7 +257,7 @@
                             @if (!$product->priceOnSale)
                             <div class="product__item__text">
                                 <h6><a href="/product/{{$product->sku}}">{{$product->name}}</a></h6>
-                                    <h5>${{$product->price}}</h5>
+                                    <h5>${{$product->lowest_price}}~${{$product->price}}</h5>
                                 </div>
                             @else
                             <div class="product__discount__item__text">

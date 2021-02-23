@@ -9,7 +9,7 @@ use stdClass;
 class ProductResouce extends JsonResource
 {
 
-    private $initColumn = ['name','sku','description','price','stock'];
+    private $initColumn = ['name','sku','description','lowest_price','price','stock'];
 
     /**
      * Transform the resource into an array.

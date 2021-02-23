@@ -64,7 +64,7 @@
                             @if ($product->priceOnSale)
                             <h5 style="color: rgb(241, 64, 64)">${{$product->priceOnSale}}</h5>    
                             @else    
-                            <h5>${{$product->price}}</h5>
+                            <h5>${{$product->lowest_price}}~${{$product->price}}</h5>
                             @endif
                         </div>
                     </div>

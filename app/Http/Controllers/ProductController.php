@@ -13,7 +13,6 @@ use App\Http\Resources\ProductResouce;
 use App\SpecificPrice;
 use App\UploadProductDescriptionImageLog;
 use \Validator;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,6 +30,7 @@ class ProductController extends Controller
             'attribute_set_id'=>['required','integer'],
             'name'=>['required','max:255','string'],
             'description'=>['required'],
+            'lowest_price'=>['required'],
             'price'=>['required'],
             'sku'=>['required','unique:products','max:255','string', new SlugRule],
             'stock' => ['required','integer'],
@@ -41,11 +41,12 @@ class ProductController extends Controller
             'attribute_set_id'=>['required','integer'],
             'name'=>['required','max:255','string'],
             'description'=>['required'],
+            'lowest_price'=>['required'],
             'price'=>['required'],
             'stock' => ['required','integer'],
             'active' => ['required','integer'],
         ];
-        $this->updateColumns = ['group_id','attribute_set_id','name','description','price','bonus_rate','stock','active'];
+        $this->updateColumns = ['group_id','attribute_set_id','name','description','lowest_price','price','bonus_rate','stock','active'];
     }
     
 
