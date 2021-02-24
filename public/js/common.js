@@ -34,6 +34,7 @@ function getCartItems(){
             });
         },
         error:function(error){
+            flashMessage('系統錯誤。','danger');
             console.log(error);
         }
     });
@@ -47,9 +48,11 @@ function addToCart(sku,qty = 1){
             qty:qty,
         },
         success: function (response) {
+            flashMessage('成功加入購物車。');
             getCartItems();
         },
         error: function(error){
+            flashMessage('系統錯誤。','danger');
             console.log(error);
         }
     });
@@ -64,7 +67,19 @@ function deleteFromCart(sku){
             window.location.reload();
         },
         error: function(error){
+            flashMessage('系統錯誤。','danger');
             console.log(error);
         }
     });
+}
+
+function flashMessage(body,type='success',header='訊息'){
+    let alertType = 'alert-' + type;
+    var cell = $('.message-stack .alert-example').clone();
+    cell.find('.alert-heading').html(header);
+    cell.find('span').html(body);
+    cell.show().removeClass('alert-example').addClass(alertType).addClass('show').appendTo('.message-stack');
+    setTimeout(function(){ 
+        cell.alert('close');
+     }, 1800);
 }

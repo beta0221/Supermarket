@@ -201,7 +201,7 @@
                                         <a style="display: block; width:268px; height:270px;z-index:-1;" href="/product/{{$product->sku}}"></a>
                                         <div class="product__discount__percent">{{$product->discount}}</div>
                                         <ul class="product__item__pic__hover">
-                                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                            {{-- <li><a href="#"><i class="fa fa-heart"></i></a></li> --}}
                                             <li><a href="#"><i class="fa fa-retweet"></i></a></li>
                                             <li><a href="javascript:;" onclick="addToCart('{{$product->sku}}')"><i class="fa fa-shopping-cart"></i></a></li>
                                         </ul>
@@ -249,7 +249,7 @@
                             <div class="product__item__pic set-bg" data-setbg="{{$product->imageUrl}}">
                                 <a style="display: block; width:268px; height:270px;z-index:-1;" href="/product/{{$product->sku}}"></a>
                                 <ul class="product__item__pic__hover">
-                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                    {{-- <li><a href="#"><i class="fa fa-heart"></i></a></li> --}}
                                     <li><a href="#"><i class="fa fa-retweet"></i></a></li>
                                     <li><a href="javascript:;" onclick="addToCart('{{$product->sku}}')"><i class="fa fa-shopping-cart"></i></a></li>
                                 </ul>

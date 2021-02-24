@@ -28,6 +28,7 @@
     @include('components.navbar')
     @yield('content')
     @include('components.footer')
+    @include('components.messageStack')
 
     <!-- Js Plugins -->
     <script src="/js/jquery-3.3.1.min.js"></script>

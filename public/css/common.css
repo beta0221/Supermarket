@@ -91,3 +91,11 @@
     display: table;
     clear: both;
 }
+
+.message-stack{
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    width: 100%;
+    max-width: 240px;
+}
