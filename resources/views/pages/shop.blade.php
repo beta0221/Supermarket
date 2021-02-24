@@ -17,7 +17,7 @@
             <div class="col-lg-3 col-md-5">
                 <div class="sidebar">
                     <div class="sidebar__item">
-                        <h4>Department</h4>
+                        <h4>產品類別</h4>
                         <ul>
                             @foreach ($categories as $category)
                             <li>
@@ -35,7 +35,7 @@
                             @endforeach
                         </ul>
                     </div>
-                    <div class="sidebar__item">
+                    {{-- <div class="sidebar__item">
                         <h4>Price</h4>
                         <div class="price-range-wrap">
                             <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
@@ -51,8 +51,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="sidebar__item sidebar__item__color--option">
+                    </div> --}}
+                    {{-- <div class="sidebar__item sidebar__item__color--option">
                         <h4>Colors</h4>
                         <div class="sidebar__item__color sidebar__item__color--white">
                             <label for="white">
@@ -90,9 +90,9 @@
                                 <input type="radio" id="green">
                             </label>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="sidebar__item">
-                        <h4>Popular Size</h4>
+                        <h4>相關內容</h4>
                         <div class="sidebar__item__size">
                             <label for="large">
                                 Large
@@ -118,7 +118,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="sidebar__item">
+                    {{-- <div class="sidebar__item">
                         <div class="latest-product__text">
                             <h4>Latest Products</h4>
                             <div class="latest-product__slider owl-carousel">
@@ -184,10 +184,13 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
+
             <div class="col-lg-9 col-md-7">
+
+                @if (count($onSaleProducts))
                 <div class="product__discount">
                     <div class="section-title product__discount__title">
                         <h2>Sale Off</h2>
@@ -218,6 +221,8 @@
                         </div>
                     </div>
                 </div>
+                @endif
+
                 <div class="filter__item">
                     <div class="row">
                         <div class="col-lg-4 col-md-5">

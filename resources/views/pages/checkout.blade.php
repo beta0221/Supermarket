@@ -64,8 +64,16 @@
 
 
         <div class="checkout__form">
-            <h4>Billing Details</h4>
 
+            <h4>訂購人資料</h4>
+            @guest
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>提醒您，您目前尚未登入！</strong> 請先登入再填寫訂單，或以訪客身份結帳。
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @endguest
 
             <form action="{{route('submitCheckout')}}" method="POST">
                 @csrf
@@ -229,36 +237,21 @@
 
                     <div class="col-lg-4 col-md-6">
                         <div class="checkout__order">
-                            <h4>Your Order</h4>
-                            <div class="checkout__order__products">Subtotal <span>${{$cartHandler->subtotal}}</span></div>
+                            <h4>您的訂單</h4>
+                            <div class="checkout__order__products">小計 <span>${{$cartHandler->subtotal}}</span></div>
                             <div class="checkout__order__products">運費 <span>${{$cartHandler->delivery_fee}}</span></div>
-                            <div class="checkout__order__products">Discount <span>-${{$cartHandler->discount}}</span></div>
-                            <div class="checkout__order__subtotal">Total <span>${{$cartHandler->total}}</span></div>
+                            <div class="checkout__order__products">折扣 <span>-${{$cartHandler->discount}}</span></div>
+                            <div class="checkout__order__subtotal">總額 <span>${{$cartHandler->total}}</span></div>
 
+                            <p><span style="color: rgb(196, 92, 92)">＊</span>您目前尚未登入</p>
                             <div class="checkout__input__checkbox">
                                 <label for="acc-or">
-                                    Create an account?
+                                    以訪客身份結帳?
                                     <input type="checkbox" id="acc-or">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt
-                                ut labore et dolore magna aliqua.</p>
-                            <div class="checkout__input__checkbox">
-                                <label for="payment">
-                                    Check Payment
-                                    <input type="checkbox" id="payment">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <div class="checkout__input__checkbox">
-                                <label for="paypal">
-                                    Paypal
-                                    <input type="checkbox" id="paypal">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <button type="submit" class="site-btn">PLACE ORDER</button>
+                            <button type="submit" class="site-btn">確定結帳</button>
                         </div>
                     </div>
 

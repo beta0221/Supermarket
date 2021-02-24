@@ -99,3 +99,9 @@
     width: 100%;
     max-width: 240px;
 }
+
+@media only screen and (max-width: 767px) {
+    .product__item__pic .product__item__pic__hover {
+        bottom: 20px!important;
+    }
+}
