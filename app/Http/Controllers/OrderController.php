@@ -59,8 +59,8 @@ class OrderController extends Controller
 
     public function view_thankyou($order_numero){
         
-        $order_numero = $order_numero;
-
+        $order = Order::where('order_numero',$order_numero)->firstOrFail();     
+        if(!$this->isUserPermittedToView($order)){ return redirect()->route('shop'); }
 
         return view('pages.thankyou',[
             'order_numero'=>$order_numero,
@@ -70,6 +70,8 @@ class OrderController extends Controller
     public function view_orderDetail($order_numero){
         
         $order = Order::where('order_numero',$order_numero)->firstOrFail();     
+        if(!$this->isUserPermittedToView($order)){ return redirect()->route('shop'); }
+
         $orderProduct = $order->orderProducts()->get();
         $orderProductCollection = new OrderProductCollection($orderProduct);
         $total = $order->total;
@@ -78,6 +80,20 @@ class OrderController extends Controller
             'order_numero' => $order_numero,
             'total' => $total,
         ]);
+    }
+
+    /**
+     * 檢查使用者能不能觀看訂單內容
+     * @param Order $order
+     * @return boolean
+     */
+    private function isUserPermittedToView(Order $order){
+        if($user = auth()->user()){
+            if($order->user_id != $user->id){ return false; }
+        }else{
+            if(!is_null($order->user_id)){ return false; }
+        }
+        return true;
     }
 
     public function getOrderDetail($order_numero){
@@ -121,14 +137,6 @@ class OrderController extends Controller
         ]);
     }
 
-    public function view_myOrderDetail($order_id){
-        $myOrderProduct = OrderProduct::where('order_id',$order_id)->get();
-        $orderProductCollection = new OrderProductCollection($myOrderProduct);
-        $myOrderProductList = $orderProductCollection->withFirstImage()->toArray();
-        return view('pages.myOrderDetail',[
-            'myOrderProductList' => $myOrderProductList,
-        ]);
-    }
 
     /**
      * 更新訂單狀態到下一個階段（單一訂單號碼）

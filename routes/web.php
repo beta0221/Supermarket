@@ -35,12 +35,13 @@ Route::group(['prefix' => 'product'], function () {
     Route::get('/{sku}','ProductController@viewProductDetail');
 });
 
-Route::group(['prefix' => 'order','middleware'=>['auth']], function () {
+Route::group(['prefix' => 'order'], function () {
     Route::get('/thankyou/{order_numero}','OrderController@view_thankyou')->name('thankyou');
     Route::get('/detail/{order_numero}','OrderController@view_orderDetail');
-    Route::get('/myOrder','OrderController@view_myOrder')->middleware('auth');
-    Route::get('/myOrderDetail/{id}','OrderController@view_myOrderDetail');
-    Route::get('downloadOrderExcel','OrderController@excel_downloadOrderExcel');
+    Route::group(['middleware'=>['auth']],function(){
+        Route::get('/myOrder','OrderController@view_myOrder')->middleware('auth');
+        Route::get('downloadOrderExcel','OrderController@excel_downloadOrderExcel');
+    });
 });
 
 Auth::routes();

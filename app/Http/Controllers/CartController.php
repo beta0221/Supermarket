@@ -23,7 +23,6 @@ class CartController extends Controller
     public function __construct(Checkout $checkout)
     {
         $this->checkout = $checkout;
-        $this->middleware("auth",['only'=>'checkout']);
     }
 
 

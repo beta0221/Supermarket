@@ -45,7 +45,7 @@
                         <td class="align-middle">{{ $myOrder->total }}</td>
                         <td class="align-middle">{{ $myOrder->created_at }}</td>
                         <td>
-                            <a href="/order/myOrderDetail/{{$myOrder->id}}"><button class="btn btn-primary">詳細</button></a>
+                            <a href="/order/detail/{{$myOrder->order_numero}}"><button class="btn btn-primary">詳細</button></a>
                         </td>
                     </tr>
                 @endforeach
