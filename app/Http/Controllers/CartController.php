@@ -49,10 +49,15 @@ class CartController extends Controller
     /**更新購物車商品數量 */
     public function update(Request $request){
 
-        if($request->has('bonus_cost')){
-            $request->session()->put('bonus_cost',$request->bonus_cost);
-        }else{
-            $request->session()->forget('bonus_cost');
+        $request->session()->forget('bonus_cost');
+        if($user = $request->user()){   //有登入
+            if($request->has('bonus_cost')){    //有使用
+                if($user->bonus >= $request->bonus_cost){   //紅利點數夠不夠
+                    $request->session()->put('bonus_cost',$request->bonus_cost);
+                }else{
+                    $request->session()->put('bonus_cost',$user->bonus);
+                }
+            }
         }
 
         foreach ($request->rowIdArray as $rowId) {
@@ -116,10 +121,12 @@ class CartController extends Controller
             ];
         };
 
-        if($cartHandler->bonus_cost){
-            $user = $request->user();
-            $user->updateBonus($cartHandler->bonus_cost);
+        if($user = $request->user()){
+            if($cartHandler->has('bonus_cost')){
+                $user->updateBonus($cartHandler->bonus_cost);
+            }
         }
+        
         Cart::destroy();
         $request->session()->forget('bonus_cost');
 
@@ -132,6 +139,9 @@ class CartController extends Controller
             'TotalAmount' => $order->total,
             'PaymentMethod' => $paymentString, // ALL, Credit, ATM, WebATM
         ];
+
+        //dispatch send mail queue here
+        //$request->email
 
         switch ($paymentString) {
             case Payment::PAYMENT_CREDIT:

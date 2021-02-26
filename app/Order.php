@@ -57,7 +57,9 @@ class Order extends Model
     public static function insert_row(Request $request,int $address_id,CartHandler $cartHandler){
         $order = new Order();
         $order->order_numero = uniqid();
-        $order->user_id = $request->user()->id;
+        if($user = $request->user()){
+            $order->user_id = $user->id;
+        }
         $order->carrier_id = $request->carrier_id;
         $order->payment_id = $request->payment_id;
 

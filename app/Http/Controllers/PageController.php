@@ -132,7 +132,13 @@ class PageController extends Controller
     /**結帳頁面 */
     public function checkout(){
 
+        $user = auth()->user();
+        if($user){
+            //抓取過去訂單的Address紀錄
+        }
+
         return view('pages.checkout',[
+            'user' =>  $user,
             'cartHandler' => new CartHandler(),
             'countries'=>Country::all(),
             'counties'=>TaiwanDistrict::COUNTY,

@@ -17,7 +17,9 @@ class Address extends Model
     public static function insert_row(Request $request){
         
         $address = new Address();
-        $address->user_id = $request->user()->id;
+        if($user = $request->user()){
+            $address->user_id = $user->id;
+        }
 
         $address->country_id = $request->country_id;
         $address->name = $request->name;

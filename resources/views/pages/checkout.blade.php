@@ -103,7 +103,12 @@
 
                         <div class="checkout__input">
                             <p>訂購人姓名<span>*</span></p>
-                            <input type="text" name="name">
+                            <input type="text" name="name" value="{{($user)?$user->name:''}}">
+                        </div>
+
+                        <div class="checkout__input">
+                            <p>E-mail<span>*</span></p>
+                            <input type="text" name="email" value="{{($user)?$user->email:''}}">
                         </div>
 
                         <div class="checkout__input">
@@ -243,14 +248,17 @@
                             <div class="checkout__order__products">折扣 <span>-${{$cartHandler->discount}}</span></div>
                             <div class="checkout__order__subtotal">總額 <span>${{$cartHandler->total}}</span></div>
 
-                            <p><span style="color: rgb(196, 92, 92)">＊</span>您目前尚未登入</p>
-                            <div class="checkout__input__checkbox">
+                            @guest
+                            <p><span style="color: rgb(196, 92, 92)">＊</span>您目前尚未登入，訂單將以訪客身份結帳</p>    
+                            @endguest
+                            
+                            {{-- <div class="checkout__input__checkbox">
                                 <label for="acc-or">
                                     以訪客身份結帳?
                                     <input type="checkbox" id="acc-or">
                                     <span class="checkmark"></span>
                                 </label>
-                            </div>
+                            </div> --}}
                             <button type="submit" class="site-btn">確定結帳</button>
                         </div>
                     </div>

@@ -14,6 +14,11 @@
         display: inline-block;
         margin-right: 15px;
     }
+    .step-title h5{
+        color: rgb(160, 37, 37);
+        font-size: 24px;
+        font-weight: 600;
+    }
 </style>
 @endsection
 
@@ -28,6 +33,12 @@
         <form id="cart-content-form" action="/cart/update" method="POST">
         <input name="_method" type="hidden" value="PUT">
         @csrf
+
+        <div class="row mb-2">
+            <div class="col-lg-6 offset-lg-6 step-title">
+                <h5>1.調整購買產品數量</h5>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-lg-12">
@@ -76,30 +87,46 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mb-2">
+            <div class="col-lg-6 offset-lg-6 step-title">
+                <h5>2.使用折扣碼或紅利</h5>
+            </div>
+        </div>
+
+
+        <div class="row mb-2">
 
             <div class="col-lg-6 offset-lg-6">
                 <div class="shoping__continue">
-                    <div class="shoping__discount">
+                    <div class="shoping__discount mt-1">
                         
                         
-                        {{-- <form action="#">    
-                            <input type="text" placeholder="Enter your coupon code">
-                            <button type="submit" class="site-btn">APPLY COUPON</button>
-                        </form> --}}
                         <h5 class="mb-1">折扣碼</h5>
                         <input class="mb-3" type="text" placeholder="coupon code">
                         
                         <h5 class="mb-1">紅利折抵</h5>
-                        <input class="mb-3" type="text" placeholder="紅利折抵" name="bonus_cost" value="{{$cartHandler->bonus_cost}}">
+                        <?php $auth = Auth::check(); ?>
+                        @if (!$auth)
+                        <div class="alert alert-warning" role="alert">請先登入</div>
+                        @endif
+                        <input {{(!$auth)?'disabled':''}} class="mb-3" type="text" placeholder="紅利折抵" name="bonus_cost" value="{{$cartHandler->bonus_cost}}">
                         
 
-                        <div>
-                            <a href="javascript:;" onclick="updateCartQty()" class="primary-btn cart-btn"><span class="icon_loading"></span>
-                                計算金額</a>
-                        </div>
+                        
                         
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-lg-6 offset-lg-6 step-title">
+                <h5 class="mb-2">3.按下計算總金額按鈕</h5>
+                <div>
+                    <a href="javascript:;" onclick="updateCartQty()" class="primary-btn cart-btn btn-block text-center">
+                        <span class="mr-2 icon_loading"></span>
+                        計算金額
+                    </a>
                 </div>
             </div>
         </div>
@@ -107,21 +134,21 @@
         </form>
 
 
-        <div class="row">
 
-            {{-- <div class="col-lg-12">
-                <div class="shoping__cart__btns">
-                    <a href="{{route('shop')}}" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
-                    
-                </div>
-            </div> --}}
+        <div class="row mb-2">
+            <div class="col-lg-6 offset-lg-6 step-title">
+                <h5>4.確定金額，前往結帳</h5>
+            </div>
+        </div>
+
+        <div class="row">
 
             <div class="col-lg-6">
                 
             </div>
 
             <div class="col-lg-6">
-                <div class="shoping__checkout">
+                <div class="shoping__checkout mt-1">
                     <h5>Cart Total</h5>
                     <ul>
                         <li>Subtotal <span>${{$cartHandler->subtotal}}</span></li>
