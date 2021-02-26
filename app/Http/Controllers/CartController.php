@@ -11,6 +11,7 @@ use App\Order;
 use App\OrderProduct;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Http\Resources\CartCollection;
+use App\Jobs\SendMail;
 use App\Payment;
 use \Validator;
 use TsaiYiHua\ECPay\Checkout;
@@ -148,7 +149,8 @@ class CartController extends Controller
         ];
 
         //dispatch send mail queue here
-        //$request->email
+        
+        SendMail::dispatch($request->email,$order_numero);
 
         switch ($paymentString) {
             case Payment::PAYMENT_CREDIT:
