@@ -7,8 +7,6 @@ use App\Http\Resources\OrderProductCollection;
 use App\Order;
 use App\Helpers\Pagination;
 use App\Http\Resources\MyOrderListCollection;
-use App\OrderProduct;
-use App\Product;
 use App\User;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
