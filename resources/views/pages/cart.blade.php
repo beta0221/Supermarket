@@ -92,7 +92,7 @@
                 <h5>2.使用折扣碼或紅利</h5>
             </div>
         </div>
-
+Ｃ
 
         <div class="row mb-2">
 
@@ -101,14 +101,14 @@
                     <div class="shoping__discount mt-1">
                         
                         
-                        @if(Session::has('wrongCode'))
-                        <p class="alert {{ Session::get('alert-class', 'alert-info') }}">
-                        {{ Session::get('wrongCode') }}</p>
-                        @elseif(Session::has('successCode'))
-                        <p class="alert {{ Session::get('alert-class', 'alert-info') }}">
-                            {{ Session::get('successCode') }}</p>
-                        @endif
+                        
+
                         <h5 class="mb-1">折扣碼</h5>
+                        @if(Session::has('success'))
+                        <p class="alert alert-success">{{ Session::get('success') }}</p>
+                        @elseif(Session::has('error'))
+                        <p class="alert alert-danger">{{ Session::get('error') }}</p>
+                        @endif
                         <input class="mb-3" type="text" placeholder="coupon code" name="coupon_code" value="{{$cartHandler->coupon_code}}">
                         
                         <h5 class="mb-1">紅利折抵</h5>

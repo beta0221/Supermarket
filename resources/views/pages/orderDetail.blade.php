@@ -10,7 +10,7 @@
 
             <div class="row">
                 <div class="col-md-12 mt-2 mb-2">
-                    <h4>訂單編號 : {{$OR->order_numero}}</h4>
+                    <h4>訂單編號 : {{$OR->order_numero}}（{{$OR->status}}）</h4>
                 </div>
             </div>
             <hr class="m-0">

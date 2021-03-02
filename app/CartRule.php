@@ -2,8 +2,6 @@
 
 namespace App;
 
-use DateTime;
-use ErrorException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -92,11 +90,4 @@ class CartRule extends Model
              return $coupon;
     }
 
-    public static function getCoupon($code){
-        // try{
-        //     $cartRule = CartRule::where('code',$code)->first();
-        // } catch(ErrorException $e){
-
-        // }
-    }
 }

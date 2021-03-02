@@ -62,13 +62,11 @@ class CartController extends Controller
             }
         }
         if($request->filled('coupon_code')){ //有使用
+            $request->session()->put('coupon_code',$request->coupon_code);
             if($coupon = CartRule::checkCoupon($request->coupon_code)){
-                $request->session()->put('coupon_code',$request->coupon_code);
-                Session::flash('wrongCode', '成功使用折扣碼'); 
-                Session::flash('alert-class', 'alert-success'); 
+                Session::flash('success', '成功使用折扣碼'); 
             }else{
-                Session::flash('wrongCode', '折扣碼錯誤'); 
-                Session::flash('alert-class', 'alert-danger'); 
+                Session::flash('error', '折扣碼無效'); 
             }
         }
 
