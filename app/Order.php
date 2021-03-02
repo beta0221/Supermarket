@@ -43,6 +43,16 @@ class Order extends Model
     const STATUS_CLOSE = 5;
     const STATUS_INVALID = 6;
 
+    public static $statusDict = [
+        '0'=>'代付款',
+        '1'=>'待出貨',
+        '2'=>'準備中',
+        '3'=>'已出貨',
+        '4'=>'已到貨',
+        '5'=>'結案',
+        '6'=>'作廢'
+    ];
+
 
     public function orderProducts(){
         return $this->hasMany('App\OrderProduct');

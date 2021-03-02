@@ -12,10 +12,12 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\OrderExport;
 use App\Http\Resources\OrderCollection;
+use App\Http\Resources\OrderResource;
 
 class OrderController extends Controller
 {
     
+    /**後台訂單管理 */
     public function getOrderList(Request $request)
     {  
         $p = new Pagination($request);
@@ -69,14 +71,11 @@ class OrderController extends Controller
         
         $order = Order::where('order_numero',$order_numero)->firstOrFail();     
         if(!$this->isUserPermittedToView($order)){ return redirect()->route('shop'); }
-
-        $orderProduct = $order->orderProducts()->get();
-        $orderProductCollection = new OrderProductCollection($orderProduct);
-        $total = $order->total;
+        
+        $orderResource = new OrderResource($order);
+        //return response($orderResource);
         return view('pages.orderDetail',[
-            'orderProduct' => $orderProductCollection->withFirstImage()->toArray(),
-            'order_numero' => $order_numero,
-            'total' => $total,
+            'OR'=>$orderResource->toArray()
         ]);
     }
 

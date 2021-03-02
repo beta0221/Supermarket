@@ -28,6 +28,6 @@ class OrderDetail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.orderDetail');
+        return $this->view('mails.mail_orderDetail');
     }
 }

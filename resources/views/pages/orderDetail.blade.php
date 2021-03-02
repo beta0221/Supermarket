@@ -11,7 +11,7 @@
                 <table class="table table-hover" style="margin: 2rem">
                     <thead>
                         <tr>
-                            <th style="border: 0px"><h4>訂單編號 : {{$order_numero}}<h4></th>
+                            <th style="border: 0px"><h4>訂單編號 : {{$OR->order_numero}}<h4></th>
                         </tr>
                         <tr>
                             <th>訂購商品</th>
@@ -20,7 +20,7 @@
                             <th>價格</th>
                         </tr>                      
                     </thead>       
-                    @foreach ($orderProduct as $op)
+                    @foreach ($OR->productList as $op)
                         <tr>  
                             <td>
                             <img style="width: 70px" src="{{$op->imageUrl}}" alt="">
@@ -36,7 +36,7 @@
                                 font-size:1.2rem;
                                 padding-right: 6rem;
                                 text-align: end;">
-                                    總價 :<span class="text-success" style="margin-left: 1.5rem"> {{$total}} </span>
+                                    總價 :<span class="text-success" style="margin-left: 1.5rem"> {{$OR->total}} </span>
                                 </th>
                             </tr>
                         </tfoot>

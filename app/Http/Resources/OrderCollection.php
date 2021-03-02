@@ -5,6 +5,10 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use App\User;
 use stdClass;
+
+/**
+ * 訂單列表（後台用）
+ */
 class OrderCollection extends ResourceCollection
 {
     private $idArray = [];

@@ -2,19 +2,12 @@
 
 namespace App\Http\Resources;
 
+use App\Order;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class MyOrderListCollection extends ResourceCollection
 {
-    private $statusArray = [
-        '0'=>'代付款',
-        '1'=>'待出貨',
-        '2'=>'準備中',
-        '3'=>'已出貨',
-        '4'=>'已到貨',
-        '5'=>'結案',
-        '6'=>'作廢'
-    ];
+    
     /**
      * Transform the resource collection into an array.
      *
@@ -23,8 +16,11 @@ class MyOrderListCollection extends ResourceCollection
      */
 
     public function getStatusWord(){
+
+
+        $statusDict = Order::$statusDict;
         foreach($this as $order){
-            $order->status_word = $this->statusArray[$order->status_id];
+            $order->status_word = $statusDict[$order->status_id];
         }
         return $this;
     }
