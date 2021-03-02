@@ -101,6 +101,13 @@
                     <div class="shoping__discount mt-1">
                         
                         
+                        @if(Session::has('wrongCode'))
+                        <p class="alert {{ Session::get('alert-class', 'alert-info') }}">
+                        {{ Session::get('wrongCode') }}</p>
+                        @elseif(Session::has('successCode'))
+                        <p class="alert {{ Session::get('alert-class', 'alert-info') }}">
+                            {{ Session::get('successCode') }}</p>
+                        @endif
                         <h5 class="mb-1">折扣碼</h5>
                         <input class="mb-3" type="text" placeholder="coupon code" name="coupon_code" value="{{$cartHandler->coupon_code}}">
                         
