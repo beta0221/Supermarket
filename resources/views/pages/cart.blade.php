@@ -92,7 +92,6 @@
                 <h5>2.使用折扣碼或紅利</h5>
             </div>
         </div>
-Ｃ
 
         <div class="row mb-2">
 
