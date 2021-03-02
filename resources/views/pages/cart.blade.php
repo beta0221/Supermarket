@@ -102,7 +102,7 @@
                         
                         
                         <h5 class="mb-1">折扣碼</h5>
-                        <input class="mb-3" type="text" placeholder="coupon code">
+                        <input class="mb-3" type="text" placeholder="coupon code" name="coupon_code" value="{{$cartHandler->coupon_code}}">
                         
                         <h5 class="mb-1">紅利折抵</h5>
                         <?php $auth = Auth::check(); ?>

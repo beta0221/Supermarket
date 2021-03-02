@@ -2,6 +2,8 @@
 
 namespace App;
 
+use DateTime;
+use ErrorException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -77,5 +79,24 @@ class CartRule extends Model
         $cartRuleIdArray = DB::table('cart_rule_product_groups')->where('product_group_id',$product_group_id)->pluck('cart_rule_id');
         $cartRule = CartRule::whereIn('id',$cartRuleIdArray)->where('status',1)->orderBy('priority','desc')->first();
         return $cartRule;
+    }
+
+    public static function checkCoupon($code){ //檢查coupon 正不正確
+        $date = date('Y-m-d');
+        $coupon = CartRule::where('code',$code)
+             ->where('status',1)
+             ->whereDate('start_date', '<=',$date)
+             ->whereDate('expiration_date', '>',$date)
+             ->count();
+             
+             return $coupon;
+    }
+
+    public static function getCoupon($code){
+        // try{
+        //     $cartRule = CartRule::where('code',$code)->first();
+        // } catch(ErrorException $e){
+
+        // }
     }
 }

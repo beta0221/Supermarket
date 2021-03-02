@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Address;
+use App\CartRule;
 use App\Helpers\CartHandler;
 use Illuminate\Http\Request;
 use App\Product;
@@ -48,14 +49,21 @@ class CartController extends Controller
     /**更新購物車商品數量 */
     public function update(Request $request){
 
-        $request->session()->forget('bonus_cost');
+        $request->session()->forget(['bonus_cost','coupon_code']);
         if($user = $request->user()){   //有登入
-            if($request->has('bonus_cost')){    //有使用
+            if($request->filled('bonus_cost')){    //有使用
                 if($user->bonus >= $request->bonus_cost){   //紅利點數夠不夠
                     $request->session()->put('bonus_cost',$request->bonus_cost);
                 }else{
                     $request->session()->put('bonus_cost',$user->bonus);
                 }
+            }
+        }
+        if($request->filled('coupon_code')){ //有使用
+            if($coupon = CartRule::checkCoupon($request->coupon_code)){
+                $request->session()->put('coupon_code',$request->coupon_code);
+            }else{
+                return 'coupon is wrong';
             }
         }
 

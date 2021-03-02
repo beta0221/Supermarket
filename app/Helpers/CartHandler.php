@@ -2,6 +2,7 @@
 namespace App\Helpers;
 
 use App\CartRule;
+use App\Category;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Session;
 
@@ -16,7 +17,9 @@ class CartHandler{
     /**折扣 */
     public $discount = 0;
     /**使用紅利 */
-    public $bonus_cost = 0;
+    public $bonus_cost = null;
+    /**使用折扣碼 */
+    public $coupon_code =null;
     /**總額 */
     public $total = 0;
 
@@ -34,6 +37,9 @@ class CartHandler{
         if($bonus_cost = Session::get('bonus_cost')){
             $this->bonus_cost = $bonus_cost - ($bonus_cost % 50);
             $this->discount = floor($bonus_cost / 50);
+        }
+        if($coupon_code = Session::get('coupon_code')){
+            $this->coupon_code = $coupon_code;
         }
 
         $this->caculate();
@@ -56,6 +62,13 @@ class CartHandler{
                 $this->handleCartItem($cartItem,$cartRule);
             }
         }
+        if(isset($this->coupon_code)){     
+            if($cartRule = CartRule::where('code',$this->coupon_code)->first()){
+                $this->handleCoupon($cartRule);
+            }
+        }
+
+
         $this->caculateDeliveryFee();
         $this->caculateTotal();
     }
@@ -82,6 +95,22 @@ class CartHandler{
                 break;
             case CartRule::TYPE_DICIMAL:
                 $discount = intval(strval($price * (1 - $cartRule->reduction_amount)))*$qty;
+                break;
+            default:
+                break;
+        }
+        $this->discount += $discount;
+        $this->logCartRules($cartRule);
+    }
+
+    private function handleCoupon(CartRule $cartRule){
+        $discount = 0;
+        switch ($cartRule->discount_type) {
+            case CartRule::TYPE_AMOUNT:
+                $discount = $cartRule->reduction_amount;
+                break;
+            case CartRule::TYPE_DICIMAL:
+                $discount = 0 ;
                 break;
             default:
                 break;
