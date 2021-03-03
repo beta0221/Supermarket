@@ -2,6 +2,9 @@
 
 namespace App\Mail;
 
+use App\Order;
+use App\Http\Resources\OrderResource;
+
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -9,6 +12,11 @@ use Illuminate\Queue\SerializesModels;
 
 class OrderDetail extends Mailable
 {
+
+    //public property for view
+    public $OR;
+
+
     use Queueable, SerializesModels;
 
     /**
@@ -18,7 +26,8 @@ class OrderDetail extends Mailable
      */
     public function __construct($order_numero)
     {
-        
+        $order = Order::where('order_numero',$order_numero)->firstOrFail();
+        $this->OR = new OrderResource($order);
     }
 
     /**
