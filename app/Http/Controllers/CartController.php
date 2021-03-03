@@ -111,18 +111,7 @@ class CartController extends Controller
         $itemsForECPay=[];
         if(empty($cartHandler->finalCartItems)){ return redirect()->route('shop'); }
         foreach ($cartHandler->finalCartItems as $item){
-
-            $orderProduct =  new OrderProduct();      
-            $orderProduct->name = $item->name;
-            $orderProduct->price = $item->price;     
-            $orderProduct->bonus_rate = $item->product->bonus_rate;
-            $orderProduct->quantity = $item->qty;
-            $orderProduct->price_with_tax = 0;
-            $orderProduct->sku = $item->product->sku;
-            $orderProduct->product_id = $item->product->id;
-            $orderProduct->order_id = $order->id;
-            $orderProduct->save();
-
+            OrderProduct::insert_row($order->id,$item);
             $itemsForECPay[] = [
                 'name' => $item->name,
                 'qty' => $item->qty,
@@ -143,7 +132,7 @@ class CartController extends Controller
         $paymentString = Payment::getPaymentString($request->payment_id);
         $formData = [
             'OrderId'=>$order_numero,
-            'UserId' => 1, // 用戶ID , Optional
+            //'UserId' => 1, // 用戶ID , Optional
             'ItemDescription' => '產品簡介',
             'Items' => $itemsForECPay,
             'TotalAmount' => $order->total,

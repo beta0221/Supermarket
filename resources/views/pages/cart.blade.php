@@ -110,12 +110,12 @@
                         @endif
                         <input class="mb-3" type="text" placeholder="coupon code" name="coupon_code" value="{{$cartHandler->coupon_code}}">
                         
-                        <h5 class="mb-1">紅利折抵</h5>
-                        <?php $auth = Auth::check(); ?>
-                        @if (!$auth)
+                        <?php $user = Auth::user(); ?>
+                        <h5 class="mb-1">紅利折抵{{($user)?'（剩餘：'.$user->bonus.'）':''}}</h5>
+                        @if (!$user)
                         <div class="alert alert-warning" role="alert">請先登入</div>
                         @endif
-                        <input {{(!$auth)?'disabled':''}} class="mb-3" type="text" placeholder="紅利折抵" name="bonus_cost" value="{{$cartHandler->bonus_cost}}">
+                        <input {{(!$user)?'disabled':''}} class="mb-3" type="text" placeholder="紅利折抵" name="bonus_cost" value="{{$cartHandler->bonus_cost}}">
                         
 
                         
