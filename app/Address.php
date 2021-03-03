@@ -33,7 +33,6 @@ class Address extends Model
         $address->phone = $request->phone;
         $address->mobile_phone = $request->mobile_phone;
 
-        $address->name = null;
         $address->save();
 
         return $address;

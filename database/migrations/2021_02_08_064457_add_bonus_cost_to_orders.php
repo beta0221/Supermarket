@@ -26,7 +26,7 @@ class AddBonusCostToOrders extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-            Schema::dropIfExists('bonus_cost');
+            $table->dropColumn('bonus_cost');
         });
     }
 }

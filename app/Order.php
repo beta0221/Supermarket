@@ -31,6 +31,7 @@ class Order extends Model
         'total',
         'total_tax',
         'bonus_cost',
+        'subtotal',
     ];
 
     public static $key = 'order_numero';
@@ -79,6 +80,8 @@ class Order extends Model
         $order->currency_id = 1;
         $order->comment = $request->comment;
 
+        $order->subtotal = $cartHandler->subtotal;
+        $order->bonus_cost = $cartHandler->bonus_cost;
         $order->total_discount = floatval($cartHandler->discount);
         $order->total_discount_tax = 0;
         $order->total_shipping = floatval($cartHandler->delivery_fee);
@@ -93,7 +96,6 @@ class Order extends Model
             $order->delivery_time = $request->delivery_time;
         }
 
-        $order->bonus_cost = $cartHandler->bonus_cost;
         $order->save();
         return $order;
     }

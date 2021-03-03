@@ -26,7 +26,7 @@ class AddColumnToOrders extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-            Schema::dropIfExists('orders');
+            $table->dropColumn('orders');
         });
     }
 }

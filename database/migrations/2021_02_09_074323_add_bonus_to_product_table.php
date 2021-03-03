@@ -26,7 +26,7 @@ class AddBonusToProductTable extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            Schema::dropIfExists('bonus');
+            $table->dropColumn('bonus_rate');
         });
     }
 }

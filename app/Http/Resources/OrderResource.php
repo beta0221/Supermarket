@@ -16,7 +16,7 @@ use stdClass;
 class OrderResource extends JsonResource
 {
 
-    private $initColumn = ['order_numero','bonus_cost','total_discount','total_shipping','total','comment','created_at'];
+    private $initColumn = ['order_numero','subtotal','bonus_cost','total_discount','total_shipping','total','comment','created_at'];
     private $orderResource;
     
     public function __construct($resource)

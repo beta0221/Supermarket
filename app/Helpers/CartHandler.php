@@ -17,9 +17,9 @@ class CartHandler{
     /**折扣 */
     public $discount = 0;
     /**使用紅利 */
-    public $bonus_cost = null;
+    public $bonus_cost = 0;
     /**使用折扣碼 */
-    public $coupon_code =null;
+    public $coupon_code = null;
     /**總額 */
     public $total = 0;
 

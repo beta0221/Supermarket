@@ -132,7 +132,7 @@ class CartController extends Controller
         };
 
         if($user = $request->user()){
-            if($cartHandler->has('bonus_cost')){
+            if($cartHandler->bonus_cost){
                 $user->updateBonus($cartHandler->bonus_cost);
             }
         }

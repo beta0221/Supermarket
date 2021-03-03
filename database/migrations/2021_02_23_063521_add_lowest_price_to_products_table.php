@@ -26,7 +26,7 @@ class AddLowestPriceToProductsTable extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            Schema::dropIfExists('lowest_price');
+            $table->dropColumn('lowest_price');
         });
     }
 }
