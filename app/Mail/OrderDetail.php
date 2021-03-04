@@ -27,7 +27,8 @@ class OrderDetail extends Mailable
     public function __construct($order_numero)
     {
         $order = Order::where('order_numero',$order_numero)->firstOrFail();
-        $this->OR = new OrderResource($order);
+        $orderResource = new OrderResource($order);
+        $this->OR = $orderResource->toArray();
     }
 
     /**

@@ -29,9 +29,9 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         $preUrl = Cookie::get('from');  //取的前一頁
-        if($user->isAdmin()){
-            return redirect()->intended('admin'); //redirect to admin panel
-        }
+        // if($user->isAdmin()){
+        //     return redirect()->intended('admin'); //redirect to admin panel
+        // }
         return redirect($preUrl);
     }
 
