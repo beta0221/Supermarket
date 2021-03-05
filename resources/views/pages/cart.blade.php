@@ -138,12 +138,24 @@
         </div>
 
         </form>
+        
+        <div class="row mb-2">
+            <div class="col-lg-6 offset-lg-6 step-title " >
+                <h6 style="background-color:#d4edda;line-height: 1.2;" class="p-3">
+                    已使用的折扣是 : 
+                </br>
+                    @foreach ($cartHandler->cartRules as $cartRule)
+                         {{$cartRule->name}} </br>
+                    @endforeach
 
+                </h6>
+            </div> 
+        </div>
 
 
         <div class="row mb-2">
             <div class="col-lg-6 offset-lg-6 step-title">
-                <h5>4.確定金額，前往結帳</h5>
+                <h5>4.確定金額，前往結帳</h5> 
             </div>
         </div>
 

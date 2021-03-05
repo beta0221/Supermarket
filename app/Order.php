@@ -58,6 +58,9 @@ class Order extends Model
     public function orderProducts(){
         return $this->hasMany('App\OrderProduct');
     }
+    public function cartRuleLog(){
+        return $this->hasMany('App\CartRuleLog');
+    }
 
     /**
      * 存資料到資料表 Order

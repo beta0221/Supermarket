@@ -30,6 +30,8 @@ class CartHandler{
     /**購物車規則 */
     public $cartRules = [];
     private $cartRulesDict = [];
+    /**判斷 dicimal */
+    private $dicimal = false;
 
     public function __construct(){
         $this->cartItems = Cart::content();
@@ -55,16 +57,18 @@ class CartHandler{
             $this->subtotal += $finalCartItem->subtotal;
             $this->finalCartItems[] = $finalCartItem;
         }
-
+        //先判斷coupon 折扣
+        if(isset($this->coupon_code)){     
+            if($cartRule = CartRule::where('code',$this->coupon_code)->first()){
+                $price = $this->subtotal;
+                $this->handleCoupon($price,$cartRule);
+            }
+        }
+        //在判斷group折扣
         foreach ($this->finalCartItems as $cartItem) {
             if(!$productGroup = $cartItem->product->group()->first()){ continue; }
             if($cartRule = CartRule::getCartRuleByProductGroupId($productGroup->id)){
                 $this->handleCartItem($cartItem,$cartRule);
-            }
-        }
-        if(isset($this->coupon_code)){     
-            if($cartRule = CartRule::where('code',$this->coupon_code)->first()){
-                $this->handleCoupon($cartRule);
             }
         }
 
@@ -76,6 +80,7 @@ class CartHandler{
     private function caculateDeliveryFee(){
         if($cartRule = CartRule::getCartRuleByMinimumTotal($this->subtotal)){
             if($cartRule->free_delivery){
+                $this->logCartRules($cartRule);
                 $this->delivery_fee = 0;
             }
         }
@@ -94,6 +99,7 @@ class CartHandler{
                 $discount = $cartRule->reduction_amount*$qty;
                 break;
             case CartRule::TYPE_DICIMAL:
+                if($this->dicimal === true){return;}
                 $discount = intval(strval($price * (1 - $cartRule->reduction_amount)))*$qty;
                 break;
             default:
@@ -103,14 +109,15 @@ class CartHandler{
         $this->logCartRules($cartRule);
     }
 
-    private function handleCoupon(CartRule $cartRule){
+    private function handleCoupon($subtotal,CartRule $cartRule){
         $discount = 0;
         switch ($cartRule->discount_type) {
             case CartRule::TYPE_AMOUNT:
                 $discount = $cartRule->reduction_amount;
                 break;
             case CartRule::TYPE_DICIMAL:
-                $discount = 0 ;
+                $discount = intval(strval($subtotal * (1 - $cartRule->reduction_amount)));
+                $this->dicimal = true;
                 break;
             default:
                 break;

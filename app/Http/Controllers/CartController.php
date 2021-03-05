@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Address;
 use App\CartRule;
+use App\CartRuleLog;
 use App\Helpers\CartHandler;
 use Illuminate\Http\Request;
 use App\Product;
@@ -119,6 +120,10 @@ class CartController extends Controller
                 'price' => $item->price,
             ];
         };
+
+        foreach ($cartHandler->cartRules as $rule){
+            CartRuleLog::insert_row($order->id,$rule);
+        }
 
         if($user = $request->user()){
             if($cartHandler->bonus_cost){
