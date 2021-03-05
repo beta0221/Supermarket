@@ -130,7 +130,7 @@ class CartHandler{
      * 把CartRuleList放進 $this->cartRules (不重複)
      * @param array $cartRuleList
      */
-    private function logCartRules($cartRule){
+    private function logCartRules(CartRule $cartRule){
         if(isset($this->cartRulesDict[$cartRule->id])){ return; }
         $this->cartRules[] = $cartRule;
         $this->cartRulesDict[$cartRule->id] = true;

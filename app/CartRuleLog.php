@@ -30,7 +30,7 @@ class CartRuleLog extends Model
       return $this->belongsTo('App\Order','order_id');
     }
 
-    public static function insert_row($order_id,$rule){
+    public static function insert_row($order_id,CartRule $rule){
         $cartRuleLog =  new CartRuleLog();      
         $cartRuleLog->order_id = $order_id;
         $cartRuleLog->name = $rule->name;
