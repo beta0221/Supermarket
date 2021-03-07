@@ -48,6 +48,10 @@
           <td style="background-color:#D3D3D3">備註</td>
           <td>{{addressInfo.comment}}</td>
         </tr>
+        <tr>
+          <td style="background-color:#D3D3D3">配合活動</td>
+          <li v-for="(cart,index) in cartRuleList" :key="index">{{ cart.name }}</li>
+        </tr>
       </table>
           <CDataTable
           :items="orderProduct"
@@ -78,6 +82,7 @@ export default {
             orderProduct:[],
             addressInfo:[],
             order:[],
+            cartRuleList:[],
             orderProductFields : [
         { key: "name", label: "商品" },
         { key: "imageUrl", label: "圖片" },
@@ -105,6 +110,8 @@ export default {
           this.userInfo = res.data.userInfo;
           this.order = res.data.order;
           this.addressInfo = res.data.addressInfo;
+          this.cartRuleList = res.data.cartRuleList;
+
         })
         .catch((err) => {
           console.error(err);

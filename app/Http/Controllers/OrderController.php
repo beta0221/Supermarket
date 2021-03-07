@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Address;
+use App\CartRuleLog;
 use App\Http\Resources\OrderProductCollection;
 use App\Order;
 use App\Helpers\Pagination;
@@ -71,11 +72,13 @@ class OrderController extends Controller
         
         $order = Order::where('order_numero',$order_numero)->firstOrFail();     
         if(!$this->isUserPermittedToView($order)){ return redirect()->route('shop'); }
-        
+        //配合活動
+        $cartRuleList = CartRuleLog::where('order_id',$order->id)->get();
         $orderResource = new OrderResource($order);
         //return response($orderResource);
         return view('pages.orderDetail',[
-            'OR'=>$orderResource->toArray()
+            'OR'=>$orderResource->toArray(),
+            'cartRuleList'=> $cartRuleList,
         ]);
     }
 
@@ -101,12 +104,14 @@ class OrderController extends Controller
         $orderProductCollection = new OrderProductCollection($orderProduct);
         $total = $order->total;
         $orderProduct = $orderProductCollection->withFirstImage();
+        $cartRuleList = CartRuleLog::where('order_id',$order->id)->get();
         return response([
             "order" => $order,
             'userInfo' => $userInfo,
             'addressInfo' => $addressInfo,
             'orderProduct' => $orderProduct,
             'total' => $total,
+            'cartRuleList'=>$cartRuleList,
         ]);
     }
 
