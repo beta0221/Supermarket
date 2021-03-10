@@ -5,6 +5,10 @@
 @include('components.orderAddress',['address'=>$OR->address])
 @endif
 
+@if (count($OR->cartRules))
+@include('components.orderCartRules',['cartRules'=>$OR->cartRules])
+@endif
+
 @include('components.productListTable',['productList'=>$OR->productList])
 
 @include('components.orderTotal',['OR'=>$OR])

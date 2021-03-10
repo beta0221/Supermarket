@@ -139,18 +139,19 @@
 
         </form>
         
-        <div class="row mb-2">
-            <div class="col-lg-6 offset-lg-6 step-title " >
-                <h6 style="background-color:#d4edda;line-height: 1.2;" class="p-3">
-                    已使用的折扣是 : 
-                </br>
+        @if (!empty($cartHandler->cartRules))
+        <div class="row mb-2 mt-2">
+            <div class="col-lg-6 offset-lg-6" >
+                <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">已使用的折扣 : </h4>
+                    <hr class="mt-2 mb-2">
                     @foreach ($cartHandler->cartRules as $cartRule)
-                         {{$cartRule->name}} </br>
+                    <p style="color:#155724" class="mb-0">＊{{$cartRule->name}}</p>
                     @endforeach
-
-                </h6>
+                </div>
             </div> 
         </div>
+        @endif
 
 
         <div class="row mb-2">

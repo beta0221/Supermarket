@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Address;
 use App\Carrier;
+use App\CartRuleLog;
 use App\Payment;
 use App\User;
 use App\Order;
@@ -82,6 +83,15 @@ class OrderResource extends JsonResource
             $this->orderResource->productList = $orderProductCollection->withFirstImage()->toArray();
         }
     }
+
+    /**使用的折扣 */
+    private function handleCartRules(){
+        $this->orderResource->cartRules = [];
+        $cartRules = CartRuleLog::where('order_id',$this->id)->pluck('name');
+        if(!empty($cartRules)){
+            $this->orderResource->cartRules = $cartRules;
+        }
+    }
     
     /**
      * Transform the resource into an array.
@@ -99,6 +109,7 @@ class OrderResource extends JsonResource
         $this->handlePayment();
         $this->handleStatus();
         $this->handleOrderProducts();
+        $this->handleCartRules();
 
         return $this->orderResource;
     }
@@ -166,5 +177,9 @@ class OrderResource extends JsonResource
 //             "quantity": 1,
 //             "imageUrl": "http:\/\/localhost:8000\/storage\/product\/pork_001\/Qt5TjEkCjknkekVfRrwh5333ItrGBXyRXIOL8kVF.jpeg"
 //         }
+//     ],
+//     "cartRules": [
+//          "\u6392\u9aa820\u7247\u6298\u6263",
+//          "\u6eff2000\u514d\u904b"
 //     ]
 // }

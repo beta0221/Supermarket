@@ -72,13 +72,11 @@ class OrderController extends Controller
         
         $order = Order::where('order_numero',$order_numero)->firstOrFail();     
         if(!$this->isUserPermittedToView($order)){ return redirect()->route('shop'); }
-        //配合活動
-        $cartRuleList = CartRuleLog::where('order_id',$order->id)->get();
+        
         $orderResource = new OrderResource($order);
         //return response($orderResource);
         return view('pages.orderDetail',[
             'OR'=>$orderResource->toArray(),
-            'cartRuleList'=> $cartRuleList,
         ]);
     }
 
