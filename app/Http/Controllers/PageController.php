@@ -6,6 +6,7 @@ use App\Category;
 use App\Country;
 use App\Product;
 use App\Carrier;
+use App\Order;
 use App\Helpers\CartHandler;
 use App\Helpers\Pagination;
 use App\Helpers\TaiwanDistrict;
@@ -13,6 +14,7 @@ use App\Http\Resources\CategoryCollection;
 use App\Http\Resources\ProductCollection;
 use App\Payment;
 use App\Banner;
+use App\Helpers\ECPay;
 use App\OrderProduct;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
@@ -145,6 +147,17 @@ class PageController extends Controller
             'cities'=>TaiwanDistrict::CITY,
             'carriers'=>Carrier::all(),
             'payments'=>Payment::all_sortByCarrier(),
+        ]);
+    }
+
+    /**付款頁面 */
+    public function pay($order_numero){
+        $order = Order::where('order_numero',$order_numero)->firstOrFail();
+        $ecpay = new ECPay($order);
+
+        $token = $ecpay->getToken();
+        return view('pages.pay',[
+            'token'=>$token
         ]);
     }
 
