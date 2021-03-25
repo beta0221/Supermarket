@@ -155,6 +155,9 @@ class PageController extends Controller
         $order = Order::where('order_numero',$order_numero)->firstOrFail();
         $ecpay = new ECPay($order);
 
+        // $body = $ecpay->getRequestBody();
+        // echo $body;
+
         $token = $ecpay->getToken();
         return view('pages.pay',[
             'token'=>$token

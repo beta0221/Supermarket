@@ -2,6 +2,7 @@
 namespace App\Helpers;
 
 use App\Order;
+use Illuminate\Support\Facades\Crypt;
 
 class ECPay{
 
@@ -10,6 +11,10 @@ class ECPay{
     private $endpoint = "https://ecpg-stage.ecpay.com.tw/Merchant/GetTokenbyTrade";
     /** 特店編號 */
     private $MerchantID;
+    /**Hashkey */
+    private $HashKey;
+    /**HashIV */
+    private $HashIV;
     /** 串接文件版號 */
     private $Revision = "1.0.0";
     /** 是否使用記憶卡號 0否 1是 */
@@ -67,9 +72,11 @@ class ECPay{
             $this->endpoint = "https://ecpg.ecpay.com.tw/Merchant/GetTokenbyTrade";
         }
         $this->MerchantID = config('ecpay.MerchantId');
+        $this->HashKey = config('ecpay.HashKey');
+        $this->HashIV = config('ecpay.HashIV');
         $this->MerchantTradeNo = $order->order_numero;
-        $this->MerchantTradeDate = $order->created_at;
-        $this->TotalAmount = $order->total;
+        $this->MerchantTradeDate = $order->created_at->format("Y/m/d H:m:s");
+        $this->TotalAmount = (int)$order->total;
         $this->setItemName($order);
 
         
@@ -91,11 +98,90 @@ class ECPay{
         }
     }
 
+
+    /**
+     * 組合json請求body
+     * @return string
+     */
+    public function getRequestBody(){
+        $body = [];
+        $body['MerchantID'] = $this->MerchantID;
+        $body['RqHeader'] = [
+            'Timestamp'=>time(),
+            'Revision'=>$this->Revision,
+        ];
+        $Data = [
+            'MerchantID' => $this->MerchantID,
+            'RememberCard' => $this->RememberCard,
+            'PaymentUIType' => $this->PaymentUIType,
+            'ChoosePaymentList' => $this->ChoosePaymentList,
+            'OrderInfo' => [
+                "MerchantTradeNo" => $this->MerchantTradeNo,
+                "MerchantTradeDate" => $this->MerchantTradeDate,
+                "TotalAmount" => $this->TotalAmount,
+                "ReturnURL" => $this->ReturnURL,
+                'TradeDesc' => $this->TradeDesc,
+                'ItemName' => $this->ItemName
+            ],
+            'CardInfo'=> [
+                'OrderResultURL' => $this->OrderResultURL,
+            ],
+            'ATMInfo' => [
+                'ExpireDate' => $this->ExpireDate
+            ],
+            'ConsumerInfo' => [
+                "MerchantMemberID"=>$this->MerchantMemberID,
+                "Email"=>$this->Email,
+                "Phone"=>$this->Phone,
+                "Name"=>$this->Name,
+                "CountryCode"=>$this->CountryCode,
+            ]
+        ];
+        $Data = json_encode($Data);
+        $Data = urlencode($Data);
+        $Data = Crypt::encrypt();
+        $body['Data'] = $Data;
+
+        return json_encode($body);
+    }
+
     /** 
      * 取得付款token
      * @return string 
      */
     public function getToken(){
+
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://ecpg-stage.ecpay.com.tw/Merchant/GetTokenbyTrade",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => $this->getRequestBody(),
+            CURLOPT_HTTPHEADER => [
+                "Content-Type: application/json",
+            ],
+        ]);
+        
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        curl_close($curl);
+        
+        if ($err) {
+          echo "cURL Error #:" . $err;
+        } else {
+          echo $response;
+        }
+
+
+
+
+
+
+
         return '';
     }
 
