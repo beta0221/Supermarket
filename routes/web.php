@@ -19,8 +19,8 @@ Route::get('/index', 'PageController@index')->name('index');
 Route::get('/shop/{slug}', 'PageController@shop');
 Route::get('/cart','PageController@cart')->name('cart');
 Route::get('/checkout','PageController@checkout')->name('checkout');
-Route::get('/pay/{order_numero}','PageController@pay');
-// Route::get('/myOrder', 'OrderController@view_myOrder')->name('myOrder')->middleware('auth');
+Route::get('/pay/{order_numero}','PageController@view_pay');
+Route::post('/pay/{order_numero}','PageController@pay');
 
 Route::group(['prefix' => 'cart'], function () {
     Route::get('/getItems','CartController@getItems');

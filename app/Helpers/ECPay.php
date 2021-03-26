@@ -2,13 +2,13 @@
 namespace App\Helpers;
 
 use App\Order;
-use Illuminate\Support\Facades\Crypt;
 
 class ECPay{
 
-
-    /** 介接路徑 */
-    private $endpoint = "https://ecpg-stage.ecpay.com.tw/Merchant/GetTokenbyTrade";
+    /** 取得token路徑 */
+    private $endpoint_GetTokenbyTrade = "https://ecpg-stage.ecpay.com.tw/Merchant/GetTokenbyTrade";
+    /** 建立交易路徑 */
+    private $endpoint_CreatePayment = "https://ecpg-stage.ecpay.com.tw/Merchant/CreatePayment";
     /** 特店編號 */
     private $MerchantID;
     /**Hashkey */
@@ -35,7 +35,7 @@ class ECPay{
     /** 付款回傳結果URL（POST） */
     private $ReturnURL = '';
     /** 交易描述 */
-    private $TradeDesc = '';
+    private $TradeDesc = 'test';
     /** 商品名稱（以#分隔） */
     private $ItemName = '';
 
@@ -62,14 +62,18 @@ class ECPay{
     /** 國別碼 */
     private $CountryCode;
 
-
-
+    /**
+     * 建構子
+     * @param Order $order
+     * @return void
+     */
     public function __construct(Order $order)
     {
 
         
         if(config('app.env') == "production"){
-            $this->endpoint = "https://ecpg.ecpay.com.tw/Merchant/GetTokenbyTrade";
+            $this->endpoint_GetTokenbyTrade = "https://ecpg.ecpay.com.tw/Merchant/GetTokenbyTrade";
+            $this->endpoint_CreatePayment = "https://ecpg.ecpay.com.tw/Merchant/CreatePayment";
         }
         $this->MerchantID = config('ecpay.MerchantId');
         $this->HashKey = config('ecpay.HashKey');
@@ -78,10 +82,8 @@ class ECPay{
         $this->MerchantTradeDate = $order->created_at->format("Y/m/d H:m:s");
         $this->TotalAmount = (int)$order->total;
         $this->setItemName($order);
-
-        
-
-
+        $this->ReturnURL = config('app.url') . '/sdfsdfsfsdf';
+        $this->OrderResultURL = config('app.url') . '/sdkfjsidfjosidf';
 
     }
 
@@ -100,16 +102,66 @@ class ECPay{
 
 
     /**
-     * 組合json請求body
+     * 加密
+     * @param array $array
      * @return string
      */
-    public function getRequestBody(){
+    private function array2EncryptedString(array $array){
+        $string = json_encode($array);
+        $string = urlencode($string);
+        $string = openssl_encrypt($string,"AES-128-CBC",$this->HashKey,0,$this->HashIV);
+        return $string;
+    }
+
+    /**
+     * 解密
+     * @param string $string
+     * @return array
+     */
+    private function string2DecryptedArray(string $string){
+        $string = openssl_decrypt($string,"AES-128-CBC",$this->HashKey,0,$this->HashIV);
+        $array = json_decode(urldecode($string),true);
+        return $array;
+    }
+
+    /**
+     * 取得請求的body templet
+     * @return array
+     */
+    private function getBody(){
         $body = [];
         $body['MerchantID'] = $this->MerchantID;
         $body['RqHeader'] = [
             'Timestamp'=>time(),
             'Revision'=>$this->Revision,
         ];
+        return $body;
+    }
+
+    /**
+     * 組合CreatePayment請求body 
+     * @param string $Paytoken
+     * @return string
+     */
+    private function getBody_CreatePayment(string $Paytoken){
+        $body = $this->getBody();
+        $Data = [
+            "MerchantID" => $this->MerchantID,
+            "PayToken" => $Paytoken,
+            "MerchantTradeNo" => $this->MerchantTradeNo,
+        ];
+        $Data = $this->array2EncryptedString($Data);
+        $body['Data'] = $Data;
+
+        return json_encode($body);
+    }
+
+    /**
+     * 組合TradeToken請求body 
+     * @return string
+     */
+    private function getBody_TradeToken(){
+        $body = $this->getBody();
         $Data = [
             'MerchantID' => $this->MerchantID,
             'RememberCard' => $this->RememberCard,
@@ -137,12 +189,34 @@ class ECPay{
                 "CountryCode"=>$this->CountryCode,
             ]
         ];
-        $Data = json_encode($Data);
-        $Data = urlencode($Data);
-        $Data = Crypt::encrypt();
+        $Data = $this->array2EncryptedString($Data);
         $body['Data'] = $Data;
 
         return json_encode($body);
+    }
+
+    /**
+     * curl 請求
+     * @param string $url
+     * @param string $body
+     * @return resource
+     */
+    private function getCurlRequest(string $url,string $body){
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => $body,
+            CURLOPT_HTTPHEADER => [
+                "Content-Type: application/json",
+            ],
+        ]);
+        return $curl;
     }
 
     /** 
@@ -151,38 +225,60 @@ class ECPay{
      */
     public function getToken(){
 
-        $curl = curl_init();
-        curl_setopt_array($curl, [
-            CURLOPT_URL => "https://ecpg-stage.ecpay.com.tw/Merchant/GetTokenbyTrade",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => $this->getRequestBody(),
-            CURLOPT_HTTPHEADER => [
-                "Content-Type: application/json",
-            ],
-        ]);
-        
-        $response = curl_exec($curl);
+        $curl = $this->getCurlRequest($this->endpoint_GetTokenbyTrade,$this->getBody_TradeToken());
+        $res = curl_exec($curl);
         $err = curl_error($curl);
         curl_close($curl);
         
         if ($err) {
-          echo "cURL Error #:" . $err;
-        } else {
-          echo $response;
+          //log err
+          return null;
         }
 
+        $res = json_decode($res,true);
+        if(!isset($res['Data'])){ return null; }
+        $Data = $this->string2DecryptedArray($res['Data']);
+        if(!isset($Data['RtnCode']) || !isset($Data['Token'])){ return null; }
+        if($Data['RtnCode'] != 1){ return null; }
+        return $Data['Token'];
+        
+    }
+
+    /**
+     * 進行付款
+     * @param string $PayToken
+     * @return string
+     */
+    public function createPayment(string $PayToken){
+        $curl = $this->getCurlRequest($this->endpoint_CreatePayment,$this->getBody_CreatePayment($PayToken));
+        $res = curl_exec($curl);
+        $err = curl_error($curl);
+        curl_close($curl);
+
+        if ($err) {
+            //log err
+            return null;
+        }
+        
+        $res = json_decode($res,true);
+        if(!isset($res['Data'])){ return null; }
+        $Data = $this->string2DecryptedArray($res['Data']);
+        if(!isset($Data['RtnCode'])){ return null; }
+        if($Data['RtnCode'] != 1){ return null; }
+
+        return "SUCCESS";
+    }
 
 
-
-
-
-
-        return '';
+    /** 
+     * 前端JS SDK 路徑 
+     * @return string
+     * */
+    public function getEcpaySDKUrl(){
+        if(config('app.env') == "production"){
+            return "https://ecpg.ecpay.com.tw/Scripts/sdk-1.0.0.js?t=20210121100116";
+        }
+        return "https://ecpg-stage.ecpay.com.tw/Scripts/sdk-1.0.0.js?t=20210121100116";
     }
 
 }

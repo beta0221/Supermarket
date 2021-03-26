@@ -45,7 +45,7 @@ class Order extends Model
     const STATUS_INVALID = 6;
 
     public static $statusDict = [
-        '0'=>'代付款',
+        '0'=>'待付款',
         '1'=>'待出貨',
         '2'=>'準備中',
         '3'=>'已出貨',
@@ -117,7 +117,7 @@ class Order extends Model
         ]);
         return 1;
     }
-    public static function updateToLastStatus($order_numero){
+    public static function updateToPrevStatus($order_numero){
         $first = Order::where('order_numero',$order_numero)->first();
         if(!$first){
             return 0;
@@ -130,6 +130,17 @@ class Order extends Model
             'status_id'=>$lastStatus
         ]);
         return 1;
+    }
+
+    /**
+     * 調整訂單狀態
+     * @param int $status
+     * @return void
+     */
+    public function setStatus(int $status){
+        if(!isset(Order::$statusDict[$status])){ return; }
+        $this->status_id = $status;
+        $this->save();
     }
 
     /**

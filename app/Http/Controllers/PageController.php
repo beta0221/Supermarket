@@ -151,17 +151,36 @@ class PageController extends Controller
     }
 
     /**付款頁面 */
-    public function pay($order_numero){
+    public function view_pay($order_numero){
         $order = Order::where('order_numero',$order_numero)->firstOrFail();
         $ecpay = new ECPay($order);
 
-        // $body = $ecpay->getRequestBody();
-        // echo $body;
+        if(!$token = $ecpay->getToken()){
+            return '錯誤頁面';
+        }
 
-        $token = $ecpay->getToken();
         return view('pages.pay',[
-            'token'=>$token
+            'order_numero' => $order_numero,
+            'token' => $token,
+            'ecpaySDKUrl'=> $ecpay->getEcpaySDKUrl(),
         ]);
+    }
+
+    /** 付款請求 */
+    public function pay(Request $request,$order_numero){
+        $order = Order::where('order_numero',$order_numero)->firstOrFail();
+        if(!$request->has('PayToken')){ return '錯誤頁面'; }
+
+        $ecpay = new ECPay($order);
+        $result = $ecpay->createPayment($request->PayToken);
+
+        if($result == "SUCCESS"){
+            $order->setStatus(Order::STATUS_READY);
+            return redirect()->route('thankyou',['order_numero'=>$order_numero]);
+        }
+
+        return '錯誤頁面';
+
     }
 
 }

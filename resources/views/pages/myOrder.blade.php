@@ -25,7 +25,7 @@
                     </tr>
                 </thead>
                 <?php $colorDict = [
-                '0' => 'btn btn-error',
+                '0' => 'btn btn-secondary',
                 '1' => 'btn btn-warning',
                 '2' => 'btn btn-info',
                 '3' => 'btn btn-primary',

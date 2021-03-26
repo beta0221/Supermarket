@@ -154,11 +154,11 @@ class OrderController extends Controller
 
         return response(['s'=>1,'m'=>'更新成功']);
     }
-    public function lastStatus(Request $request){
+    public function prevStatus(Request $request){
         $this->validate($request,[
             'order_numero'=>'required',
         ]);     
-        $result = Order::updateToLastStatus($request->order_numero);
+        $result = Order::updateToPrevStatus($request->order_numero);
         if($result == 0){
             return response(['s'=>0,'m'=>'系統錯誤']);
         }else if($result == -1){
@@ -188,7 +188,7 @@ class OrderController extends Controller
         ]);
         $order_numero_array = json_decode($request->order_numero_array,true);
         foreach ($order_numero_array as $order_numero) {
-            Order::updateToLastStatus($order_numero);
+            Order::updateToPrevStatus($order_numero);
         }
         return response('success');
     }
