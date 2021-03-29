@@ -25,4 +25,18 @@ class PaymentController extends Controller
     public function all(){
         return response(Payment::all());
     }
+
+    /** 綠界付款完成頁面  */
+    public function view_ecpay_thankyouPage($order_numero){
+        return redirect()->route('thankyou',['order_numero'=>$order_numero]);
+    }
+
+    /** 付款完成api */
+    public function api_ecpay_pay(Request $request,$order_numero){
+        
+    }
+
+
+
+
 }

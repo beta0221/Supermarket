@@ -5,6 +5,8 @@ use App\Order;
 
 class ECPay{
 
+    /** 訂單 */
+    private $order;
     /** 取得token路徑 */
     private $endpoint_GetTokenbyTrade = "https://ecpg-stage.ecpay.com.tw/Merchant/GetTokenbyTrade";
     /** 建立交易路徑 */
@@ -70,7 +72,7 @@ class ECPay{
     public function __construct(Order $order)
     {
 
-        
+        $this->order = $order;
         if(config('app.env') == "production"){
             $this->endpoint_GetTokenbyTrade = "https://ecpg.ecpay.com.tw/Merchant/GetTokenbyTrade";
             $this->endpoint_CreatePayment = "https://ecpg.ecpay.com.tw/Merchant/CreatePayment";
@@ -81,19 +83,17 @@ class ECPay{
         $this->MerchantTradeNo = $order->order_numero;
         $this->MerchantTradeDate = $order->created_at->format("Y/m/d H:m:s");
         $this->TotalAmount = (int)$order->total;
-        $this->setItemName($order);
-        $this->ReturnURL = config('app.url') . '/sdfsdfsfsdf';
-        $this->OrderResultURL = config('app.url') . '/sdkfjsidfjosidf';
+        $this->ReturnURL = route('ecpay_ReturnURL',['order_numero'=>$order->order_numero]);
+        $this->OrderResultURL = route('ecpay_OrderResultURL',['order_numero'=>$order->order_numero]);
 
     }
 
     /**
      * 組合ItemName
-     * @param Order $order 
      * @return void
      * */
-    private function setItemName(Order $order){
-        $nameList = $order->orderProducts()->pluck('name');
+    private function setItemName(){
+        $nameList = $this->order->orderProducts()->pluck('name');
         foreach ($nameList as $name) {
             if(!empty($this->ItemName)){ $this->ItemName .= "#"; }
             $this->ItemName .= $name;
@@ -224,7 +224,7 @@ class ECPay{
      * @return string 
      */
     public function getToken(){
-
+        $this->setItemName();
         $curl = $this->getCurlRequest($this->endpoint_GetTokenbyTrade,$this->getBody_TradeToken());
         $res = curl_exec($curl);
         $err = curl_error($curl);

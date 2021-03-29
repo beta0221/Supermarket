@@ -21,9 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 /**綠界結帳成功導轉用 */
-Route::post('thankyou/{order_numero}',function($order_numero){
-    return redirect()->route('thankyou',['order_numero'=>$order_numero]);
-});
+Route::post('thankyou/{order_numero}','PaymentController@view_ecpay_thankyouPage')->name('ecpay_OrderResultURL');
+Route::post('ecpay/pay/{order_numero}','PaymentController@api_ecpay_pay')->name('ecpay_ReturnURL');
 
 //get all
 Route::get('/attribute/all','AttributeController@all');
