@@ -148,6 +148,16 @@ class Order extends Model
     }
 
     /**
+     * 調整訂單付款方式
+     * @param int $payment_id
+     * @return void
+     */
+    public function setPayment(int $payment_id){
+        $this->payment_id = $payment_id;
+        $this->save();
+    }
+
+    /**
      * 計算這筆訂單可以獲得多少紅利點數
      * @return int
      */

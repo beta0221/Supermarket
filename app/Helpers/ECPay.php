@@ -280,10 +280,12 @@ class ECPay{
         switch ($Data['OrderInfo']['PaymentType']) {
             case 'CreditCard':
                 $this->order->setStatus(Order::STATUS_READY);
+                $this->order->setPayment(1);
                 $this->order->sendBonusToBuyer();
                 return route('thankyou',['order_numero'=>$this->order->order_numero]);    
                 break;
             case 'ATM':
+                $this->order->setPayment(2);
                 return route('orderDetail',['order_numero'=>$this->order->order_numero]);    
                 break;
             default:
