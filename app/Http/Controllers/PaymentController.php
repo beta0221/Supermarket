@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ECPay;
+use App\Order;
 use App\Payment;
 use Illuminate\Http\Request;
 use App\Traits\CrudTrait;
@@ -34,11 +36,11 @@ class PaymentController extends Controller
 
     /** 付款完成api */
     public function api_ecpay_pay(Request $request,$order_numero){
-
-        Log::info("accept ecpay api");
-        Log::info("order_numero:".$order_numero);
-        $body = json_decode($request->getContent(),true);
-        Log::info($body);
+        
+        Log::info("api_ecpay_pay:".$order_numero);
+        $order = Order::where('order_numero',$order_numero)->firstOrFail();
+        $ecpay = new ECPay($order);
+        $ecpay->handleAtmPayRequest($request);
 
         return "1|OK";
     }

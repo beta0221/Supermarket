@@ -176,6 +176,7 @@ class PageController extends Controller
 
         if($result == "SUCCESS"){
             $order->setStatus(Order::STATUS_READY);
+            $order->sendBonusToBuyer();
             return redirect()->route('thankyou',['order_numero'=>$order_numero]);
         }
 

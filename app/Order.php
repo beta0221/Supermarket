@@ -61,6 +61,9 @@ class Order extends Model
     public function cartRuleLog(){
         return $this->hasMany('App\CartRuleLog');
     }
+    public function paymentLogs(){
+        return $this->hasMany('App\PaymentLog');
+    }
 
     /**
      * 存資料到資料表 Order

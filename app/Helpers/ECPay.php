@@ -2,6 +2,8 @@
 namespace App\Helpers;
 
 use App\Order;
+use App\PaymentLog;
+use Illuminate\Http\Request;
 
 class ECPay{
 
@@ -261,12 +263,39 @@ class ECPay{
         }
         
         $res = json_decode($res,true);
-        if(!isset($res['Data'])){ return null; }
-        $Data = $this->string2DecryptedArray($res['Data']);
-        if(!isset($Data['RtnCode'])){ return null; }
-        if($Data['RtnCode'] != 1){ return null; }
-
+        if(!isset($res['TransCode']) || !isset($res['TransMsg']) || !isset($res['Data'])){ return null; }
+        PaymentLog::insert_row(
+            $this->order->id,
+            PaymentLog::TYPE_CREATE_PAYMENT,
+            $res['TransCode'],
+            $res['TransMsg'],
+            $res['Data'],
+        );
+        //$Data = $this->string2DecryptedArray($res['Data']);
+        if($res['TransCode'] != 1){ return null; }
         return "SUCCESS";
+    }
+
+    /** 
+     * 處理atm付款回傳請求
+     * @param Request $request
+     * @return void
+     */
+    public function handleAtmPayRequest(Request $request){
+        $res = json_decode($request->getContent(),true);
+        if(!isset($res['TransCode']) || !isset($res['TransMsg']) || !isset($res['Data'])){ return; }
+        PaymentLog::insert_row(
+            $this->order->id,
+            PaymentLog::TYPE_PAY_REQUEST,
+            $res['TransCode'],
+            $res['TransMsg'],
+            $res['Data'],
+        );
+        //$this->string2DecryptedArray($res['Data']);
+        if($res['TransCode'] == 1){
+            $this->order->setStatus(Order::STATUS_READY);
+            $this->order->sendBonusToBuyer();
+        }
     }
 
 
