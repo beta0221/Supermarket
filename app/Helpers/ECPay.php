@@ -231,8 +231,8 @@ class ECPay{
         curl_close($curl);
         
         if ($err) {
-          //log err
-          return null;
+            //log err
+            return null;
         }
 
         $res = json_decode($res,true);

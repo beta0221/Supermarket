@@ -14,7 +14,6 @@ use App\SpecificPrice;
 use App\UploadProductDescriptionImageLog;
 use \Validator;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
