@@ -21,6 +21,10 @@ class Payment extends Model
     const PAYMENT_ATM = 'ATM';
     const PAYMENT_COD = 'COD';
 
+    const PAYMENT_ID_CREDIT = 1;
+    const PAYMENT_ID_ATM = 2;
+    const PAYMENT_ID_COD = 3;
+
     /**
      * 取得payment_id對應的金流代號 
      * @param int $payment_id

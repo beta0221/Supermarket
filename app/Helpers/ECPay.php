@@ -2,6 +2,7 @@
 namespace App\Helpers;
 
 use App\Order;
+use App\Payment;
 use App\PaymentLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -275,18 +276,23 @@ class ECPay{
         if($res['TransCode'] != 1){ return null; }
         $Data = $this->string2DecryptedArray($res['Data']);
 
+        Log::info("createPayment:" . $this->order->order_numero);
         Log::info(json_encode($Data));
         if(!isset($Data['OrderInfo']['PaymentType'])){ return null; }
         switch ($Data['OrderInfo']['PaymentType']) {
             case 'CreditCard':
+
                 $this->order->setStatus(Order::STATUS_READY);
-                $this->order->setPayment(1);
+                $this->order->setPayment(Payment::PAYMENT_ID_CREDIT);
                 $this->order->sendBonusToBuyer();
                 return route('thankyou',['order_numero'=>$this->order->order_numero]);    
+
                 break;
             case 'ATM':
-                $this->order->setPayment(2);
+
+                $this->order->setPayment(Payment::PAYMENT_ID_ATM);
                 return route('orderDetail',['order_numero'=>$this->order->order_numero]);    
+
                 break;
             default:
                 return null;
@@ -314,6 +320,17 @@ class ECPay{
             $this->order->setStatus(Order::STATUS_READY);
             $this->order->sendBonusToBuyer();
         }
+    }
+
+    /**
+     * 取得atm付款碼
+     * @return array
+     */
+    public function getAtmInfo(){
+        if(!$log = $this->order->paymentLogs()->where('type',PaymentLog::TYPE_CREATE_PAYMENT)->first()){ return null; }
+        $data = $this->string2DecryptedArray($log->Data);
+        if(!isset($data['ATMInfo'])){ return null; }
+        return $data['ATMInfo'];
     }
 
 

@@ -9,6 +9,10 @@
 @include('components.orderCartRules',['cartRules'=>$OR->cartRules])
 @endif
 
+@if ($OR->atmInfo)
+@include('components.orderATM',['atmInfo'=>$OR->atmInfo])
+@endif
+
 @include('components.productListTable',['productList'=>$OR->productList])
 
 @include('components.orderTotal',['OR'=>$OR])

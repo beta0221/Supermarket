@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use App\Address;
 use App\Carrier;
 use App\CartRuleLog;
+use App\Helpers\ECPay;
 use App\Payment;
 use App\User;
 use App\Order;
@@ -18,11 +19,13 @@ class OrderResource extends JsonResource
 {
 
     private $initColumn = ['order_numero','subtotal','bonus_cost','total_discount','total_shipping','total','comment','created_at'];
+    private $order;
     private $orderResource;
     
     public function __construct($resource)
     {
         parent::__construct($resource);
+        $this->order = $resource;
         $this->orderResource = new stdClass();
     }
     
@@ -92,6 +95,16 @@ class OrderResource extends JsonResource
             $this->orderResource->cartRules = $cartRules;
         }
     }
+
+    /** ATM匯款資訊 */
+    private function handleAtmInfo(){
+        $this->orderResource->atmInfo = null;
+        if($this->payment_id != Payment::PAYMENT_ID_ATM){ return; }
+        $ecpay = new ECPay($this->order);
+        if($atmInfo = $ecpay->getAtmInfo()){
+            $this->orderResource->atmInfo = (object)$atmInfo;
+        }
+    }
     
     /**
      * Transform the resource into an array.
@@ -110,6 +123,7 @@ class OrderResource extends JsonResource
         $this->handleStatus();
         $this->handleOrderProducts();
         $this->handleCartRules();
+        $this->handleAtmInfo();
 
         return $this->orderResource;
     }
