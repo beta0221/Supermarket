@@ -269,7 +269,7 @@ class ECPay{
             PaymentLog::TYPE_CREATE_PAYMENT,
             $res['TransCode'],
             $res['TransMsg'],
-            $res['Data'],
+            $res['Data']
         );
         //$Data = $this->string2DecryptedArray($res['Data']);
         if($res['TransCode'] != 1){ return null; }
@@ -289,7 +289,7 @@ class ECPay{
             PaymentLog::TYPE_PAY_REQUEST,
             $res['TransCode'],
             $res['TransMsg'],
-            $res['Data'],
+            $res['Data']
         );
         //$this->string2DecryptedArray($res['Data']);
         if($res['TransCode'] == 1){
