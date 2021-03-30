@@ -77,6 +77,7 @@ class Order extends Model
         if($user = $request->user()){
             $order->user_id = $user->id;
         }
+        $order->status_id = Order::STATUS_PENDING_PAYMENT;
         $order->carrier_id = $request->carrier_id;
         $order->payment_id = $request->payment_id;
 

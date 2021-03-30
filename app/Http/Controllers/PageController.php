@@ -172,15 +172,10 @@ class PageController extends Controller
         if(!$request->has('PayToken')){ return '錯誤頁面'; }
 
         $ecpay = new ECPay($order);
-        $result = $ecpay->createPayment($request->PayToken);
+        $resultUrl = $ecpay->createPayment($request->PayToken);
 
-        if($result == "SUCCESS"){
-            $order->setStatus(Order::STATUS_READY);
-            $order->sendBonusToBuyer();
-            return redirect()->route('thankyou',['order_numero'=>$order_numero]);
-        }
-
-        return '錯誤頁面';
+        if(!$resultUrl){ return '錯誤頁面'; }
+        return redirect($resultUrl);
 
     }
 

@@ -19,7 +19,7 @@ Route::get('/index', 'PageController@index')->name('index');
 Route::get('/shop/{slug}', 'PageController@shop');
 Route::get('/cart','PageController@cart')->name('cart');
 Route::get('/checkout','PageController@checkout')->name('checkout');
-Route::get('/pay/{order_numero}','PageController@view_pay');
+Route::get('/pay/{order_numero}','PageController@view_pay')->name('payPage');
 Route::post('/pay/{order_numero}','PageController@pay');
 
 Route::group(['prefix' => 'cart'], function () {
@@ -38,7 +38,7 @@ Route::group(['prefix' => 'product'], function () {
 
 Route::group(['prefix' => 'order'], function () {
     Route::get('/thankyou/{order_numero}','OrderController@view_thankyou')->name('thankyou');
-    Route::get('/detail/{order_numero}','OrderController@view_orderDetail');
+    Route::get('/detail/{order_numero}','OrderController@view_orderDetail')->name('orderDetail');
     Route::group(['middleware'=>['auth']],function(){
         Route::get('/myOrder','OrderController@view_myOrder')->middleware('auth');
         Route::get('downloadOrderExcel','OrderController@excel_downloadOrderExcel');

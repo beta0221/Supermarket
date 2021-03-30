@@ -109,16 +109,16 @@ class CartController extends Controller
         $order = Order::insert_row($request,$address->id,$cartHandler);
         $order_numero = $order->order_numero;
 
-        $itemsForECPay=[];
+        // $itemsForECPay=[];
         if(empty($cartHandler->finalCartItems)){ return redirect()->route('shop'); }
         foreach ($cartHandler->finalCartItems as $item){
             OrderProduct::insert_row($order->id,$item);
-            $itemsForECPay[] = [
-                'name' => $item->name,
-                'qty' => $item->qty,
-                'unit' => '個',
-                'price' => $item->price,
-            ];
+            // $itemsForECPay[] = [
+            //     'name' => $item->name,
+            //     'qty' => $item->qty,
+            //     'unit' => '個',
+            //     'price' => $item->price,
+            // ];
         };
 
         foreach ($cartHandler->cartRules as $rule){
@@ -135,14 +135,14 @@ class CartController extends Controller
         $request->session()->forget('bonus_cost');
 
         $paymentString = Payment::getPaymentString($request->payment_id);
-        $formData = [
-            'OrderId'=>$order_numero,
-            //'UserId' => 1, // 用戶ID , Optional
-            'ItemDescription' => '產品簡介',
-            'Items' => $itemsForECPay,
-            'TotalAmount' => $order->total,
-            'PaymentMethod' => $paymentString, // ALL, Credit, ATM, WebATM
-        ];
+        // $formData = [
+        //     'OrderId'=>$order_numero,
+        //     //'UserId' => 1, // 用戶ID , Optional
+        //     'ItemDescription' => '產品簡介',
+        //     'Items' => $itemsForECPay,
+        //     'TotalAmount' => $order->total,
+        //     'PaymentMethod' => $paymentString, // ALL, Credit, ATM, WebATM
+        // ];
 
         //dispatch send mail queue here
         
@@ -151,9 +151,13 @@ class CartController extends Controller
         switch ($paymentString) {
             case Payment::PAYMENT_CREDIT:
             case Payment::PAYMENT_ATM:
-                return $this->checkout->setReturnUrl(config('app.url') . '/api/thankyou/' . $order_numero)->setPostData($formData)->send();
+                //ecpay 站內付款
+                return redirect()->route('payPage',['order_numero'=>$order_numero]);
+                //ecpay 跳轉付款
+                //return $this->checkout->setReturnUrl(config('app.url') . '/api/thankyou/' . $order_numero)->setPostData($formData)->send();
                 break;
             case Payment::PAYMENT_COD:
+                $order->setStatus(Order::STATUS_READY);
                 return redirect()->route('thankyou',['order_numero'=>$order_numero]);
                 break;
             default:

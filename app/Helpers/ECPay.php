@@ -4,6 +4,7 @@ namespace App\Helpers;
 use App\Order;
 use App\PaymentLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ECPay{
 
@@ -271,9 +272,24 @@ class ECPay{
             $res['TransMsg'],
             $res['Data']
         );
-        //$Data = $this->string2DecryptedArray($res['Data']);
         if($res['TransCode'] != 1){ return null; }
-        return "SUCCESS";
+        $Data = $this->string2DecryptedArray($res['Data']);
+
+        Log::info(json_encode($Data));
+        if(!isset($Data['OrderInfo']['PaymentType'])){ return null; }
+        switch ($Data['OrderInfo']['PaymentType']) {
+            case 'CreditCard':
+                $this->order->setStatus(Order::STATUS_READY);
+                $this->order->sendBonusToBuyer();
+                return route('thankyou',['order_numero'=>$this->order->order_numero]);    
+                break;
+            case 'ATM':
+                return route('orderDetail',['order_numero'=>$this->order->order_numero]);    
+                break;
+            default:
+                return null;
+                break;
+        }
     }
 
     /** 
