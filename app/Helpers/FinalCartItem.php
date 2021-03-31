@@ -6,6 +6,7 @@ use App\CartRule;
 class FinalCartItem{
 
     public $rowId;
+    public $sku;
     public $name;
     public $price;
     public $qty;
@@ -15,6 +16,7 @@ class FinalCartItem{
     public static function getInstance($cartItem,CartRule $cartRule = null){
         $finalCartItem = new FinalCartItem();
         $finalCartItem->rowId = $cartItem->rowId;
+        $finalCartItem->sku = $cartItem->model->sku;
         $finalCartItem->name = $cartItem->name;
         $finalCartItem->price = $cartItem->price;
         if($cartRule){

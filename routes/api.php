@@ -69,6 +69,7 @@ Route::get('/order/{id}/orderProducts','OrderController@getOrderProducts');
 Route::group(['prefix' => 'product'], function () {
     Route::get('/images/{sku}','ProductController@getImages');
     Route::get('/specificPrices/{sku}','ProductController@getSpecificPrices');
+    Route::get('/priceList/{sku}','ProductController@getPriceList');
     Route::post('/{sku}/addImage','ProductController@addImage');
     Route::post('/addImageInDescription/{sku}','ProductController@addImageInDescription');
     Route::delete('/{sku}/deleteImage','ProductController@deleteImage');

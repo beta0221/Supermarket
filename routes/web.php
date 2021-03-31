@@ -33,7 +33,7 @@ Route::group(['prefix' => 'cart'], function () {
 });
 
 Route::group(['prefix' => 'product'], function () {
-    Route::get('/{sku}','ProductController@viewProductDetail');
+    Route::get('/{sku}','ProductController@viewProductDetail')->name('productDetail');
 });
 
 Route::group(['prefix' => 'order'], function () {

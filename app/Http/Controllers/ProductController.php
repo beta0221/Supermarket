@@ -186,6 +186,17 @@ class ProductController extends Controller
        return response($specificPrice);
     }
 
+    /** api 取得各個數量價目表 */
+    public function getPriceList($sku){
+        $product = Product::where('sku',$sku)->firstOrFail();
+        return response([
+            'name'=>$product->name,
+            // 'image'=>$product->getFirstImageUrl(),
+            'priceList'=>$product->getPriceList()
+        ]);
+    }
+
+    /** view 商品詳情頁面 */
     public function viewProductDetail($sku){
 
         $product = Product::where('sku',$sku)->firstOrFail();

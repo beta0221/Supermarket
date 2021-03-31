@@ -23,7 +23,7 @@
             {{-- for loop items here --}}
         </ul>
 
-        <a href="/cart" class="btn btn-primary">Checkout</a>
+        <a href="/cart" class="btn btn-primary">前往結帳</a>
         
     </div>
 

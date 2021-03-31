@@ -8,7 +8,7 @@ use stdClass;
 class CartCollection extends ResourceCollection
 {
 
-    private $initColumn = ['name','price','qty'];
+    private $initColumn = ['name','sku','rowId','price','qty'];
     /**
      * Transform the resource collection into an array.
      *

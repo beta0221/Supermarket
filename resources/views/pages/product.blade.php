@@ -8,6 +8,13 @@
         padding: 8px 24px;
         border: 1px solid gray;
     }
+    .quantity-btn{
+        cursor: pointer;
+        font-weight: 600;
+    }
+    .quantity-btn:hover{
+        color:gray;
+    }
 </style>
 @endsection
 
@@ -50,14 +57,14 @@
                         
                         @if (!empty($priceList))
                         <div class="product__priceList mt-3 mb-3">
-                            <table class="text-center">
+                            <table class="text-center h4">
                                 <tr>
                                     <td>數量</td>
                                     <td>單價</td>
                                 </tr>
                                 @foreach ($priceList as $quantity => $price)
                                     <tr>
-                                        <td>{{$quantity}}</td>
+                                        <td><span class="quantity-btn" onclick="selectQty({{$quantity}})">{{$quantity}}</span></td>
                                         <td>${{$price}}</td>
                                     </tr>
                                 @endforeach
@@ -178,6 +185,10 @@
     function addQtyToCart(){
         let qty = $('#add-qty').val();
         addToCart(sku,qty);
+    }
+
+    function selectQty(qty){
+        $('#add-qty').val(qty);
     }
 </script>
 @endsection
