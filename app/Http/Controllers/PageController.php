@@ -48,7 +48,7 @@ class PageController extends Controller
         $onSaleProductCollection = new ProductCollection($onSaleProducts);
 
         //取得Banner
-        $banners = Banner::orderBy('id','desc')->get();
+        $banners = Banner::whereNotNull('image_path')->orderBy('order','asc')->orderBy('id','desc')->get();
         $static_host = config('app.static_host') . '/';
         $imagesUrl = [];
         foreach($banners as $banner){

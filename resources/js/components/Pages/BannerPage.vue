@@ -31,11 +31,12 @@ export default {
                 {key:'index',label:'#'},
                 {key:'key_word',label:'名稱'},
                 // {key:'image_path',label:'圖片'},
-                {key:'edit',label:'-'},
+                {key:'edit_delete',label:'-'},
             ],
             columns:[
                 {key:'slug',type:'text',label:'代號',readonly:true},
                 {key:'key_word',type:'text',label:'名稱'},
+                {key:'order',type:'text',label:'排序'},
                  {key:'image_path',type:'image_input',addImageUrl:'banner',label:'商品圖片',url:'/api/banner/images'},
             ]
         }

@@ -136,7 +136,9 @@ trait CrudTrait{
      */
     public function destroy($value)
     {
-        //
+        $model = $this->model::findOrFail($value);
+        $model->delete();
+        return response('success');
     }
 
 

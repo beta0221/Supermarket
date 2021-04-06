@@ -19,6 +19,7 @@
         </td>
       </template>
 
+      <!-- 編輯按鈕 -->
       <template #edit="{ item }">
         <td>
           <CButton
@@ -31,6 +32,41 @@
           </CButton>
         </td>
       </template>
+
+      <!-- 刪除按鈕 -->
+      <template #delete="{ item }">
+        <td>
+          <CButton
+            size="sm"
+            color="danger"
+            class="ml-1"
+            @click="deleteItem(item)">
+            刪除
+          </CButton>
+        </td>
+      </template>
+      
+      <!-- 刪除 & 編輯按鈕 -->
+      <template #edit_delete="{ item }">
+        <td>
+          <CButton
+            size="sm"
+            color="info"
+            class="ml-1"
+            @click="showDetail(item)">
+            詳細
+          </CButton>
+          <CButton
+            size="sm"
+            color="danger"
+            class="ml-1"
+            @click="deleteItem(item)">
+            刪除
+          </CButton>
+        </td>
+      </template>
+
+      
     </CDataTable>
 
     <CPagination
@@ -97,6 +133,17 @@ export default {
     showDetail(item) {
       EventBus.$emit("showDetailModal", item);
     },
+    deleteItem(item){
+      axios.post(this.requestUrl + "/" + item.id, {
+        '_method':'DELETE'
+      })
+      .then(res => {
+        this.reloadData();
+      })
+      .catch(error => {
+        errorHelper.handle(error);
+      })
+    }
   },
 };
 </script>

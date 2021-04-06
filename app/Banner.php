@@ -12,7 +12,7 @@ class Banner extends Model
 
     public $timestamps = false;
 
-
+    public static $key = 'slug';
 
     public function getStaticUrl(){
         return config('app.static_host') . '/' . $this->name;
