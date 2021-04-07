@@ -37,7 +37,7 @@ export default {
                 {key:'slug',type:'text',label:'代號',readonly:true},
                 {key:'key_word',type:'text',label:'名稱'},
                 {key:'order',type:'text',label:'排序'},
-                 {key:'image_path',type:'image_input',addImageUrl:'banner',label:'商品圖片',url:'/api/banner/images'},
+                {key:'image_path',type:'image_input',addImageUrl:'banner',label:'圖片',url:'/api/banner/images'},
             ]
         }
     }

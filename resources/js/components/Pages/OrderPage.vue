@@ -129,7 +129,7 @@ export default {
         { label: "日期", value: "created_at" },
       ],
       statusValue: [
-        { label: "代付款", value: "0" },
+        { label: "待付款", value: "0" },
         { label: "待出貨", value: "1" },
         { label: "準備中", value: "2" },
         { label: "已出貨", value: "3" },

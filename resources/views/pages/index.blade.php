@@ -285,5 +285,16 @@
 @endsection
 
 @section('js')
+<script>
+    $(".owl-carousel").owlCarousel({
+		loop:true,
+		nav:false,
+		items:1,
+		navText:[],
+		autoplay:true,
+		autoplaySpeed:1000,
+		smartSpeed:500,
+	});
+</script>
 
 @endsection

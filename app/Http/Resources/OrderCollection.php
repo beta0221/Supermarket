@@ -12,7 +12,7 @@ use stdClass;
 class OrderCollection extends ResourceCollection
 {
     private $idArray = [];
-    private $initColumn = ['order_numero','status_id','buyer','created_at'];
+    private $initColumn = ['order_numero','status_id','buyer'];
     private $userNameDict = [];
 
     public function __construct($resource){
@@ -38,6 +38,7 @@ class OrderCollection extends ResourceCollection
     {
         return $this->collection->map(function($model) use($request){
             $resource = new stdClass();
+            $resource->created_at = $model->created_at->format("Y/m/d H:m:s");
             foreach ($this->initColumn as $column) {
                 $resource->{$column} = $model->{$column};
             }

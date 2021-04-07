@@ -34,19 +34,18 @@ class OrderController extends Controller
             else{
                 $query = $query->where($request->column,'like','%'.$request->value.'%'); 
             }
-               
         }    
+        
         $p->cacuTotalPage($query->count()); 
 
-        $modelList = $query->skip($p->skip)
+        $orderList = $query->skip($p->skip)
             ->take($p->rows)
             ->orderBy($p->orderBy,$p->order)
             ->get();
-        $order = new OrderCollection($modelList);
+        $orderCollection = new OrderCollection($orderList);
         
-        $new = $order->withUserName()->toArray();
         return response([
-            'data'=>$new,
+            'data'=>$orderCollection->withUserName(),
             'pagination'=>$p,
         ]);
     }

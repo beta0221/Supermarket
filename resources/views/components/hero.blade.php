@@ -54,7 +54,7 @@
                     </div>
                 </div> --}}
 
-                <div class="banner__slider owl-carousel">
+                <div class="owl-carousel">
                     @if(count($banner))
 
                         @foreach ($banner as $img)
