@@ -26,7 +26,7 @@ class AddColumnToOrders extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->dropColumn('orders');
+            $table->dropColumn('order_numero');
         });
     }
 }
