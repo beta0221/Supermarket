@@ -18,7 +18,7 @@ class UserTableSeeder extends Seeder
 
         $employee = new User();
         $employee->name = 'employee';
-        $employee->email = 'employee@employee';
+        $employee->email = 'employee@employee.com';
         $employee->password = 'employee';
         $employee->birthday = '1995-03-13';
         $employee->gender = 1;
@@ -27,7 +27,7 @@ class UserTableSeeder extends Seeder
 
         $admin = new User();
         $admin->name = 'admin';
-        $admin->email = 'admin@admin';
+        $admin->email = 'admin@admin.com';
         $admin->password = 'admin';
         $admin->birthday = '1995-02-21';
         $admin->gender = 1;

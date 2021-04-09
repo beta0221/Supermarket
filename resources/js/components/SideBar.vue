@@ -7,33 +7,36 @@
         </CSidebarBrand>
         
         <CSidebarNav>
-            <CSidebarNavDropdown :name="'資料管理'">
+            <CSidebarNavDropdown :name="'設定'">
                 <CSidebarNavItem :name="'標籤(Attribute)'" to="/admin/attribute"></CSidebarNavItem>
                 <CSidebarNavItem :name="'標籤群組(Attribute Set)'" to="/admin/attributeSet"></CSidebarNavItem>
-                <CSidebarNavItem :name="'產品分類(Category)'" to="/admin/category"></CSidebarNavItem>
-                <CSidebarNavItem :name="'產品群組(Product Group)'" to="/admin/productGroup"></CSidebarNavItem>
-                <CSidebarNavItem :name="'產品(Product)'" to="/admin/product"></CSidebarNavItem>
-                <CSidebarNavItem :name="'產品特價(SpecificPrice))'" to="/admin/specificPrice"></CSidebarNavItem>
                 <CSidebarNavItem :name="'國家(Country))'" to="/admin/country"></CSidebarNavItem>
                 <CSidebarNavItem :name="'物流(Carrier))'" to="/admin/carrier"></CSidebarNavItem>
                 <CSidebarNavItem :name="'金流(Payment))'" to="/admin/payment"></CSidebarNavItem>
             </CSidebarNavDropdown>
 
-            <CSidebarNavDropdown name="行銷管理">
+            <CSidebarNavDropdown name="產品">
+                <CSidebarNavItem name="產品(Product)" to="/admin/product"></CSidebarNavItem>
+                <CSidebarNavItem name="產品特價(SpecificPrice))" to="/admin/specificPrice"></CSidebarNavItem>
+                <CSidebarNavItem name="產品分類(Category)" to="/admin/category"></CSidebarNavItem>
+                <!-- <CSidebarNavItem name="產品群組(Product Group)" to="/admin/productGroup"></CSidebarNavItem> -->
+            </CSidebarNavDropdown>
+
+            <CSidebarNavDropdown name="行銷">
                 <CSidebarNavItem name="購物車規則" to="/admin/cartRule"></CSidebarNavItem>
             </CSidebarNavDropdown>
 
-            <CSidebarNavDropdown :name="'前台管理'">
-                <CSidebarNavItem :name="'列表管理'" to="/admin/banner"></CSidebarNavItem>
+            <CSidebarNavDropdown name="前台">
+                <CSidebarNavItem name="列表管理" to="/admin/banner"></CSidebarNavItem>
             </CSidebarNavDropdown>
                 
 
-            <CSidebarNavDropdown :name="'會員管理'">
-                <CSidebarNavItem :name="'會員管理'" to="/admin/member"></CSidebarNavItem>
+            <CSidebarNavDropdown name="會員">
+                <CSidebarNavItem name="會員管理" to="/admin/member"></CSidebarNavItem>
             </CSidebarNavDropdown>
 
-            <CSidebarNavDropdown :name="'訂單管理'">
-                <CSidebarNavItem :name="'訂單管理'" to="/admin/order"></CSidebarNavItem>
+            <CSidebarNavDropdown name="訂單">
+                <CSidebarNavItem name="訂單管理" to="/admin/order"></CSidebarNavItem>
             </CSidebarNavDropdown>
             
         </CSidebarNav>

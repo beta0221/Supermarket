@@ -25,8 +25,8 @@ class ProductController extends Controller
         
         $this->model = Product::class;
         $this->storeRule = [
-            'group_id'=>['required','integer'],
-            'attribute_set_id'=>['required','integer'],
+            'group_id'=>['nullable','integer'],
+            'attribute_set_id'=>['nullable','integer'],
             'name'=>['required','max:255','string'],
             'description'=>['required'],
             'lowest_price'=>['required'],
@@ -36,8 +36,8 @@ class ProductController extends Controller
             'active' => ['required','integer'],
         ];
         $this->updateRule = [
-            'group_id'=>['required','integer'],
-            'attribute_set_id'=>['required','integer'],
+            'group_id'=>['nullable','integer'],
+            'attribute_set_id'=>['nullable','integer'],
             'name'=>['required','max:255','string'],
             'description'=>['required'],
             'lowest_price'=>['required'],

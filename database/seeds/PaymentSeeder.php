@@ -12,8 +12,8 @@ class PaymentSeeder extends Seeder
      */
     public function run()
     {
-        Payment::create(['name'=>'信用卡']);
-        Payment::create(['name'=>'ATM']);
-        Payment::create(['name'=>'貨到付款']);
+        Payment::create(['id'=>1,'name'=>'信用卡']);
+        Payment::create(['id'=>2,'name'=>'ATM']);
+        Payment::create(['id'=>3,'name'=>'貨到付款']);
     }
 }
