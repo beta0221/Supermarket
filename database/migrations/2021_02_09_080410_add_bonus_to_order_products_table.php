@@ -26,7 +26,7 @@ class AddBonusToOrderProductsTable extends Migration
     public function down()
     {
         Schema::table('order_products', function (Blueprint $table) {
-            $table->dropColumn('bonus');
+            $table->dropColumn('bonus_rate');
         });
     }
 }
