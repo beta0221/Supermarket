@@ -33,6 +33,7 @@ class CartRuleLog extends Model
     public static function insert_row($order_id,CartRule $rule){
         $cartRuleLog =  new CartRuleLog();      
         $cartRuleLog->order_id = $order_id;
+        $cartRuleLog->rule_type = $rule->rule_type;
         $cartRuleLog->name = $rule->name;
         $cartRuleLog->code = $rule->code;
         $cartRuleLog->start_date = $rule->start_date;

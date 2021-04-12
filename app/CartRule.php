@@ -7,6 +7,39 @@ use Illuminate\Support\Facades\DB;
 
 class CartRule extends Model
 {
+
+    const RULE_CHANGE_PRICE = 'change_price';
+    const RULE_COUPON_DISCOUNT = 'coupon_discount';
+    const RULE_GROUP_DISCOUNT = 'group_discount';
+    const RULE_THRESHOLD_DISCOUNT = 'threshold_discount';
+    const RULE_DELIVERY_DISCOUNT = 'delivery_discount';
+
+    const COLUMN_CHANGE_PRICE = ['priority','status','minimum_amount','discount_type','reduction_amount'];
+    const COLUMN_COUPON_DISCOUNT = ['priority','status','code','discount_type','reduction_amount'];
+    const COLUMN_GROUP_DISCOUNT = ['priority','status','discount_type','reduction_amount'];
+    const COLUMN_THRESHOLD_DISCOUNT = ['priority','status','minimum_total','discount_type','reduction_amount'];
+    const COLUMN_DELIVERY_DISCOUNT = ['priority','status','minimum_total','free_delivery','reduction_amount'];
+
+    public static function getRuleTypes(){
+        return [
+            ['id'=>static::RULE_CHANGE_PRICE,'name'=>'產品變價'],
+            ['id'=>static::RULE_COUPON_DISCOUNT,'name'=>'Coupon碼'],
+            ['id'=>static::RULE_GROUP_DISCOUNT,'name'=>'群組折扣'],
+            ['id'=>static::RULE_THRESHOLD_DISCOUNT,'name'=>'滿額折扣'],
+            ['id'=>static::RULE_DELIVERY_DISCOUNT,'name'=>'免運折扣'],
+        ];
+    }
+
+    public static function getColumnsDict(){
+        return [
+            static::RULE_CHANGE_PRICE => static::COLUMN_CHANGE_PRICE,
+            static::RULE_COUPON_DISCOUNT => static::COLUMN_COUPON_DISCOUNT,
+            static::RULE_GROUP_DISCOUNT => static::COLUMN_GROUP_DISCOUNT,
+            static::RULE_THRESHOLD_DISCOUNT => static::COLUMN_THRESHOLD_DISCOUNT,
+            static::RULE_DELIVERY_DISCOUNT => static::COLUMN_DELIVERY_DISCOUNT
+        ];
+    }
+
     const TYPE_AMOUNT = 'amount';
     const TYPE_DICIMAL = 'dicimal';
 
@@ -17,6 +50,7 @@ class CartRule extends Model
      */
     protected $fillable = [
         'name',
+        'rule_type',
         'code',
         'priority',
         'start_date',
@@ -50,8 +84,20 @@ class CartRule extends Model
         return $this->belongsToMany('App\ProductGroup','cart_rule_product_groups','cart_rule_id','product_group_id');
     }
 
-    public static function getCartRuleByMinimumTotal($total){
-        $cartRule = CartRule::where('status',1)
+    /**搜尋Coupon類型 */
+    public static function getCouponDiscountRule($code){
+        $cartRule = CartRule::where('rule_type',CartRule::RULE_COUPON_DISCOUNT)
+            ->where('status',1)
+            ->where('code',$code)
+            ->orderBy('priority','desc')
+            ->first();
+        return $cartRule;
+    }
+
+    /**搜尋免運類型 */
+    public static function getDeliveryDiscountRule($total){
+        $cartRule = CartRule::where('rule_type',static::RULE_DELIVERY_DISCOUNT)
+            ->where('status',1)
             ->where('minimum_total','<=',$total)
             ->orderBy('priority','desc')
             ->first();

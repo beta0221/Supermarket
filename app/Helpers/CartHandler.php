@@ -59,7 +59,7 @@ class CartHandler{
         }
         //先判斷coupon 折扣
         if(isset($this->coupon_code)){     
-            if($cartRule = CartRule::where('code',$this->coupon_code)->first()){
+            if($cartRule = CartRule::getCouponDiscountRule($this->coupon_code)){
                 $price = $this->subtotal;
                 $this->handleCoupon($price,$cartRule);
             }
@@ -78,10 +78,12 @@ class CartHandler{
     }
 
     private function caculateDeliveryFee(){
-        if($cartRule = CartRule::getCartRuleByMinimumTotal($this->subtotal)){
+        if($cartRule = CartRule::getDeliveryDiscountRule($this->subtotal)){
+            $this->logCartRules($cartRule);
             if($cartRule->free_delivery){
-                $this->logCartRules($cartRule);
                 $this->delivery_fee = 0;
+            }else{
+                $this->delivery_fee -= (int)$cartRule->reduction_amount;
             }
         }
     }

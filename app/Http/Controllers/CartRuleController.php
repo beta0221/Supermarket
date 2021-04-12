@@ -12,14 +12,29 @@ class CartRuleController extends Controller
 
     public function __construct(){
         $this->model = CartRule::class;
-        $rule = ['name'=>['required']];
-        $this->storeRule = $rule;
-        $this->updateRule = $rule;
+        $this->storeRule = ['name'=>['required']];
+        $this->updateRule = [
+            'name'=>['required'],
+            'rule_type'=>['required'],
+        ];
         $this->updateColumns = CartRule::get_fillable();
     }
     /**取得所有 CartRule */
     public function all(){
-        return response(CartRule::all());
+        $cartRules = CartRule::where('status',1)->get();
+        return response($cartRules);
+    }
+
+    /**取得所有 CartRule 的enum 類別 */
+    public function all_type(){
+        $types = CartRule::getRuleTypes();
+        return response($types);
+    }
+
+    /**取得所有type 對應的欄位 */
+    public function getColumnsDict(){
+        $dict = CartRule::getColumnsDict();
+        return response($dict);
     }
     
 }

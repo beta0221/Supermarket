@@ -12,7 +12,7 @@
                 :fields="fields"
                 :requestUrl="'/api/cartRule'"/>
             
-            <DataDetailModal
+            <CartRuleDataDetailModal
                 :requestUrl="'/api/cartRule/'"
                 :slug="'id'"
                 :columns="columns"/>
@@ -23,9 +23,10 @@
 </template>
 
 <script>
+import CartRuleDataDetailModal from '../CartRule/_DataDetailModal'
 export default {
     components:{
-        
+        CartRuleDataDetailModal,
     },
     data(){
         return{
@@ -47,7 +48,7 @@ export default {
                 {key:'highlight',type:'single_selector',label:'Hightlight',relationUrl:'/api/cartRuleHeightlight/all',trackBy:'name'},
                 {key:'minimum_total',type:'text',label:'總金額門檻'},
                 {key:'minimum_amount',type:'text',label:'數量門檻'},
-                {key:'free_delivery',type:'single_selector',label:'免運',relationUrl:'/api/cartRuleFreeDelivery/all',trackBy:'name'},
+                {key:'free_delivery',type:'single_selector',label:'免運(若否則輸入折扣額)',relationUrl:'/api/cartRuleFreeDelivery/all',trackBy:'name'},
                 {key:'total_available',type:'text',label:'使用次數'},
                 {key:'total_available_each_user',type:'text',label:'每人使用次數'},
                 {key:'promo_label',type:'text',label:'小標籤'},

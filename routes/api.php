@@ -34,6 +34,7 @@ Route::get('/payment/all','PaymentController@all');
 Route::get('/category/allParents','CategoryController@allParents');
 Route::get('/activeStatus/all','EnumController@active_enum');
 Route::get('/cartRule/all','CartRuleController@all');
+Route::get('/cartRuleType/all','CartRuleController@all_type');
 Route::get('/cartRuleStatus/all','EnumController@cartRule_status_enum');
 Route::get('/cartRuleHeightlight/all','EnumController@cartRule_heightlight_enum');
 Route::get('/cartRuleFreeDelivery/all','EnumController@cartRule_freeDelivery_enum');
@@ -99,9 +100,15 @@ Route::group(['prefix'=>'order'],function(){
 Route::get('member','MemberController@getMembers');
 Route::get('userOrder/{id}','MemberController@userOrderList');
 
-Route::get('banner/images/{slug}','BannerController@getImages');
-Route::post('banner/{slug}/addImage','BannerController@addImage');
-Route::delete('banner/{slug}/deleteImage','BannerController@deleteImage');
+Route::group(['prefix'=>'banner'],function(){
+    Route::get('/images/{slug}','BannerController@getImages');
+    Route::post('/{slug}/addImage','BannerController@addImage');
+    Route::delete('/{slug}/deleteImage','BannerController@deleteImage');
+});
+
+Route::group(['prefix'=>'cartRule'],function(){
+    Route::get('columnsDict','CartRuleController@getColumnsDict');
+});
 
 
 Route::apiResource('banner','BannerController');
