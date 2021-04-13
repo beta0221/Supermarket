@@ -65,6 +65,7 @@
 <!-- Header Section Begin -->
 <header class="header">
     <div class="header__top">
+
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-6">
@@ -83,7 +84,7 @@
                             <a href="#"><i class="fa fa-linkedin"></i></a>
                             <a href="#"><i class="fa fa-pinterest-p"></i></a>
                         </div>
-                        <div class="header__top__right__language">
+                        {{-- <div class="header__top__right__language">
                             <img src="img/language.png" alt="">
                             <div>English</div>
                             <span class="arrow_carrot-down"></span>
@@ -91,17 +92,17 @@
                                 <li><a href="#">Spanis</a></li>
                                 <li><a href="#">English</a></li>
                             </ul>
-                        </div>
+                        </div> --}}
                         <div class="header__top__right__language">
                             @auth
                                 <div> <a href="/shop"><i class="fa fa-user"></i>{{ auth()->user()->name }}</a></div>
                                 <span class="arrow_carrot-down"></span>
                                 <ul>
-                                    <li><a href="/order/myOrder" >My Order</a></li>
+                                    <li><a href="/order/myOrder" >我的訂單</a></li>
                                     <li>
                                         <form action="{{ route('logout') }}" method="post">
                                             @csrf
-                                            <button type="submit" class="btn btn-light">logout</button>
+                                            <button type="submit" class="btn btn-light">登出</button>
                                         </form>
                                     </li>
                                 </ul>
@@ -115,6 +116,7 @@
             </div>
         </div>
     </div>
+
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
@@ -133,20 +135,17 @@
                     </ul>
                 </nav>
             </div>
-            <div class="col-lg-3">
-                <div class="header__cart">
-                    <ul>
-                        {{-- <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li> --}}
 
-                        @include('components.littleCart')
 
-                    </ul>
-                </div>
-            </div>
         </div>
         <div class="humberger__open">
             <i class="fa fa-bars"></i>
         </div>
     </div>
+    
 </header>
 <!-- Header Section End -->
+
+<!-- Float Header Cart Begin -->
+@include('components.littleCart')
+<!-- Float Header Cart End -->

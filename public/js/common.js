@@ -9,10 +9,10 @@ jQuery(function(){
     /** 小購物車顯示 */
     $('body').on('click',function(event){
         if($(event.target).hasClass('little-cart-btn')){
-            $(".shopping-cart").toggle();
+            $(".cart-container").toggle();
             return;
         }
-        $(".shopping-cart").hide();
+        $(".cart-container").hide();
     });
 
     /**載入購物車 */
