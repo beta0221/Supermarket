@@ -3,12 +3,20 @@
 @section('title','首頁')
 
 @section('css')
-
+<style>
+    .customize-banner{
+        width: 100%;
+        height: 30vw;
+    }
+    .owl-stage-outer,.owl-stage,.owl-item,.item,.item>a>img{
+        height: 100%;
+    }
+</style>
 @endsection
 
 @section('content')
 
-    @include('components.hero')
+@include('components.hero')
 
 <!-- Categories Section Begin -->
 <section class="categories">

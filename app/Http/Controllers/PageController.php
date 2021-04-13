@@ -48,11 +48,14 @@ class PageController extends Controller
         $onSaleProductCollection = new ProductCollection($onSaleProducts);
 
         //取得Banner
-        $banners = Banner::whereNotNull('image_path')->orderBy('order','asc')->orderBy('id','desc')->get();
+        $_banners = Banner::whereNotNull('image_path')->orderBy('order','asc')->orderBy('id','desc')->get();
         $static_host = config('app.static_host') . '/';
-        $imagesUrl = [];
-        foreach($banners as $banner){
-            if($banner->image_path){ $imagesUrl[] = ['url'=>$static_host . $banner->image_path]; }    
+        $banners = [];
+        foreach($_banners as $banner){
+            $banners[] = [
+                'url'=>$static_host . $banner->image_path,
+                'alt'=>$banner->key_word,
+            ];
         };
 
         //  get session
@@ -81,7 +84,7 @@ class PageController extends Controller
         return view('pages.index',[
             'popular' => $popularTop3,
             'lastSeen'=>$lastSeen,
-            'banner'=>$imagesUrl,
+            'banners'=>$banners,
             'categories'=>Category::getNestedCategoryList(),
             'categoryWithoutSub'=> $categoryWithoutSub->withFirstImage()->toArray(),
             'products'=>$productCollection->withFirstImage()->withFirstSpecificPrice()->withCategoryArray()->toArray(),
