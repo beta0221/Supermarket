@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\CartRule;
+use App\Helpers\Pagination;
+use App\Http\Resources\CartRuleCollection;
 use Illuminate\Http\Request;
 use App\Traits\CrudTrait;
 
@@ -19,6 +21,35 @@ class CartRuleController extends Controller
         ];
         $this->updateColumns = CartRule::get_fillable();
     }
+
+    /**後台列表api */
+    public function index(Request $request){
+        
+        $p = new Pagination($request);
+        
+        $query = new CartRule();
+        if($request->has('status')){
+            $query = $query->where('status',(int)$request->status);
+        }
+        if($request->has('rule_type')){
+            $query = $query->where('rule_type',$request->rule_type);
+        }
+
+        $p->cacuTotalPage($query->count());
+        
+        $cartRules = $query->skip($p->skip)
+            ->take($p->rows)
+            ->orderBy($p->orderBy,$p->order)
+            ->get();
+
+        $cartRuleCollection = new CartRuleCollection($cartRules);
+
+        return response([
+            'data'=>$cartRuleCollection,
+            'pagination'=>$p,
+        ]);
+    }
+
     /**取得所有 CartRule */
     public function all(){
         $cartRules = CartRule::where('status',1)->get();

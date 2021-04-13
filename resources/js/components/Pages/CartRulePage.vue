@@ -8,7 +8,7 @@
                 :requestUrl="'/api/cartRule'"
                 :columns="create_columns"/>
 
-            <DataTable 
+            <CartRuleDataTable 
                 :fields="fields"
                 :requestUrl="'/api/cartRule'"/>
             
@@ -24,16 +24,21 @@
 
 <script>
 import CartRuleDataDetailModal from '../CartRule/_DataDetailModal'
+import CartRuleDataTable from '../CartRule/_DataTable'
 export default {
     components:{
         CartRuleDataDetailModal,
+        CartRuleDataTable,
     },
     data(){
         return{
             fields:[
                 {key:'index',label:'#'},
+                {key:'active',label:'狀態'},
                 {key:'name',label:'名稱'},
-                {key:'edit',label:'-'},
+                {key:'rule_type',label:'類別'},
+                {key:'priority',label:'權重'},
+                {key:'edit_delete',label:'-'},
             ],
             create_columns:[
                 {key:'name',type:'text',label:'名稱'},
