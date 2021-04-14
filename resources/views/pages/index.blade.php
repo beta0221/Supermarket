@@ -18,23 +18,7 @@
 
 @include('components.hero')
 
-<!-- Categories Section Begin -->
-<section class="categories">
-    <div class="container">
-        <div class="row">
-            <div class="categories__slider owl-carousel">        
-                @foreach ($categoryWithoutSub as $category)
-                <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="{{$category->imageUrl}}">
-                        <h5><a href="/shop/{{$category->slug}}">{{$category->name}}</a></h5>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Categories Section End -->
+
 
 <!-- Featured Section Begin -->
 <section class="featured spad">
@@ -64,7 +48,7 @@
                             <ul class="featured__item__pic__hover">
                                 {{-- <li><a href="#"><i class="fa fa-heart"></i></a></li> --}}
                                 <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                <li><a href="javascript:;" onclick="addToCart('{{$product->sku}}')"><i class="fa fa-shopping-cart"></i></a></li>
                             </ul>
                         </div>
                         <div class="featured__item__text">
@@ -82,6 +66,26 @@
     </div>
 </section>
 <!-- Featured Section End -->
+
+
+<!-- Categories Section Begin -->
+<section class="categories">
+    <div class="container">
+        <div class="row">
+            <div class="categories__slider owl-carousel">        
+                @foreach ($categoryWithoutSub as $category)
+                <div class="col-lg-3">
+                    <div class="categories__item set-bg" data-setbg="{{$category->imageUrl}}">
+                        <h5><a href="/shop/{{$category->slug}}">{{$category->name}}</a></h5>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Categories Section End -->
+
 
 <!-- Banner Begin -->
 <div class="banner">

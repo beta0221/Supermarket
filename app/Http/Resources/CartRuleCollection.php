@@ -41,7 +41,11 @@ class CartRuleCollection extends ResourceCollection
             }
 
             $resource->active = $model->status;
-            $resource->rule_type = $this->typeDict[$model->rule_type];
+            $resource->rule_type = '';
+            if(isset($this->typeDict[$model->rule_type])){
+                $resource->rule_type = $this->typeDict[$model->rule_type];
+            }
+            
             
             return $resource;
         });

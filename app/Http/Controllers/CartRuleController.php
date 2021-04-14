@@ -28,6 +28,9 @@ class CartRuleController extends Controller
         $p = new Pagination($request);
         
         $query = new CartRule();
+        if($request->has('name')){
+            $query = $query->where('name','LIKE','%'.$request->name.'%');
+        }
         if($request->has('status')){
             $query = $query->where('status',(int)$request->status);
         }
@@ -53,6 +56,12 @@ class CartRuleController extends Controller
     /**取得所有 CartRule */
     public function all(){
         $cartRules = CartRule::where('status',1)->get();
+        return response($cartRules);
+    }
+
+    /**取得某個類別的 CartRule */
+    public function allOf($rule_type){
+        $cartRules = CartRule::where('status',1)->where('rule_type',$rule_type)->get();
         return response($cartRules);
     }
 

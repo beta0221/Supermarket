@@ -21,6 +21,14 @@
                     v-on:updateDataColumn="updateFilter"
                     :value="filter.rule_type"/>
             </CCol>
+
+            <CCol md="2">
+                <CInput 
+                    :label="'名稱'" 
+                    :placeholder="'名稱'"
+                    @keyup.native.enter="updateFilter"
+                    v-model.lazy="filter.name"/>
+            </CCol>
         </CRow>
         
     </div>
@@ -87,6 +95,7 @@ export default {
         filter:{
             status:null,
             rule_type:null,
+            name:null
         },
         items: [],
         pagination: {
@@ -124,7 +133,7 @@ export default {
         let _params = Object.assign({},this.pagination);
         Object.keys(this.filter).forEach(key => {
             let value = this.filter[key];
-            if(value != null){
+            if(value != null || value != ''){
                 _params[key] = value;
             }
         });

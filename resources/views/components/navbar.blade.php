@@ -4,15 +4,15 @@
     <div class="humberger__menu__logo">
         <a href="#"><img src="img/logo.png" alt=""></a>
     </div>
-    <div class="humberger__menu__cart">
+    {{-- <div class="humberger__menu__cart">
         <ul>
             <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
             <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
         </ul>
         <div class="header__cart__price">item: <span>$150.00</span></div>
-    </div>
+    </div> --}}
     <div class="humberger__menu__widget">
-        <div class="header__top__right__language">
+        {{-- <div class="header__top__right__language">
             <img src="img/language.png" alt="">
             <div>English</div>
             <span class="arrow_carrot-down"></span>
@@ -20,13 +20,13 @@
                 <li><a href="#">Spanis</a></li>
                 <li><a href="#">English</a></li>
             </ul>
-        </div>
+        </div> --}}
         <div class="header__top__right__auth">
             @auth
                 <a href="/home"><i class="fa fa-user"></i>{{ auth()->user()->name }}</a>
             @endauth
             @guest
-                <a href="/login"><i class="fa fa-user"></i> Login</a>
+                <a href="/login"><i class="fa fa-user"></i> 登入</a>
             @endguest
         </div>
     </div>
@@ -108,7 +108,7 @@
                                 </ul>
                             @endauth
                             @guest
-                                <a href="/login"><i class="fa fa-user"></i> Login</a>
+                                <a href="/login"><i class="fa fa-user"></i> 登入</a>
                             @endguest
                         </div>
                     </div>

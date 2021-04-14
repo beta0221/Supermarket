@@ -34,6 +34,7 @@ Route::get('/payment/all','PaymentController@all');
 Route::get('/category/allParents','CategoryController@allParents');
 Route::get('/activeStatus/all','EnumController@active_enum');
 Route::get('/cartRule/all','CartRuleController@all');
+Route::get('/cartRule/all/{rule_type}','CartRuleController@allOf');
 Route::get('/cartRuleType/all','CartRuleController@all_type');
 Route::get('/cartRuleStatus/all','EnumController@cartRule_status_enum');
 Route::get('/cartRuleHeightlight/all','EnumController@cartRule_heightlight_enum');
