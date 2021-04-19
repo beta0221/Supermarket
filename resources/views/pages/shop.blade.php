@@ -223,7 +223,7 @@
                 </div>
                 @endif
 
-                <div class="filter__item">
+                {{-- <div class="filter__item">
                     <div class="row">
                         <div class="col-lg-4 col-md-5">
                             <div class="filter__sort">
@@ -246,7 +246,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
+
                 <div class="row">
                     @foreach ($products as $product)
                     <div class="col-lg-4 col-md-6 col-sm-6">
@@ -262,7 +263,12 @@
                             @if (!$product->priceOnSale)
                             <div class="product__item__text">
                                 <h6><a href="/product/{{$product->sku}}">{{$product->name}}</a></h6>
-                                    <h5>${{$product->lowest_price}}~${{$product->price}}</h5>
+                                @if ($product->price == $product->lowest_price)
+                                <h5>${{$product->price}}</h5>
+                                @else
+                                <h5>${{$product->lowest_price}}~${{$product->price}}</h5>
+                                @endif
+                                    
                                 </div>
                             @else
                             <div class="product__discount__item__text">

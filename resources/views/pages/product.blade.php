@@ -53,7 +53,15 @@
                             <i class="fa fa-star-half-o"></i>
                             <span>(18 reviews)</span>
                         </div>
-                        <div class="product__details__price">${{$product->lowest_price}}~${{$product->priceOnsale}}</div>
+                        <div class="product__details__price">
+
+                            @if ($product->price == $product->lowest_price)
+                            ${{$product->price}}
+                            @else
+                            ${{$product->lowest_price}}~${{$product->priceOnsale}}
+                            @endif
+                            
+                        </div>
                         
                         @if (!empty($priceList))
                         <div class="product__priceList mt-3 mb-3">

@@ -40,7 +40,7 @@ class PageController extends Controller
         $products = $products->where('active',1)
             ->skip($p->skip)
             ->take($p->rows)
-            ->orderBy($p->orderBy,$p->order)
+            ->orderBy('priority','desc')
             ->get();
         $productCollection = new ProductCollection($products);
         
@@ -111,7 +111,7 @@ class PageController extends Controller
         $products = $products->where('active',1)
             ->skip($p->skip)
             ->take($p->rows)
-            ->orderBy($p->orderBy,$p->order)
+            ->orderBy('priority','desc')
             ->get();
 
         $productCollection = new ProductCollection($products);

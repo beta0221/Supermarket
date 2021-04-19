@@ -26,7 +26,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title">
-                    <h2>Featured Product</h2>
+                    <h2>精選商品</h2>
                 </div>
                 <div class="featured__controls">
                     <ul>
@@ -56,7 +56,13 @@
                             @if ($product->priceOnSale)
                             <h5 style="color: rgb(241, 64, 64)">${{$product->priceOnSale}}</h5>    
                             @else    
-                            <h5>${{$product->lowest_price}}~${{$product->price}}</h5>
+
+                                @if ($product->price == $product->lowest_price)
+                                <h5>${{$product->price}}</h5>
+                                @else
+                                <h5>${{$product->lowest_price}}~${{$product->price}}</h5>
+                                @endif
+
                             @endif
                         </div>
                     </div>

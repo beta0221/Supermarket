@@ -70,7 +70,7 @@
                                         </h5>
                                     </td>
                                     <td class="shoping__cart__price text-left">
-                                        ${{$row->price}}
+                                        ${{$row->price}}<br>
                                         <span style="font-size: 14px">(<a class="common-a" href="javascript:;" onclick="showPriceList('{{$row->sku}}')">價目表</a>)</span>
                                     </td>
                                     <td class="shoping__cart__quantity">

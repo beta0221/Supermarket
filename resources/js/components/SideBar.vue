@@ -27,7 +27,7 @@
             </CSidebarNavDropdown>
 
             <CSidebarNavDropdown name="前台">
-                <CSidebarNavItem name="列表管理" to="/admin/banner"></CSidebarNavItem>
+                <CSidebarNavItem name="輪播牆" to="/admin/banner"></CSidebarNavItem>
             </CSidebarNavDropdown>
                 
 

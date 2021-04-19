@@ -9,7 +9,7 @@
                 :requestUrl="'/api/product'"
                 :columns="columns"/>
 
-            <DataTable 
+            <ProductDataTable 
                 :fields="fields"
                 :requestUrl="'/api/product'"/>
             
@@ -26,21 +26,24 @@
 </template>
 
 <script>
+import ProductDataTable from '../Product/_DataTable'
 export default {    
     components:{
-        
+        ProductDataTable,
     },
     data(){
         return{
             fields:[
                 {key:'index',label:'#'},
-                {key:'name',label:'商品名稱'},
                 {key:'active',label:'上下架'},
+                {key:'name',label:'商品名稱'},
+                {key:'priority',label:'排序權重'},
                 {key:'edit',label:'-'},
             ],
             columns:[
                 {key:'name',type:'text',label:'商品名稱'},
                 {key:'sku',type:'text',label:'商品代號',readonly:true},
+                {key:'priority',type:'text',label:'權重'},
                 {key:'stock',type:'text',label:'庫存'},
                 {key:'lowest_price',type:'text',label:'最低價'},
                 {key:'price',type:'text',label:'價格'},

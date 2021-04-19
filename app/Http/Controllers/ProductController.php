@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use App\Helpers\Pagination;
 use App\Product;
 use Illuminate\Http\Request;
 use App\Traits\CrudTrait;
@@ -25,6 +27,7 @@ class ProductController extends Controller
         
         $this->model = Product::class;
         $this->storeRule = [
+            'priority'=>['nullable','integer'],
             'group_id'=>['nullable','integer'],
             'attribute_set_id'=>['nullable','integer'],
             'name'=>['required','max:255','string'],
@@ -36,6 +39,7 @@ class ProductController extends Controller
             'active' => ['required','integer'],
         ];
         $this->updateRule = [
+            'priority'=>['nullable','integer'],
             'group_id'=>['nullable','integer'],
             'attribute_set_id'=>['nullable','integer'],
             'name'=>['required','max:255','string'],
@@ -45,9 +49,39 @@ class ProductController extends Controller
             'stock' => ['required','integer'],
             'active' => ['required','integer'],
         ];
-        $this->updateColumns = ['group_id','attribute_set_id','name','description','lowest_price','price','bonus_rate','stock','active'];
+        $this->updateColumns = ['priority','group_id','attribute_set_id','name','description','lowest_price','price','bonus_rate','stock','active'];
     }
     
+
+    /**後台列表api */
+    public function index(Request $request){
+        $p = new Pagination($request);
+        
+        $query = new Product();
+        if($request->has('category_id')){
+            if($cat = Category::find($request->category_id)){
+                $query = $cat->products();
+            }
+        }
+        if($request->has('name')){
+            $query = $query->where('name','LIKE','%'.$request->name.'%');
+        }
+        if($request->has('active')){
+            $query = $query->where('active',(int)$request->active);
+        }
+
+        $p->cacuTotalPage($query->count());
+
+        $proucts = $query->skip($p->skip)
+            ->take($p->rows)
+            ->orderBy('priority','desc')
+            ->get();
+        
+        return response([
+            'data'=>$proucts,
+            'pagination'=>$p,
+        ]);
+    }
 
     /**取得關聯的 Attribute */
     public function getAttributes($id){

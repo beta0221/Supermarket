@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model implements Buyable {    
     protected $fillable = [
+        'priority',
         'group_id',
         'attribute_set_id',
         'sku',
