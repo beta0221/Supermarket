@@ -32,16 +32,9 @@
     </div>
     <nav class="humberger__menu__nav mobile-menu">
         <ul>
-            <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="/">Home</a></li>
-            <li class="{{ Request::is('shop') ? 'active' : '' }}"><a href="/shop">Shop</a></li>
-            <li><a href="#">Pages</a>
-                <ul class="header__menu__dropdown">
-                    <li><a href="./shop-details.html">Shop Details</a></li>
-                    <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                    <li><a href="./checkout.html">Check Out</a></li>
-                    <li><a href="./blog-details.html">Blog Details</a></li>
-                </ul>
-            </li>
+            <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="/">首頁</a></li>
+            <li class="{{ Request::is('shop') ? 'active' : '' }}"><a href="/shop">商品</a></li>
+            <li><a href="https://blog.kingpork.com.tw" target="_blank">金園廚房</a></li>
             <li><a href="./blog.html">訂購相關</a></li>
             <li><a href="./contact.html">連絡我們</a></li>
         </ul>
@@ -127,11 +120,11 @@
             <div class="col-lg-6">
                 <nav class="header__menu">
                     <ul>
-                        <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="/">Home</a></li>
-                        <li class="{{ Request::is('shop') ? 'active' : '' }}"><a href="/shop">Shop</a></li>
-                        <li><a href="#">Pages</a></li>
-                        <li><a href="./blog.html">Blog</a></li>
-                        <li><a href="./contact.html">Contact</a></li>
+                        <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="/">首頁</a></li>
+                        <li class="{{ Request::is('shop') ? 'active' : '' }}"><a href="/shop">商品</a></li>
+                        <li><a href="https://blog.kingpork.com.tw" target="_blank">金園廚房</a></li>
+                        <li><a href="./blog.html">訂購相關</a></li>
+                        <li><a href="./contact.html">聯絡我們</a></li>
                     </ul>
                 </nav>
             </div>

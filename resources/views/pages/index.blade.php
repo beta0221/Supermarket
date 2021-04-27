@@ -74,7 +74,7 @@
 <!-- Featured Section End -->
 
 
-<!-- Categories Section Begin -->
+{{-- <!-- Categories Section Begin -->
 <section class="categories">
     <div class="container">
         <div class="row">
@@ -90,7 +90,7 @@
         </div>
     </div>
 </section>
-<!-- Categories Section End -->
+<!-- Categories Section End --> --}}
 
 
 <!-- Banner Begin -->
@@ -112,7 +112,7 @@
 </div>
 <!-- Banner End -->
 
-<!-- Latest Product Section Begin -->
+{{-- <!-- Latest Product Section Begin -->
 <section class="latest-product spad">
     <div class="container">
         <div class="row">
@@ -238,9 +238,58 @@
         </div>
     </div>
 </section>
-<!-- Latest Product Section End -->
+<!-- Latest Product Section End --> --}}
 
-<!-- Blog Section Begin -->
+<!-- Shop Info Section Begin -->
+<section class="from-blog spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title from-blog__title">
+                    <h2>各店簡介</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="blog__item">
+                    <div class="blog__item__pic">
+                        <img src="img/blog/blog-1.jpg" alt="">
+                    </div>
+                    <div class="blog__item__text">
+                        <h5><a href="#">台北-萬年店</a></h5>
+                        <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="blog__item">
+                    <div class="blog__item__pic">
+                        <img src="img/blog/blog-2.jpg" alt="">
+                    </div>
+                    <div class="blog__item__text">
+                        <h5><a href="#">桃園-春日店</a></h5>
+                        <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="blog__item">
+                    <div class="blog__item__pic">
+                        <img src="img/blog/blog-3.jpg" alt="">
+                    </div>
+                    <div class="blog__item__text">
+                        <h5><a href="#">桃園-長庚店</a></h5>
+                        <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shop Info Section End -->
+
+{{-- <!-- Blog Section Begin -->
 <section class="from-blog spad">
     <div class="container">
         <div class="row">
@@ -299,7 +348,7 @@
         </div>
     </div>
 </section>
-<!-- Blog Section End -->
+<!-- Blog Section End --> --}}
 @endsection
 
 @section('js')

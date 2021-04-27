@@ -22,24 +22,13 @@ use Illuminate\Support\Facades\DB;
 class PageController extends Controller
 {
     /**首頁 */
-    public function index(Request $request,$slug = null){
+    public function index(Request $request){
         
-        $products = new Product();
-        if($slug){
-            $category = Category::where('slug',$slug)->firstOrFail();
-            $products = $category->products();
-        }
         $categoryWithoutSub = Category::all();
         $categoryWithoutSub = new CategoryCollection($categoryWithoutSub);
-        if(!$request->has('rows')){$request->merge(['rows'=>10]);}
-        $p = new Pagination($request);
 
-        $total = $products->where('active',1)->count();
-        $p->cacuTotalPage($total);
-
-        $products = $products->where('active',1)
-            ->skip($p->skip)
-            ->take($p->rows)
+        $products = Product::where('active',1)
+            ->take(10)
             ->orderBy('priority','desc')
             ->get();
         $productCollection = new ProductCollection($products);
@@ -48,48 +37,39 @@ class PageController extends Controller
         $onSaleProductCollection = new ProductCollection($onSaleProducts);
 
         //取得Banner
-        $_banners = Banner::whereNotNull('image_path')->orderBy('order','asc')->orderBy('id','desc')->get();
-        $static_host = config('app.static_host') . '/';
-        $banners = [];
-        foreach($_banners as $banner){
-            $banners[] = [
-                'url'=>$static_host . $banner->image_path,
-                'alt'=>$banner->key_word,
-            ];
-        };
+        $banners = Banner::whereNotNull('image_path')->orderBy('order','asc')->orderBy('id','desc')->get();
 
         //  get session
-        $lastSeen = [];
-        if(session('lastSeen')){
-            $lastSeen = array_reverse(Session::get('lastSeen'));
-            $lastSeen = new ProductCollection($lastSeen);
-            $lastSeen = $lastSeen->withFirstImage()->withFirstSpecificPrice()->toArray();
-        }else{
-            
-        }
+        // $lastSeen = [];
+        // if(session('lastSeen')){
+        //     $lastSeen = array_reverse(Session::get('lastSeen'));
+        //     $lastSeen = new ProductCollection($lastSeen);
+        //     $lastSeen = $lastSeen->withFirstImage()->withFirstSpecificPrice()->toArray();
+        // }
 
         //取得最熱銷 top3
-        $topArray = OrderProduct::select('product_id',DB::raw('COUNT(product_id) as count'))
-            ->groupBy('product_id')
-            ->orderBy('count', 'desc')
-            ->take(3)
-            ->pluck('product_id');
+        // $topArray = OrderProduct::select('product_id',DB::raw('COUNT(product_id) as count'))
+        //     ->groupBy('product_id')
+        //     ->orderBy('count', 'desc')
+        //     ->take(3)
+        //     ->pluck('product_id');
         
-        $popularTop3 = [];
-        if($popular = Product::whereIn('id',$topArray)->get()){
-            $popular = new ProductCollection($popular);
-            $popularTop3 = $popular->withFirstImage()->withFirstSpecificPrice()->toArray();
-        }
+        // $popularTop3 = [];
+        // if($popular = Product::whereIn('id',$topArray)->get()){
+        //     $popular = new ProductCollection($popular);
+        //     $popularTop3 = $popular->withFirstImage()->withFirstSpecificPrice()->toArray();
+        // }
     
         return view('pages.index',[
-            'popular' => $popularTop3,
-            'lastSeen'=>$lastSeen,
+            //'popular' => $popularTop3,
+            //'lastSeen'=>$lastSeen,
             'banners'=>$banners,
             'categories'=>Category::getNestedCategoryList(),
-            'categoryWithoutSub'=> $categoryWithoutSub->withFirstImage()->toArray(),
+            'categoryWithoutSub'=> $categoryWithoutSub
+                // ->withFirstImage()
+                ->toArray(),
             'products'=>$productCollection->withFirstImage()->withFirstSpecificPrice()->withCategoryArray()->toArray(),
             'onSaleProducts'=>$onSaleProductCollection->withFirstImage()->withFirstSpecificPrice()->toArray(),
-            'pagination'=>$p,
         ]);
     }
     
