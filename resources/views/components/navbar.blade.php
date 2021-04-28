@@ -36,7 +36,7 @@
             <li class="{{ Request::is('shop') ? 'active' : '' }}"><a href="/shop">商品</a></li>
             <li><a href="https://blog.kingpork.com.tw" target="_blank">金園廚房</a></li>
             <li><a href="./blog.html">訂購相關</a></li>
-            <li><a href="./contact.html">連絡我們</a></li>
+            <li class="{{ Request::is('contact') ? 'active' : '' }}"><a href="/contact">連絡我們</a></li>
         </ul>
     </nav>
     <div id="mobile-menu-wrap"></div>
@@ -124,7 +124,7 @@
                         <li class="{{ Request::is('shop') ? 'active' : '' }}"><a href="/shop">商品</a></li>
                         <li><a href="https://blog.kingpork.com.tw" target="_blank">金園廚房</a></li>
                         <li><a href="./blog.html">訂購相關</a></li>
-                        <li><a href="./contact.html">聯絡我們</a></li>
+                        <li class="{{ Request::is('contact') ? 'active' : '' }}"><a href="/contact">連絡我們</a></li>
                     </ul>
                 </nav>
             </div>

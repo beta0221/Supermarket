@@ -162,4 +162,9 @@ class PageController extends Controller
 
     }
 
+    /** 聯絡我們 */
+    public function contact(){
+        return view('pages.contact');
+    }
+
 }

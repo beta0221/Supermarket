@@ -21,6 +21,8 @@ Route::get('/cart','PageController@cart')->name('cart');
 Route::get('/checkout','PageController@checkout')->name('checkout');
 Route::get('/pay/{order_numero}','PageController@view_pay')->name('payPage');
 Route::post('/pay/{order_numero}','PageController@pay');
+Route::get('/contact','PageController@contact')->name('contact');
+Route::post('/contact','MessageController@store');
 
 Route::group(['prefix' => 'cart'], function () {
     Route::get('/getItems','CartController@getItems');

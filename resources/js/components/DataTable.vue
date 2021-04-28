@@ -6,15 +6,24 @@
       items-per-page-select
       :items-per-page="10"
       v-on:pagination-change="setRows"
-      table-filter
     >
       <template #index="{ item, index }">
         <td>{{ index + 1 }}</td>
       </template>
+      
       <template #active="{ item }">
         <td>
           <CBadge :color="colorDict[item.active]">
             {{ activeDict[item.active] }}
+          </CBadge>
+        </td>
+      </template>
+
+      <template #status="{ item }">
+        <td>
+          <CBadge :color="colorDict[item.status]">
+            <span v-if="item.statusText != undefinded">{{item.statusText}}</span>
+            <span v-else>{{item.status}}</span>
           </CBadge>
         </td>
       </template>
@@ -83,6 +92,7 @@ export default {
   props: ["fields", "requestUrl"],
   data() {
     return {
+      filter:{},
       items: [],
       pagination: {
         page: 1,
@@ -108,6 +118,10 @@ export default {
     EventBus.$on("reloadData", (_) => {
       this.reloadData();
     });
+    EventBus.$on("reloadDataWithFilter",filter =>{
+      this.filter = filter;
+      this.reloadData();
+    });
   },
   destroyed() {
     EventBus.$off("reloadData");
@@ -118,9 +132,16 @@ export default {
       this.reloadData();
     },
     reloadData() {
+      let _params = Object.assign({},this.pagination);
+      Object.keys(this.filter).forEach(key => {
+        let value = this.filter[key];
+        if(value != null || value != ''){
+          _params[key] = value;
+        }
+      });
       axios
         .get(this.requestUrl, {
-          params: this.pagination,
+          params: _params,
         })
         .then((res) => {
           this.items = res.data.data;

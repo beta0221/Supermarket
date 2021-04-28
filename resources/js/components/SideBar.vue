@@ -38,6 +38,8 @@
             <CSidebarNavDropdown name="訂單">
                 <CSidebarNavItem name="訂單管理" to="/admin/order"></CSidebarNavItem>
             </CSidebarNavDropdown>
+
+            <CSidebarNavItem name="訊息" to="/admin/message"></CSidebarNavItem>
             
         </CSidebarNav>
     </CSidebar>

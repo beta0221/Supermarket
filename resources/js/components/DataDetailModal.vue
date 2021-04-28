@@ -48,6 +48,13 @@
                 :addImageUrl="column.addImageUrl"
                 :url="column.url"/>
 
+
+            <div v-if="column.type == 'plain_text'">
+                <label>{{column.label}}</label>
+                <textarea rows="10"  class="form-control" readonly="false" v-html="detailData[column.key]"></textarea>
+            </div>
+            
+
         </div>
         
         
@@ -96,6 +103,7 @@ export default {
             })
         },
         updateDetailData(){
+            if(this.requestUrl == null){ return; }
             let postData = this.detailData;
             postData['_method'] = 'PUT';
             axios.post(this.requestUrl + this.dataSlug, postData)

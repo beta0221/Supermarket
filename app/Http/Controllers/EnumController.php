@@ -73,5 +73,18 @@ class EnumController extends Controller
         ]);
     }
 
+    public function messageStatus_enum(){
+        return response([
+            [
+                'id'=>0,
+                'name'=>'待處理'
+            ],
+            [
+                'id'=>1,
+                'name'=>'結案'
+            ]
+        ]);
+    }
+
 
 }
