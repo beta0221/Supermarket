@@ -77,8 +77,10 @@ class PageController extends Controller
     public function shop(Request $request,$slug = null){
         
         $products = new Product();
+        $catName = null;
         if($slug){
             $category = Category::where('slug',$slug)->firstOrFail();
+            $catName = $category->name;
             $products = $category->products();
         }
 
@@ -100,6 +102,7 @@ class PageController extends Controller
         $onSaleProductCollection = new ProductCollection($onSaleProducts);
 
         return view('pages.shop',[
+            'catName'=>$catName,
             'categories'=>Category::getNestedCategoryList(),
             'products'=>$productCollection->withFirstImage()->withFirstSpecificPrice()->toArray(),
             'onSaleProducts'=>$onSaleProductCollection->withFirstImage()->withFirstSpecificPrice()->toArray(),

@@ -8,7 +8,9 @@
 
 @section('content')
 
-@include('components.breadcrumb')
+    @include('components.breadcrumb',['crumbs'=>[
+        ['url'=>null,'name'=>'聯絡我們']
+    ]])
 
 
     <!-- Contact Section Begin -->

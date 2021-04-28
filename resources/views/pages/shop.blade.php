@@ -8,7 +8,18 @@
 
 @section('content')
 
-    @include('components.breadcrumb')
+    <?php 
+        $crumbs = [
+            ['url'=>null,'name'=>'所有商品']
+        ];
+        if ($catName != null) {
+            $crumbs = [
+                ['url'=>'/shop','name'=>'所有商品'],
+                ['url'=>null,'name'=>$catName],
+            ];
+        }
+    ?>
+    @include('components.breadcrumb',['crumbs'=>$crumbs])
 
 <!-- Product Section Begin -->
 <section class="product spad">

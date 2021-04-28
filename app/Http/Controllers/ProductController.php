@@ -20,7 +20,10 @@ use Illuminate\Support\Facades\Session;
 class ProductController extends Controller
 {
 
-    use CrudTrait;
+    use CrudTrait {
+        store as traitStore;
+        update as traitUpdate;
+    }
 
     public function __construct(){
         
@@ -81,6 +84,27 @@ class ProductController extends Controller
             'data'=>$proucts,
             'pagination'=>$p,
         ]);
+    }
+
+    public function store(Request $request){
+        if($request->has('description')){
+            $request->merge(['description'=>$this->resizeHtmlImg($request->description)]);
+        }
+        return $this->traitStore($request);
+    }
+
+    public function update(Request $request,$value){
+        if($request->has('description')){
+            $request->merge(['description'=>$this->resizeHtmlImg($request->description)]);
+        }
+        return $this->traitUpdate($request,$value);
+    }
+
+    /** 調整 img 寬度 */
+    private function resizeHtmlImg($html){
+        $html = str_replace("style='width:100%'","",$html);
+        $html = str_replace("<img","<img style='width:100%'",$html);
+        return $html;
     }
 
     /**取得關聯的 Attribute */

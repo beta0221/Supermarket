@@ -6,8 +6,17 @@
                 <div class="breadcrumb__text">
                     <h2>金園排骨 - 網路商城</h2>
                     <div class="breadcrumb__option">
-                        <a href="./index.html">Home</a>
-                        <span>Shop</span>
+                        <a href="/">首頁</a>
+                        @if (isset($crumbs))
+                            @foreach($crumbs as $crumb)
+                                @if ($crumb['url'] != null)
+                                <a href="{{$crumb['url']}}">{{$crumb['name']}}</a>
+                                @else
+                                <span>{{$crumb['name']}}</span>
+                                @endif
+                            @endforeach
+                        @endif
+                        
                     </div>
                 </div>
             </div>
