@@ -9,8 +9,5 @@ use Auth;
 
 class AuthController extends Controller
 {
-    public function admin_login(){
-        
-        return view('admin');
-    }
+    
 }

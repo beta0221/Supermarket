@@ -49,9 +49,6 @@ Route::group(['prefix' => 'order'], function () {
 
 Auth::routes();
 
-Route::get('/admin','AuthController@admin_login');
-
-
 Route::group(['middleware'=>['auth','AdminGroup']],function(){
     Route::view('/admin','admin.home');
     Route::view('/admin/{any}','admin.home');

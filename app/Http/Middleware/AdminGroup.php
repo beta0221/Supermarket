@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\User;
 use Closure;
 
 /**
@@ -10,7 +11,10 @@ use Closure;
 class AdminGroup
 {
 
-    private $group = ['Admin','Employee'];
+    private $group = [
+        User::ROLE_ADMIN,
+        User::ROLE_EMPLOYEE,
+    ];
 
     /**
      * Handle an incoming request.
@@ -21,14 +25,8 @@ class AdminGroup
      */
     public function handle($request, Closure $next,$driver = 'web')
     {   
-        $roles = $request->user()->roles()->get();
-        $from = $request->path();
-        $result = false;
-        foreach ($roles as $role){
-            if(in_array($role->name,$this->group)){
-                $result = true;
-            }
-        }
+        $user = $request->user();
+        $result = $user->hasRoles($this->group);
 
         if(!$result){
             if($driver == 'api'){
@@ -36,7 +34,6 @@ class AdminGroup
             }else{
                 return redirect()->route('shop');
             }
-            
         }
 
         return $next($request);

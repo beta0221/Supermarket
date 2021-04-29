@@ -11,6 +11,10 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const ROLE_ADMIN = "Admin";
+    const ROLE_EMPLOYEE = "Employee";
+    const ROLE_VIP = "Vip";
+
     /**
      * The attributes that are mass assignable.
      *
@@ -50,13 +54,19 @@ class User extends Authenticatable
     public function permissions(){
         return $this->belongsToMany('App\Permission','permission_users','user_id','permission_id');
     }
-    public function isAdmin()
+
+    /**
+     * 有沒有這些角色
+     * @param array $roles
+     * @return bool
+     */
+    public function hasRoles(array $roles)
     {
-        $roles = $this->roles()->get();
-        foreach ($roles as $role) {   
-            if ($role->name=='Admin' or 'Employee') {
+        $userRoles = $this->roles()->get();
+        foreach ($userRoles as $userRole) {   
+            if(in_array($userRole->name,$roles)){
                 return true;
-            }    
+            }
         }
         return false;
     }

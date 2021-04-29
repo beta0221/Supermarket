@@ -23,16 +23,18 @@ class LoginController extends Controller
     use AuthenticatesUsers;
     public function showLoginForm()
     {
-        Cookie::queue('from',url()->previous(), 5); //save 前一頁在cookie
+        Cookie::queue('intended',url()->previous(), 5); //save 前一頁在cookie
         return view('auth.login');
     }
     protected function authenticated(Request $request, $user)
     {
-        $preUrl = Cookie::get('from');  //取的前一頁
-        // if($user->isAdmin()){
-        //     return redirect()->intended('admin'); //redirect to admin panel
-        // }
-        return redirect($preUrl);
+        $intended = Cookie::get('intended');  //原本要前往的頁面
+        
+        if(!$intended){
+            return redirect()->route('shop');
+        }
+        
+        return redirect($intended);
     }
 
     /**
