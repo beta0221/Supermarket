@@ -44,6 +44,7 @@ Route::group(['prefix' => 'order'], function () {
     Route::group(['middleware'=>['auth']],function(){
         Route::get('/myOrder','OrderController@view_myOrder')->middleware('auth');
         Route::get('downloadOrderExcel','OrderController@excel_downloadOrderExcel');
+        Route::get('/download/excel/{type}','OrderController@download_excel');
     });
 });
 

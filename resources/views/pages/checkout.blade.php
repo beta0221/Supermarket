@@ -174,6 +174,16 @@
                         </div>
                         @endif
                         
+
+                        <div class="checkout__input mt-2">
+                            <p class="mb-1">發票</p>
+                            <select class="form-control mb-2" id="invoice-type-selector">
+                                <option value="2">二聯式</option>
+                                <option value="3">三聯式</option>
+                            </select>
+                            <input style="display: none" class="billing-company-input mb-2" type="text" name="billing_company_name" placeholder="公司抬頭">
+                            <input style="display: none" class="billing-company-input" type="text" name="billing_company_numero" placeholder="統一編號">
+                        </div>
                         
 
                         <div class="checkout__input mt-2">

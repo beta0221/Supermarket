@@ -46,6 +46,19 @@ class Payment extends Model
     }
 
     /**
+     * Payment 字典
+     * @return array
+     */
+    public static function getPaymentDict(){
+        $payments = Payment::all();
+        $dict = [];
+        foreach($payments as $payment){
+            $dict[$payment->id] = $payment->name;
+        }
+        return $dict;
+    }
+
+    /**
      * 取得所有以物流方式分類的金流方式
      */
     public static function all_sortByCarrier(){

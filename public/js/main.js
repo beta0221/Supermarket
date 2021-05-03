@@ -181,7 +181,7 @@
         Product Details Pic Slider
     ----------------------------------*/
     $(".product__details__pic__slider").owlCarousel({
-        loop: true,
+        loop: false,
         margin: 20,
         items: 4,
         dots: true,

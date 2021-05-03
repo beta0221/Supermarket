@@ -18,6 +18,8 @@ class Order extends Model
         'shipping_address_id',
         'billing_address_id',
         'billing_company_id',
+        'billing_company_name',
+        'billing_company_numero',
         'currency_id',
         'comment',
         'shipping_no',
@@ -83,6 +85,11 @@ class Order extends Model
 
         $order->shipping_address_id = $address_id;
         $order->billing_address_id = $address_id;
+
+        if(!empty($request->billing_company_name) && !empty($request->billing_company_numero)){
+            $order->billing_company_name = $request->billing_company_name;
+            $order->billing_company_numero = $request->billing_company_numero;
+        }
 
         $order->currency_id = 1;
         $order->comment = $request->comment;

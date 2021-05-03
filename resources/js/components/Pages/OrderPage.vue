@@ -2,18 +2,13 @@
   <div>
     <NavBar :title="'訂單管理'" />
     <CCardBody>
-      <CButton size="sm" color="info" class="ml-1" @click="selectAll"
-        >全選</CButton
-      >
-      <CButton size="sm" color="info" class="ml-1" @click="groupLastStatus"
-        >上階段</CButton
-      >
-      <CButton size="sm" color="info" class="ml-1" @click="groupNextStatus"
-        >下階段</CButton
-      >
-      <CButton size="sm" color="info" class="ml-1" @click="groupExportExcel"
-        >匯出</CButton
-      >
+      <CButton size="sm" color="info" class="ml-1" @click="selectAll">全選</CButton>
+      <CButton size="sm" color="info" class="ml-1" @click="groupLastStatus">上階段</CButton>
+      <CButton size="sm" color="info" class="ml-1" @click="groupNextStatus">下階段</CButton>
+      <CButton size="sm" color="primary" class="ml-1" @click="groupExportExcel('Delivery')">匯出黑貓csv</CButton>
+      <CButton size="sm" color="danger" class="ml-1" @click="groupExportExcel('Accounting')">匯出會計csv</CButton>
+
+      
       <CRow class="mt-3">
         <CCol md="2">
           <CSelect
@@ -255,14 +250,14 @@ export default {
       });
       return numeroArray;
     },
-    groupExportExcel() {
+    groupExportExcel(type) {
       let order_numero_array = this.getCheckedOrderNumero();
       if (order_numero_array.length == 0) {
         alert("請勾選");
         return;
       }
       window.open(
-        "/order/downloadOrderExcel?token=" +
+        "/order/download/excel/" + type + "?token=" +
           localStorage.getItem("token") +
           "&order_numero_array=" +
           order_numero_array.join(",")

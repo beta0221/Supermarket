@@ -31,5 +31,14 @@ jQuery(function(){
         }
     });
 
+    $('#invoice-type-selector').on('change',function(){
+        if($(this).val() == 3){
+            $('.billing-company-input').show();
+            return; 
+        }
+        $('.billing-company-input').val(null);
+        $('.billing-company-input').hide();
+    });
+
 
 });

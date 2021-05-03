@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Address;
 use App\CartRuleLog;
+use App\Exports\ExcelAccounting;
+use App\Exports\ExcelDelivery;
 use App\Http\Resources\OrderProductCollection;
 use App\Order;
 use App\Helpers\Pagination;
@@ -237,6 +239,34 @@ class OrderController extends Controller
 
         return Excel::download(new OrderExport($cellData,$cellDict),'訂單資料-'.$now.'.xlsx');
         
+    }
+
+    public function download_excel(Request $request,$type){
+        $this->validate($request,[
+            'order_numero_array'=>'required',
+        ]);
+        
+        date_default_timezone_set('Asia/Taipei');
+        $order_numero_array = explode(',',$request->order_numero_array);
+        $orders = Order::whereIn('order_numero',$order_numero_array)->get();
+
+        $excel = null;
+        $filename = null;
+        switch ($type) {
+            case 'Delivery':
+                $excel = new ExcelDelivery($orders);
+                $filename = '黑貓出貨-' . date("Y-m-d") . '.csv';
+                break;
+            case 'Accounting':
+                $excel = new ExcelAccounting($orders);
+                $filename = '會計帳務-' . date("Y-m-d") . '.csv';
+                break;
+            default:
+                return abort(404);
+                break;
+        }
+        
+        return $excel->download($filename,\Maatwebsite\Excel\Excel::CSV);
     }
         
 }
