@@ -24,7 +24,7 @@ class BannerController extends Controller
             'key_word' => ['required','max:255','string'],
             'order' => ['integer'],
         ];
-        $this->updateColumns = ['key_word'];
+        $this->updateColumns = ['key_word','order'];
     }
 
     /**刪除 */
