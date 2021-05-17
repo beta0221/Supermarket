@@ -3,11 +3,14 @@
         @section('css')
         @endsection
     @section('content') 
-        @include('components.breadcrumb')
+        
+        @include('components.breadcrumb',['crumbs'=>[
+            ['url'=>null,'name'=>'購買成功']
+        ]])
 
-        <div class="container">
+        <div class="container" style="min-height: 400px">
             <div class="row">
-                <div class="col-md-12 mt-3" style="text-align: center">
+                <div class="col-md-12 mt-4" style="text-align: center">
                     <h3>感謝您的購買</h3>
                     <p>您的貨品將在3-5天之後送達</p>
                     <h3>訂單編號 : {{$order_numero}}</h3>         

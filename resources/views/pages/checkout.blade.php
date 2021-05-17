@@ -16,7 +16,10 @@
 
 @section('content')
 
-@include('components.breadcrumb')
+@include('components.breadcrumb',['crumbs'=>[
+    ['url'=>'/cart','name'=>'購物車'],
+    ['url'=>null,'name'=>'結帳']
+]])
 
 <!-- Checkout Section Begin -->
 <section class="checkout spad">

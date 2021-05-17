@@ -3,7 +3,10 @@
 @section('css')
 @endsection
 @section('content')
-    @include('components.breadcrumb')
+    
+    @include('components.breadcrumb',['crumbs'=>[
+        ['url'=>null,'name'=>'我的訂單']
+    ]])
 
 
     <div class="container">

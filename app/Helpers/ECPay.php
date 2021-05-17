@@ -90,6 +90,17 @@ class ECPay{
         $this->ReturnURL = route('ecpay_ReturnURL',['order_numero'=>$order->order_numero]);
         $this->OrderResultURL = route('ecpay_OrderResultURL',['order_numero'=>$order->order_numero]);
 
+        switch ($order->payment_id) {
+            case Payment::PAYMENT_ID_CREDIT:
+                $this->ChoosePaymentList = "1";
+                break;
+            case Payment::PAYMENT_ID_ATM:
+                $this->ChoosePaymentList = "3";
+                break;
+            default:
+                break;
+        }
+
     }
 
     /**
@@ -280,17 +291,17 @@ class ECPay{
         Log::info(json_encode($Data));
         if(!isset($Data['OrderInfo']['PaymentType'])){ return null; }
         switch ($Data['OrderInfo']['PaymentType']) {
-            case 'CreditCard':
+            case 'Credit':
 
                 $this->order->setStatus(Order::STATUS_READY);
-                $this->order->setPayment(Payment::PAYMENT_ID_CREDIT);
+                // $this->order->setPayment(Payment::PAYMENT_ID_CREDIT);
                 $this->order->sendBonusToBuyer();
                 return route('thankyou',['order_numero'=>$this->order->order_numero]);    
 
                 break;
             case 'ATM':
 
-                $this->order->setPayment(Payment::PAYMENT_ID_ATM);
+                // $this->order->setPayment(Payment::PAYMENT_ID_ATM);
                 return route('orderDetail',['order_numero'=>$this->order->order_numero]);    
 
                 break;

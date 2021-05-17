@@ -3,7 +3,11 @@
         @section('css')
         @endsection
     @section('content') 
-        @include('components.breadcrumb')
+    
+        @include('components.breadcrumb',['crumbs'=>[
+            ['url'=>'/order/myOrder','name'=>'我的訂單'],
+            ['url'=>null,'name'=>$OR->order_numero]
+        ]])
     
         
         <div class="container mt-4 mb-4">

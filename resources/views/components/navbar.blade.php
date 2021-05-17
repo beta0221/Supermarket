@@ -74,8 +74,8 @@
                         <div class="header__top__right__social">
                             <a href="#"><i class="fa fa-facebook"></i></a>
                             <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                            <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                            {{-- <a href="#"><i class="fa fa-linkedin"></i></a> --}}
+                            {{-- <a href="#"><i class="fa fa-pinterest-p"></i></a> --}}
                         </div>
                         {{-- <div class="header__top__right__language">
                             <img src="img/language.png" alt="">
@@ -123,7 +123,7 @@
                         <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="/">首頁</a></li>
                         <li class="{{ Request::is('shop') ? 'active' : '' }}"><a href="/shop">商品</a></li>
                         <li><a href="https://blog.kingpork.com.tw" target="_blank">金園廚房</a></li>
-                        <li><a href="./blog.html">訂購相關</a></li>
+                        <li class="{{ Request::is('about') ? 'active' : '' }}"><a href="/about">訂購相關</a></li>
                         <li class="{{ Request::is('contact') ? 'active' : '' }}"><a href="/contact">連絡我們</a></li>
                     </ul>
                 </nav>

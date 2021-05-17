@@ -29,7 +29,9 @@
 
 @section('content')
 
-@include('components.breadcrumb')
+@include('components.breadcrumb',['crumbs'=>[
+    ['url'=>null,'name'=>'購物車']
+]])
 
 <!-- Shoping Cart Section Begin -->
 <section class="shoping-cart spad">

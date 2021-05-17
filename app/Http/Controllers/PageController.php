@@ -110,6 +110,11 @@ class PageController extends Controller
         ]);
     }
 
+    /** 訂購相關頁面 */
+    public function about(){
+        return view('pages.about');
+    }
+
     /**購物車頁面 */
     public function cart(){
         return view('pages.cart',[
