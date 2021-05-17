@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Banner extends Model
 {
     protected $fillable = [
-        'key_word','image_path','slug'
+        'key_word','image_path','slug','order'
     ];
 
     public $timestamps = false;
