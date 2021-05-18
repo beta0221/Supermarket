@@ -285,10 +285,8 @@ class ProductController extends Controller
             ->firstOrFail()
             ->products()
             ->get();
-        $productCollection = new ProductCollection($relateToProducts);
-        $productCollection = $productCollection->withFirstImage()->toArray();
-        }else{
-           
+            $productCollection = new ProductCollection($relateToProducts);
+            $productCollection = $productCollection->withFirstImage()->toArray();
         }
             
 

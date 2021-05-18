@@ -115,6 +115,12 @@ ol {
 	margin-bottom: 50px;
 	text-align: center;
 }
+@media only screen and (max-width: 479px) {
+	.section-title {
+		margin-bottom: 24px;
+		text-align: center;
+	}
+}
 
 .section-title h2 {
 	color: #1c1c1c;
@@ -826,10 +832,22 @@ ol {
 	padding-top: 80px;
 	padding-bottom: 40px;
 }
+@media only screen and (max-width: 479px) {
+	.featured {
+		padding-top: 24px;
+		padding-bottom: 24px;
+	}
+}
 
 .featured__controls {
 	text-align: center;
 	margin-bottom: 50px;
+}
+@media only screen and (max-width: 479px) {
+	.featured__controls {
+		text-align: center;
+		margin-bottom: 24px;
+	}
 }
 
 .featured__controls ul li {
@@ -1271,6 +1289,12 @@ ol {
 	padding-top: 80px;
 	padding-bottom: 80px;
 }
+@media only screen and (max-width: 479px) {
+	.product {
+		padding-top: 24px;
+		padding-bottom: 24px;
+	}	
+}
 
 .product__discount {
 	padding-bottom: 50px;
@@ -1683,6 +1707,11 @@ ol {
 .product-details {
 	padding-top: 80px;
 }
+@media only screen and (max-width: 479px) {
+	.product-details {
+		padding-top: 24px;
+	}
+}
 
 .product__details__pic__item {
 	margin-bottom: 20px;
@@ -1901,6 +1930,12 @@ ol {
 	padding-top: 80px;
 	padding-bottom: 80px;
 }
+@media only screen and (max-width: 479px) {
+	.shoping-cart {
+		padding-top: 24px;
+		padding-bottom: 24px;
+	}
+}
 
 .shoping__cart__table {
 	margin-bottom: 30px;
@@ -2092,6 +2127,12 @@ ol {
 .checkout {
 	padding-top: 80px;
 	padding-bottom: 60px;
+}
+@media only screen and (max-width: 479px) {
+	.checkout {
+		padding-top: 24px;
+		padding-bottom: 24px;
+	}
 }
 
 .checkout h6 {
@@ -2771,6 +2812,12 @@ ol {
 .contact {
 	padding-top: 80px;
 	padding-bottom: 50px;
+}
+@media only screen and (max-width: 479px) {
+	.contact {
+		padding-top: 24px;
+		padding-bottom: 24px;
+	}
 }
 
 .contact__widget {

@@ -52,7 +52,7 @@
                     @endif
 
                     
-                    <div class="sidebar__item">
+                    {{-- <div class="sidebar__item">
                         <h4>相關內容</h4>
                         <div class="sidebar__item__size">
                             <label for="large">
@@ -78,7 +78,7 @@
                                 <input type="radio" id="tiny">
                             </label>
                         </div>
-                    </div>
+                    </div> --}}
                     
                 </div>
             </div>

@@ -1,8 +1,8 @@
 /* 小購物車 */
 .float-cart{
     position: fixed;
-    right: 20px;
-    top: 20px;
+    right: 32px;
+    bottom: 32px;
     height: 64px;
     width: 64px;
     background-color: rgba(216, 49, 49, 0.8);

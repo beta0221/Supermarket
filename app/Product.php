@@ -131,7 +131,7 @@ class Product extends Model implements Buyable {
      * @return array
      */
     public function getPriceList(){
-        $cartRuleList = $this->cartRules()->orderBy('minimum_amount','asc')->get();
+        $cartRuleList = $this->cartRules()->where('rule_type',CartRule::RULE_CHANGE_PRICE)->orderBy('minimum_amount','asc')->get();
         $priceList = [];
         foreach ($cartRuleList as $cartRule) {
             $price = $this->cartRulePrice($cartRule);

@@ -2,7 +2,7 @@
 <div class="humberger__menu__overlay"></div>
 <div class="humberger__menu__wrapper">
     <div class="humberger__menu__logo">
-        <a href="#"><img src="img/logo.png" alt=""></a>
+        <a href="#"><img src="/img/logo.png" alt=""></a>
     </div>
     {{-- <div class="humberger__menu__cart">
         <ul>
@@ -23,7 +23,15 @@
         </div> --}}
         <div class="header__top__right__auth">
             @auth
-                <a href="/home"><i class="fa fa-user"></i>{{ auth()->user()->name }}</a>
+                <a href="/home"><i class="fa fa-user mb-2"></i>{{ auth()->user()->name }}</a>
+                {{-- <span class="arrow_carrot-down"></span> --}}
+
+                <a class="mb-2" href="/order/myOrder" >我的訂單</a>
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button type="submit" class="btn btn-sm btn-light">登出</button>
+                </form>
+                    
             @endauth
             @guest
                 <a href="/login"><i class="fa fa-user"></i> 登入</a>
@@ -35,7 +43,7 @@
             <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="/">首頁</a></li>
             <li class="{{ Request::is('shop') ? 'active' : '' }}"><a href="/shop">商品</a></li>
             <li><a href="https://blog.kingpork.com.tw" target="_blank">金園廚房</a></li>
-            <li><a href="./blog.html">訂購相關</a></li>
+            <li class="{{ Request::is('about') ? 'active' : '' }}"><a href="/about">訂購相關</a></li>
             <li class="{{ Request::is('contact') ? 'active' : '' }}"><a href="/contact">連絡我們</a></li>
         </ul>
     </nav>
@@ -43,13 +51,13 @@
     <div class="header__top__right__social">
         <a href="#"><i class="fa fa-facebook"></i></a>
         <a href="#"><i class="fa fa-twitter"></i></a>
-        <a href="#"><i class="fa fa-linkedin"></i></a>
-        <a href="#"><i class="fa fa-pinterest-p"></i></a>
+        {{-- <a href="#"><i class="fa fa-linkedin"></i></a>
+        <a href="#"><i class="fa fa-pinterest-p"></i></a> --}}
     </div>
     <div class="humberger__menu__contact">
         <ul>
-            <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-            <li>Free Shipping for all Order of $99</li>
+            <li><i class="fa fa-envelope"></i> kingpork80390254@gmail.com</li>
+            {{-- <li>Free Shipping for all Order of $99</li> --}}
         </ul>
     </div>
 </div>
@@ -95,7 +103,7 @@
                                     <li>
                                         <form action="{{ route('logout') }}" method="post">
                                             @csrf
-                                            <button type="submit" class="btn btn-light">登出</button>
+                                            <button type="submit" class="btn btn-light btn-sm">登出</button>
                                         </form>
                                     </li>
                                 </ul>
@@ -114,7 +122,7 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="header__logo">
-                    <a href="/"><img style="max-width: 120px;max-height:80px" src="img/logo.png" alt=""></a>
+                    <a href="/"><img style="max-width: 120px;max-height:80px" src="/img/logo.png" alt=""></a>
                 </div>
             </div>
             <div class="col-lg-6">
