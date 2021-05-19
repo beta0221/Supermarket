@@ -19,12 +19,25 @@
             </div>
             <hr class="m-0">
             
-            @if ($OR->address)
             <div class="row">
                 <div class="col-md-12 mt-2 mb-2">
                     <h4>訂購資訊</h4>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-12 mt-2">
+                    付款方式：{{$OR->payment}}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 mb-2">
+                    運送方式：{{$OR->carrier}}
+                </div>
+            </div>
+
+            @if ($OR->address)
             @include('components.orderAddress',['address'=>$OR->address])
             @endif
 
@@ -38,6 +51,16 @@
 
             @if ($OR->atmInfo)
                 @include('components.orderATM',['atmInfo'=>$OR->atmInfo])
+            @endif
+
+            @if ($OR->cardInfo)
+            <div class="row">
+                <div class="col-md-12 mt-2 mb-2">
+                    <h4>信用卡資訊</h4>
+                    卡片末四碼：{{$OR->cardInfo->Card4No}}
+                </div>
+            </div>
+            
             @endif
 
             <div class="row">

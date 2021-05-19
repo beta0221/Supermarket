@@ -12,33 +12,42 @@
         <tr>
           <th style="background-color:#D3D3D3">姓名</th>
           <th style="background-color:#D3D3D3">信箱</th>
-          <th style="background-color:#D3D3D3">累積紅利</th>
         </tr>
         <tr>
-          <td>{{userInfo.name}}</td>
-          <td>{{userInfo.email}}</td>
-          <td>{{userInfo.bonus}}</td>
+          <td>{{user.name}}</td>
+          <td>{{user.email}}</td>
         </tr>
       </table>
       <table class="table table-bordered mt-2">
         <tr>
-          <th colspan="2" style="background-color:#1E90FF"><span style="color:white">訂購資訊</span></th>
+          <th colspan="2" style="background-color:#1E90FF"><span style="color:white">出貨資訊</span></th>
         </tr>
         <tr>
           <td style="background-color:#D3D3D3">收件人</td>
-          <td>{{addressInfo.name}}</td>
+          <td>{{address.name}}</td>
         </tr>
         <tr>
           <td style="background-color:#D3D3D3">地址</td>
-          <td>{{addressInfo.address1}}</td>
+          <td>{{address.address1}}</td>
         </tr>
         <tr>
           <td style="background-color:#D3D3D3">電話</td>
-          <td>{{addressInfo.phone}}</td>
+          <td>{{address.phone}}</td>
         </tr>
-         <tr>
-          <td style="background-color:#D3D3D3">總金額</td>
-          <td>{{order.total}}</td>
+      </table>
+
+
+      <table class="table table-bordered mt-2">
+        <tr>
+          <th colspan="2" style="background-color:#1E90FF"><span style="color:white">訂單資訊</span></th>
+        </tr>
+        <tr>
+          <td style="background-color:#D3D3D3">付款方式</td>
+          <td>{{order.payment}}</td>
+        </tr>
+        <tr>
+          <td style="background-color:#D3D3D3">運送方式</td>
+          <td>{{order.carrier}}</td>
         </tr>
         <tr>
           <td style="background-color:#D3D3D3">發票</td>
@@ -46,15 +55,80 @@
         </tr>
         <tr>
           <td style="background-color:#D3D3D3">備註</td>
-          <td>{{addressInfo.comment}}</td>
+          <td>{{order.comment}}</td>
         </tr>
         <tr>
-          <td style="background-color:#D3D3D3">配合活動</td>
-          <li v-for="(cart,index) in cartRuleList" :key="index">{{ cart.name }}</li>
+          <td style="background-color:#D3D3D3">小記</td>
+          <td>{{order.subtotal}}</td>
+        </tr>
+        <tr>
+          <td style="background-color:#D3D3D3">運費</td>
+          <td>{{order.total_shipping}}</td>
+        </tr>
+        <tr>
+          <td style="background-color:#D3D3D3">折扣</td>
+          <td>-{{order.total_discount}}（使用紅利:{{order.bonus_cost}}）</td>
+        </tr>
+         <tr>
+          <td style="background-color:#D3D3D3">總金額</td>
+          <td style="color:red">{{order.total}}</td>
         </tr>
       </table>
+
+
+      <table class="table table-bordered mt-2" v-if="atmInfo != null">
+        <tr>
+          <th colspan="2" style="background-color:#1E90FF"><span style="color:white">atm繳款資訊</span></th>
+        </tr>
+        <tr>
+          <td style="background-color:#D3D3D3">繳費銀行代碼</td>
+          <td>{{atmInfo.BankCode}}</td>
+        </tr>
+        <tr>
+          <td style="background-color:#D3D3D3">虛擬帳號</td>
+          <td>{{atmInfo.vAccount}}</td>
+        </tr>
+        <tr>
+          <td style="background-color:#D3D3D3">繳費期限</td>
+          <td>{{atmInfo.ExpireDate}}</td>
+        </tr>
+      </table>
+
+
+      <table class="table table-bordered mt-2" v-if="cardInfo != null">
+        <tr>
+          <th colspan="2" style="background-color:#1E90FF"><span style="color:white">信用卡繳款資訊</span></th>
+        </tr>
+        <tr>
+          <td style="background-color:#D3D3D3">卡片末四碼</td>
+          <td>{{cardInfo.Card4No}}</td>
+        </tr>
+        <tr>
+          <td style="background-color:#D3D3D3">銀行授權碼</td>
+          <td>{{cardInfo.AuthCode}}</td>
+        </tr>
+        <tr>
+          <td style="background-color:#D3D3D3">金額</td>
+          <td>{{cardInfo.Amount}}</td>
+        </tr>
+        <tr>
+          <td style="background-color:#D3D3D3">交易時間</td>
+          <td>{{cardInfo.ProcessDate}}</td>
+        </tr>
+
+        
+      </table>
+
+
+
+      <div class="alert alert-success" role="alert">
+          <h4 class="alert-heading">使用折扣 :</h4>
+          <hr class="mt-2 mb-2">
+          <p style="color:#155724" class="mb-0" v-for="(rule,index) in cartRules" :key="index">＊{{rule}}</p>
+      </div>
+
           <CDataTable
-          :items="orderProduct"
+          :items="productList"
           :fields="orderProductFields"
           >
           <template #imageUrl="{item}">
@@ -79,16 +153,19 @@ export default {
         return{
             show:false,
             order_numero:'',
-            orderProduct:[],
-            addressInfo:[],
-            order:[],
-            cartRuleList:[],
+            user:{},
+            order:{},
+            address:{},
+            productList:[],
+            cartRules:[],
+            atmInfo:{},
+            cardInfo:{},
             orderProductFields : [
-        { key: "name", label: "商品" },
-        { key: "imageUrl", label: "圖片" },
-        { key: "price", label: "價錢" },
-        { key: "quantity", label: "數量" },
-      ],
+              { key: "name", label: "商品" },
+              { key: "imageUrl", label: "圖片" },
+              { key: "price", label: "價錢" },
+              { key: "quantity", label: "數量" },
+            ],
         }
     },
     mounted(){
@@ -106,15 +183,16 @@ export default {
         .get("/api/order/getOrderDetail/"+order_numero )
         .then((res) => {
           this.show = true;
-          this.orderProduct = res.data.orderProduct;
-          this.userInfo = res.data.userInfo;
-          this.order = res.data.order;
-          this.addressInfo = res.data.addressInfo;
-          this.cartRuleList = res.data.cartRuleList;
-
+          this.order = res.data;
+          this.user = res.data.user;
+          this.address = res.data.address;
+          this.productList = res.data.productList;
+          this.cartRules = res.data.cartRules;
+          this.atmInfo = res.data.atmInfo;
+          this.cardInfo = res.data.cardInfo;
         })
         .catch((err) => {
-          console.error(err);
+          errorHelper.handle(error);
         });
     },
     }

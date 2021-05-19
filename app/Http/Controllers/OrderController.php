@@ -97,21 +97,24 @@ class OrderController extends Controller
 
     public function getOrderDetail($order_numero){
         $order = Order::where('order_numero',$order_numero)->firstOrFail();
-        $addressInfo = Address::where('id',$order->shipping_address_id)->firstOrFail();
-        $userInfo = User::where('id',$order->user_id)->firstOrFail();
-        $orderProduct = $order->orderProducts()->get();
-        $orderProductCollection = new OrderProductCollection($orderProduct);
-        $total = $order->total;
-        $orderProduct = $orderProductCollection->withFirstImage();
-        $cartRuleList = CartRuleLog::where('order_id',$order->id)->get();
-        return response([
-            "order" => $order,
-            'userInfo' => $userInfo,
-            'addressInfo' => $addressInfo,
-            'orderProduct' => $orderProduct,
-            'total' => $total,
-            'cartRuleList'=>$cartRuleList,
-        ]);
+        $OR = new OrderResource($order);
+        return response($OR);
+
+        // $addressInfo = Address::where('id',$order->shipping_address_id)->firstOrFail();
+        // $userInfo = User::where('id',$order->user_id)->firstOrFail();
+        // $orderProduct = $order->orderProducts()->get();
+        // $orderProductCollection = new OrderProductCollection($orderProduct);
+        // $total = $order->total;
+        // $orderProduct = $orderProductCollection->withFirstImage();
+        // $cartRuleList = CartRuleLog::where('order_id',$order->id)->get();
+        // return response([
+        //     "order" => $order,
+        //     'userInfo' => $userInfo,
+        //     'addressInfo' => $addressInfo,
+        //     'orderProduct' => $orderProduct,
+        //     'total' => $total,
+        //     'cartRuleList'=>$cartRuleList,
+        // ]);
     }
 
     public function view_myOrder(Request $request){

@@ -70,6 +70,9 @@ export default {
     methods:{
         showCreateDetailModal(){
             this.show = true;
+            Object.keys(this.detailData).forEach(key => {
+                this.detailData[key] = null;
+            });
             this.detailData = {};
         },
         createDetailData(){

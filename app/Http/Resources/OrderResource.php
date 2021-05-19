@@ -96,13 +96,29 @@ class OrderResource extends JsonResource
         }
     }
 
-    /** ATM匯款資訊 */
-    private function handleAtmInfo(){
+    /** 綠界金流交易資訊 */
+    private function handlePaymentInfo(){
         $this->orderResource->atmInfo = null;
-        if($this->payment_id != Payment::PAYMENT_ID_ATM){ return; }
+        $this->orderResource->cardInfo = null;
+
+        if($this->payment_id != Payment::PAYMENT_ID_ATM && $this->payment_id != Payment::PAYMENT_ID_CREDIT){ return; }
+
         $ecpay = new ECPay($this->order);
-        if($atmInfo = $ecpay->getAtmInfo()){
-            $this->orderResource->atmInfo = (object)$atmInfo;
+        if(!$data = $ecpay->getPaymentInfo()){ return; }
+
+        switch ($this->payment_id) {
+            case Payment::PAYMENT_ID_ATM:
+                if(isset($data['ATMInfo'])){
+                    $this->orderResource->atmInfo = (object)$data['ATMInfo'];
+                }    
+                break;
+            case Payment::PAYMENT_ID_CREDIT:
+                if(isset($data['CardInfo'])){
+                    $this->orderResource->cardInfo = (object)$data['CardInfo'];
+                }    
+                break;
+            default:
+                break;
         }
     }
     
@@ -123,7 +139,7 @@ class OrderResource extends JsonResource
         $this->handleStatus();
         $this->handleOrderProducts();
         $this->handleCartRules();
-        $this->handleAtmInfo();
+        $this->handlePaymentInfo();
 
         return $this->orderResource;
     }
