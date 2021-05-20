@@ -61,13 +61,39 @@ class MessageController extends Controller
 
     public function store(Request $request){
         $validator = Validator::make($request->all(), $this->storeRule);
-        Session::flash('error', $validator->errors()); 
-        if (!$validator->fails()) {
-            Session::flash('success', '訊息已成功送出，我們將會儘速回覆您。'); 
+        if ($validator->fails()){
+            // return response($request->all());
+            Session::flash('error', $validator->errors());
+            Session::flash('request',$request->all());
+            return redirect()->route('contact');
         }
 
-        //SendMail::dispatch($request->email,$order_numero);
+        //recaptcha
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+        $data = array(
+            'secret' => '6LfOZnoUAAAAAFNdAX43Z17487emgfmW5r1Rj9CQ',
+            'response' => $request->input('g-recaptcha-response')
+        );
+        $options = array(
+            'http' => array (
+                'method' => 'POST',
+                'header'=>"Content-Type: application/x-www-form-urlencoded",
+                'content' => http_build_query($data)
+            )
+        );
+        $context  = stream_context_create($options);
+        $verify = file_get_contents($url, false, $context);
+        $result = json_decode($verify);
         
+        if ($result->success==false) {
+            Session::flash('request',$request->all());
+            return redirect()->route('contact');
+        }
+
+        Message::insert_row($request);
+        //SendMail::dispatch($request->email,$order_numero);
+
+        Session::flash('success', '訊息已成功送出，我們將會儘速回覆您。'); 
         return redirect()->route('contact');
         
     }

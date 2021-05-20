@@ -43,7 +43,7 @@
 
         <div class="row mb-2">
             <div class="col-lg-6 offset-lg-6 step-title">
-                <h5>1.調整購買產品數量</h5>
+                <h5>1.確認數量</h5>
             </div>
         </div>
 
@@ -78,7 +78,7 @@
                                     <td class="shoping__cart__quantity">
                                         <div class="quantity">
                                             <div class="pro-qty">
-                                                <input name="qty_{{$row->rowId}}" type="text" value="{{$row->qty}}">
+                                                <input class="cart-quantity-input" name="qty_{{$row->rowId}}" type="text" value="{{$row->qty}}">
                                             </div>
                                         </div>
                                     </td>
@@ -97,9 +97,9 @@
             </div>
         </div>
 
-        <div class="row mb-4">
+        <div class="row mb-4 step-caculate-row" style="display: none;">
             <div class="col-lg-6 offset-lg-6 step-title">
-                <h5 class="mb-2">2.按下計算總金額按鈕</h5>
+                <h5 class="mb-2">2.計算總金額</h5>
                 <div>
                     <a href="javascript:;" onclick="updateCartQty()" class="primary-btn cart-btn btn-block text-center">
                         <span class="mr-2 icon_loading"></span>
@@ -110,13 +110,13 @@
         </div>
         
 
-        <div class="row mb-2">
+        <div class="row mb-2 step-discount-row">
             <div class="col-lg-6 offset-lg-6 step-title">
-                <h5>3.使用紅利折抵</h5>
+                <h5>2.使用紅利折抵</h5>
             </div>
         </div>
 
-        <div class="row mb-4">
+        <div class="row mb-4 step-discount-row">
 
             <div class="col-lg-6 offset-lg-6">
                 <div class="shoping__continue">
@@ -148,14 +148,14 @@
 
         </form>
         
-        <div class="row mb-2 mt-4">
+        <div class="row mb-2 mt-4 step-checkout-row">
             <div class="col-lg-6 offset-lg-6 step-title">
-                <h5>4.確定金額，前往結帳</h5> 
+                <h5>3.確定金額，前往結帳</h5> 
             </div>
         </div>
 
         @if (!empty($cartHandler->cartRules))
-        <div class="row mt-2">
+        <div class="row mt-2 step-checkout-row">
             <div class="col-lg-6 offset-lg-6" >
                 <div class="alert alert-success" role="alert">
                     <h4 class="alert-heading">已使用的折扣 : </h4>
@@ -168,7 +168,7 @@
         </div>
         @endif
 
-        <div class="row">
+        <div class="row step-checkout-row">
 
             <div class="col-lg-6">
                 
@@ -220,8 +220,20 @@
 <script>
     jQuery(function(){
         $("select").niceSelect();
+
+        $('.cart-quantity-input').on('change',function(){
+            showCacuButton();
+        });
+        $('.qtybtn').on('click',function(){
+            showCacuButton();
+        })
     });
-    
+
+    function showCacuButton(){
+        $('.step-caculate-row').show();
+        $('.step-discount-row').hide();
+        $('.step-checkout-row').hide();
+    }
 
     function updateCartQty(){
         $('#cart-content-form').submit();

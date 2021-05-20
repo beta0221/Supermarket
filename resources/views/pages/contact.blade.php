@@ -73,6 +73,10 @@
             </p>
             @endif
 
+            @if (Session::has('request'))
+            <?php $request = Session::get('request'); ?>
+            @endif
+
             @if (Session::has('success'))
             <p class="alert alert-success">{{ Session::get('success') }}</p>
             @endif
@@ -81,18 +85,29 @@
             <form action="/contact" method="POST">
                 {{ csrf_field() }}
                 <div class="row">
+
                     <div class="col-lg-6 col-md-6">
-                        <input type="text" placeholder="姓名" name="name">
+                        <input type="text" placeholder="姓名" name="name" value="{{(!empty($request['name'])?$request['name']:'')}}">
                     </div>
+
                     <div class="col-lg-6 col-md-6">
-                        <input type="text" placeholder="Email" name="email">
+                        <input type="text" placeholder="Email" name="email" value="{{(!empty($request['email'])?$request['email']:'')}}">
                     </div>
+
                     <div class="col-lg-12 col-md-12">
-                        <input type="text" placeholder="主旨" name="title">
+                        <input type="text" placeholder="主旨" name="title" value="{{(!empty($request['title'])?$request['title']:'')}}">
                     </div>
+
+                    <div class="col-lg-12 col-md-12">
+                        <textarea placeholder="訊息..." name="message">{{(!empty($request['message'])?$request['message']:'')}}</textarea>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12">
+                        <div class="g-recaptcha" data-sitekey="6LfOZnoUAAAAANBhKzIm2Clc64yH5cYujcq6X_Iv"></div>
+                    </div>
+
                     <div class="col-lg-12 text-center">
-                        <textarea placeholder="訊息..." name="message"></textarea>
-                        <button type="submit" class="site-btn">確認送出</button>
+                    <button id="submit-button" type="submit" class="site-btn">確認送出</button>
                     </div>
                 </div>
             </form>
@@ -124,5 +139,13 @@
 @endsection
 
 @section('js')
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<script>
+jQuery(function(){
+    $('#submit-button').on('click',function(){
+		$('#submit-button').css('display','none');
+	});
+});
+</script>
 
 @endsection
