@@ -161,21 +161,18 @@
             </div>
             @if (!empty($relateToProducts))        
             <div class="row">
-                @foreach ($relateToProducts as $item)
-                    @if ($item->sku != $sku)
+                @foreach ($relateToProducts as $product)
+                    @if ($product->sku != $sku)
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="{{$item->imageUrl}}">
-                                <a style="display: block; width:268px; height:270px;z-index:-1;" href="/product/{{$item->sku}}"></a>
-                                {{-- <ul class="product__item__pic__hover">
-                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                </ul> --}}
+                            <div class="product-image-outter-div">
+                                <a href="/product/{{$product->sku}}">
+                                    <img src="{{$product->imageUrl}}" alt="{{$product->name}}">
+                                </a>
                             </div>
                             <div class="product__item__text">
-                                <h6><a href="/product/{{$item->sku}}">{{$item->name}}</a></h6>
-                                 <h5>${{$item->lowest_price}}~${{$item->price}}</h5>
+                                <h6><a href="/product/{{$product->sku}}">{{$product->name}}</a></h6>
+                                 <h5>${{$product->lowest_price}}~${{$product->price}}</h5>
                             </div>
                         </div>
                     </div>
