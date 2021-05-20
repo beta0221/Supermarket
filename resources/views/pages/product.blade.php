@@ -161,18 +161,18 @@
             </div>
             @if (!empty($relateToProducts))        
             <div class="row">
-                @foreach ($relateToProducts as $product)
-                    @if ($product->sku != $sku)
+                @foreach ($relateToProducts as $item)
+                    @if ($item->sku != $sku)
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="product__item">
                             <div class="product-image-outter-div">
-                                <a href="/product/{{$product->sku}}">
-                                    <img src="{{$product->imageUrl}}" alt="{{$product->name}}">
+                                <a href="/product/{{$item->sku}}">
+                                    <img src="{{$item->imageUrl}}" alt="{{$item->name}}">
                                 </a>
                             </div>
                             <div class="product__item__text">
-                                <h6><a href="/product/{{$product->sku}}">{{$product->name}}</a></h6>
-                                 <h5>${{$product->lowest_price}}~${{$product->price}}</h5>
+                                <h6><a href="/product/{{$item->sku}}">{{$item->name}}</a></h6>
+                                 <h5>${{$item->lowest_price}}~${{$item->price}}</h5>
                             </div>
                         </div>
                     </div>
