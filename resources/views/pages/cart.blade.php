@@ -224,6 +224,9 @@
         $('.cart-quantity-input').on('change',function(){
             showCacuButton();
         });
+        $('.cart-quantity-input').on('click',function(){
+            showCacuButton();
+        });
         $('.qtybtn').on('click',function(){
             showCacuButton();
         })
